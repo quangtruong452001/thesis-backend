@@ -1,0 +1,40 @@
+#extend type Query {
+#    notifications: [Notification!]!
+#
+#}
+#
+#extend type Mutation {
+#    createNotification(input: CreateNotificationInput!): NotificationMutation!
+#    markNotificationAsRead(id: ID!): NotificationMutation!
+#}
+
+type Notification {
+    id: ID!
+    title: String!
+    type: NotificationType!
+    order: Order
+    reservation: Reservation
+    isRead: Boolean!
+    createdAt: String
+}
+
+
+
+enum NotificationType {
+    RESERVATION
+    ORDER
+}
+
+input CreateNotificationInput {
+    title: String!
+    type: NotificationType!
+    orderId: ID
+    reservationId: ID
+}
+
+type NotificationMutation {
+    success: Boolean!
+    msg: String!
+    data: Notification
+}
+

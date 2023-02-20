@@ -1,0 +1,47 @@
+
+
+interface MutationOf {
+    "Mutation status"
+    success: Boolean
+    "Mutation message"
+    msg: String
+}
+interface Paginator {
+    hasNextPage: Boolean
+    limit: Int
+    page: Int
+    prevPage: Int
+    total: Int
+    hasPrevPage: Boolean
+    nextPage: Int
+    pagingCounter: Int
+    totalPages: Int
+}
+
+type Hour {
+    _id: ID
+    name: String
+    time: Int
+    timeFrame: String
+    slot: Int
+}
+
+type ServiceType {
+    _id: ID
+    name: String
+    price: [ServicePrice]
+    selectedCount: Int
+    description: String
+    timeServe: String
+    type: String
+}
+
+type ServicePrice {
+    name: String
+    serviceId: Int
+    price: String
+    priceNumber: Float
+    minWeight: Float
+    maxWeight: Float
+    updatedAt: DateTime
+}

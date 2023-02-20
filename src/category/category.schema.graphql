@@ -1,0 +1,32 @@
+extend type Mutation {
+    "Update Category"
+    updateCategory(id: ID!, name: String!): CategoryMutation
+    "Delete Category"
+    deleteCategory(id: ID!): CategoryMutation
+    "Add Category"
+    addCategory(name: String): CategoryMutation
+}
+
+extend type Query {
+    "List of categories"
+    categories: [Category]
+}
+
+type Category {
+    "ID"
+    _id: ID!
+    "Name"
+    category_name: String!
+    "Total number of products"
+    totalProducts: Int
+}
+
+type CategoryMutation implements MutationOf {
+    "Mutation status"
+    success: Boolean
+    "Mutation message"
+    msg: String
+    "Data"
+    data: Category
+}
+

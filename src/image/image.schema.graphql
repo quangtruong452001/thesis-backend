@@ -1,0 +1,8 @@
+type Image {
+    "The image's unique identifier"
+    id: ID
+    "Url of the image"
+    url: String!
+    "The image's title"
+    image_name: String
+}

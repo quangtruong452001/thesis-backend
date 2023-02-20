@@ -1,0 +1,100 @@
+import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { OrderService } from './order.service';
+import {
+  OrderFilter,
+  CreateOrderInput,
+  UpdateOrderInput,
+} from '../dto/order.dto';
+import { handleOrderFilters } from '../utils/helper';
+import { GetUser } from '../decorator';
+
+@Resolver('Order')
+export class OrderResolver {
+  constructor(private readonly orderService: OrderService) {}
+
+  @Query('orders')
+  async orders(
+    @Args('page') page: number,
+    @Args('limit') limit: number,
+    @Args('sort') sort: any,
+    @Args('filters', { nullable: true }) filters: OrderFilter,
+  ) {
+    const options = handleOrderFilters(filters);
+    return this.orderService.orders(filters, page, limit, sort);
+  }
+
+  @Query('order')
+  async order(@Args('id') id: string) {
+    return this.orderService.getOrderById(id);
+  }
+
+  @Mutation('createOrder')
+  async createOrder(@Args('input') input: CreateOrderInput, @GetUser() user) {
+    try {
+      input.user = user.id;
+      const data = await this.orderService.createOrder(input);
+      if (data) {
+        return {
+          success: true,
+          msg: 'Create order successfully',
+          data: data,
+        };
+      } else {
+        return {
+          success: false,
+          msg: 'Create order failed',
+        };
+      }
+    } catch (error) {
+      console.error(`Error in createOrder mutation: ${error}`);
+      throw new Error('Could not create order');
+    }
+  }
+
+  @Mutation('updateOrder')
+  async updateOrder(
+    @Args('id') id: string,
+    @Args('input') input: UpdateOrderInput,
+  ) {
+    try {
+      const data = await this.orderService.updateOrder(id, input);
+      if (data) {
+        return {
+          success: true,
+          msg: 'Update order successfully',
+          data: data,
+        };
+      } else {
+        return {
+          success: false,
+          msg: 'Update order failed',
+        };
+      }
+    } catch (error) {
+      console.error(`Error in updateOrder mutation: ${error}`);
+      throw new Error('Could not update order');
+    }
+  }
+
+  @Mutation('deleteOrder')
+  async deleteOrder(@Args('id') id: string) {
+    try {
+      const data = await this.orderService.deleteOrder(id);
+      if (data) {
+        return {
+          success: true,
+          msg: 'Delete order successfully',
+          data: data,
+        };
+      } else {
+        return {
+          success: false,
+          msg: 'Delete order failed',
+        };
+      }
+    } catch (error) {
+      console.error(`Error in deleteOrder mutation: ${error}`);
+      throw new Error('Could not delete order');
+    }
+  }
+}

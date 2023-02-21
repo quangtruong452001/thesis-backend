@@ -47,7 +47,7 @@ export class ReservationInput {
   phoneNumber: string;
 
   @ArrayMinSize(1)
-  species: string[];
+  species: string;
 
   @IsString()
   breed: string;
@@ -92,7 +92,7 @@ export class UpdateReservationInput {
 
   @IsOptional()
   @ArrayMinSize(1)
-  species: string[];
+  species: string;
 
   @IsOptional()
   @IsString()

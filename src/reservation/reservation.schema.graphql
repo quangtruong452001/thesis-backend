@@ -14,7 +14,7 @@ type Reservation {
     userId: User!
     userName: String!
     phoneNumber: String!
-    species: [Category!]!
+    species: String
     breed: String!
     weight: Float!
     reservationDate: DateTime!
@@ -51,7 +51,7 @@ input ReservationInput {
     userId: ID!
     userName: String!
     phoneNumber: String!
-    species: [ID!]!
+    species: String
     breed: String!
     weight: Float!
     reservationDate: DateTime
@@ -67,7 +67,8 @@ input UpdateReservationInput {
     userId: ID
     userName: String
     phoneNumber: String
-    species: [ID!]
+    # TODO: add enum if need
+    species: String
     breed: String
     weight: Float
     reservationDate: DateTime

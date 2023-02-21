@@ -113,7 +113,7 @@ export class ReservationInput {
     userId: string;
     userName: string;
     phoneNumber: string;
-    species: string[];
+    species?: Nullable<string>;
     breed: string;
     weight: number;
     reservationDate?: Nullable<DateTime>;
@@ -129,7 +129,7 @@ export class UpdateReservationInput {
     userId?: Nullable<string>;
     userName?: Nullable<string>;
     phoneNumber?: Nullable<string>;
-    species?: Nullable<string[]>;
+    species?: Nullable<string>;
     breed?: Nullable<string>;
     weight?: Nullable<number>;
     reservationDate?: Nullable<DateTime>;
@@ -378,7 +378,7 @@ export class Reservation {
     userId: User;
     userName: string;
     phoneNumber: string;
-    species: Category[];
+    species?: Nullable<string>;
     breed: string;
     weight: number;
     reservationDate: DateTime;

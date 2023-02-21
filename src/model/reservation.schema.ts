@@ -21,7 +21,7 @@ export class Reservation {
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
     required: true,
   })
-  species: string[];
+  species: string;
 
   @Prop({ type: String, required: true })
   breed: string;

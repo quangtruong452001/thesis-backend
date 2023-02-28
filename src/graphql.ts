@@ -105,8 +105,18 @@ export class CreateProductInput {
     description: string;
     shortDescription?: Nullable<string>;
     additionalInfos?: Nullable<string>;
-    images: Nullable<string>[];
     categories: Nullable<string>[];
+}
+
+export class UpdateProductInput {
+    name?: Nullable<string>;
+    productCode?: Nullable<string>;
+    productSKU?: Nullable<string>;
+    price?: Nullable<number>;
+    description?: Nullable<string>;
+    shortDescription?: Nullable<string>;
+    additionalInfos?: Nullable<string>;
+    categories?: Nullable<Nullable<string>[]>;
 }
 
 export class ReservationInput {
@@ -188,6 +198,10 @@ export abstract class IMutation {
     abstract updateOrder(id: string, input: UpdateOrderInput): Nullable<OrderMutation> | Promise<Nullable<OrderMutation>>;
 
     abstract deleteOrder(id: string): Nullable<OrderMutation> | Promise<Nullable<OrderMutation>>;
+
+    abstract createProduct(input: CreateProductInput): Nullable<ProductMutation> | Promise<Nullable<ProductMutation>>;
+
+    abstract updateProduct(id: string, input: UpdateProductInput): Nullable<ProductMutation> | Promise<Nullable<ProductMutation>>;
 
     abstract deleteProduct(id: string): Nullable<ProductMutation> | Promise<Nullable<ProductMutation>>;
 

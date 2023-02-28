@@ -5,7 +5,7 @@ import {
 import { Model, PaginateModel } from 'mongoose';
 import { Product, ProductDocument } from '../model/product.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateProductDto } from '../dto/product.dto';
+import { CreateProductDto, UpdateProductDto } from '../dto/product.dto';
 
 // import { ConfigService } from '@nestjs/config';
 
@@ -79,13 +79,6 @@ export class ProductService {
     }
   }
 
-  // Create products
-
-  async createProduct(productDto: CreateProductDto) {
-    // console.log(productDto);
-    return await this.productModel.create(productDto);
-  }
-
   // Get number of total products
   async getTotalProducts() {
     try {
@@ -134,6 +127,26 @@ export class ProductService {
   }
 
   // TODO: Add create and update
+
+  async createProduct(input: CreateProductDto) {
+    try {
+      const data = await this.productModel.create(input);
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  async updateProduct(id: string, input: UpdateProductDto) {
+    try {
+      const data = await this.productModel.findByIdAndUpdate(id, input);
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 
   async similarProducts(options) {
     try {

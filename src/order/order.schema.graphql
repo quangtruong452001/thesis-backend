@@ -1,125 +1,135 @@
 extend type Query {
-    "Orders List"
-    orders(
-        page: Int = 1
-        limit: Int = 9
-        sort: String,
-        filters: OrderFilter,
-    ): OrderPagination
-    "Get order by id"
-    order(id: ID!): Order
+  "Orders List"
+  orders(
+    page: Int = 1
+    limit: Int = 9
+    sort: String
+    filters: OrderFilter
+  ): OrderPagination
+  "Get order by id"
+  order(id: ID!): Order
 }
 
 extend type Mutation {
-    "Create Order"
-    createOrder(input: CreateOrderInput!): OrderMutation
-    "Update Order by ID"
-    updateOrder(id: ID!, input: UpdateOrderInput!): OrderMutation
-    "Delete Order by ID"
-    deleteOrder(id: ID!): OrderMutation
+  "Create Order"
+  createOrder(input: CreateOrderInput!): OrderMutation
+  "Update Order by ID"
+  updateOrder(id: ID!, input: UpdateOrderInput!): OrderMutation
+  "Delete Order by ID"
+  deleteOrder(id: ID!): OrderMutation
 }
 
-input OrderFilter{
-    status: OrderStatus
+input OrderFilter {
+  status: OrderStatus
 }
 
+type Images {
+  _id: ID!
+  image_name: String!
+  url: String!
+}
 type CartItem {
-    productId: ID!
-    quantity: Int!
+  id: ID!
+  name: String!
+  price: Float!
+  quantity: Int!
+  images: [Images]!
 }
 
 type Info {
-    name: String!
-    email: String!
-    address: String!
-    city: String!
-    state: String!
-    country: String!
-    postalCode: String!
+  firstName: String!
+  lastName: String!
+  phone: String!
+  email: String!
+  company: String!
+  region: String!
+  district: String!
+  ward: String!
+  address: String!
+  orderComment: String
+  paymentMethod: String!
 }
 
 type Order {
-    id: ID!
-    cart: [CartItem!]!
-    bill: Info!
-    user: User
-    payment: String
-    shippingTime: String!
-    shippingFee: Float!
-    totalPrice: Float!
-    status: OrderStatus!
-    createdAt: DateTime
-    updatedAt: DateTime
+  id: ID!
+  cart: [CartItem!]!
+  bill: Info!
+  user: User
+  payment: String
+  shippingTime: String!
+  shippingFee: Float!
+  totalPrice: Float!
+  status: OrderStatus!
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 enum OrderStatus {
-    PENDING
-    CONFIRMED
-    FINISHED
-    RETURNED
-    CANCELED
+  PENDING
+  CONFIRMED
+  FINISHED
+  RETURNED
+  CANCELED
 }
 
 scalar DateTime
 
 input CartItemInput {
-    productId: ID!
-    quantity: Int!
+  productId: ID!
+  quantity: Int!
 }
 
 input InfoInput {
-    name: String!
-    email: String!
-    address: String!
-    city: String!
-    state: String!
-    country: String!
-    postalCode: String!
+  name: String!
+  email: String!
+  address: String!
+  city: String!
+  state: String!
+  country: String!
+  postalCode: String!
 }
 
 input CreateOrderInput {
-    cart: [CartItemInput!]!
-    bill: InfoInput!
-#    user: String!
-    payment: String
-    shippingTime: String!
-    shippingFee: Float!
-    totalPrice: Float!
-    status: OrderStatus = PENDING
+  cart: [CartItemInput!]!
+  bill: InfoInput!
+  #    user: String!
+  payment: String
+  shippingTime: String!
+  shippingFee: Float!
+  totalPrice: Float!
+  status: OrderStatus = PENDING
 }
 
 input UpdateOrderInput {
-    cart: [CartItemInput!]
-    bill: InfoInput
-#    user: String
-    payment: String
-    shippingTime: String
-    shippingFee: Float
-    totalPrice: Float
-    status: OrderStatus
+  cart: [CartItemInput!]
+  bill: InfoInput
+  #    user: String
+  payment: String
+  shippingTime: String
+  shippingFee: Float
+  totalPrice: Float
+  status: OrderStatus
 }
-
-
 
 type OrderPagination implements Paginator {
-    "Orders lists"
-    docs: [Order]
-    hasNextPage: Boolean
-    limit: Int
-    page: Int
-    prevPage: Int
-    total: Int
-    hasPrevPage: Boolean
-    nextPage: Int
-    pagingCounter: Int
-    totalPages: Int
+  "Orders lists"
+  docs: [Order]
+  hasNextPage: Boolean
+  limit: Int
+  page: Int
+  prevPage: Int
+  total: Int
+  hasPrevPage: Boolean
+  nextPage: Int
+  pagingCounter: Int
+  totalPages: Int
 }
 
-type OrderMutation implements MutationOf{
-    "Mutation status"
-    success: Boolean
-    "Mutation message"
-    msg: String
-    "Data"
-    data: Order
+type OrderMutation implements MutationOf {
+  "Mutation status"
+  success: Boolean
+  "Mutation message"
+  msg: String
+  "Data"
+  data: Order
 }

@@ -1,89 +1,86 @@
 extend type Query {
-    reservations: [Reservation!]!
-    reservation(id: ID!): Reservation
+  reservations: [Reservation!]!
+  reservation(id: ID!): Reservation
 }
 
 extend type Mutation {
-    createReservation(reservation: ReservationInput!): Reservation!
-    updateReservation(id: ID!, reservation: UpdateReservationInput!): Reservation!
-    deleteReservation(id: ID!): Reservation
+  createReservation(reservation: ReservationInput!): Reservation!
+  updateReservation(id: ID!, reservation: UpdateReservationInput!): Reservation!
+  deleteReservation(id: ID!): Reservation
 }
 
 type Reservation {
-    _id: ID!
-    userId: User!
-    userName: String!
-    phoneNumber: String!
-    species: [Category!]!
-    breed: String!
-    weight: Float!
-    reservationDate: DateTime!
-    reservationHour: Hour!
-    serviceType: ServiceType!
-    locationType: String!
-    location: Location!
-    note: String
-    status: String!
+  _id: ID!
+  userId: User!
+  userName: String!
+  phoneNumber: String!
+  species: String!
+  breed: String!
+  weight: Float!
+  reservationDate: DateTime!
+  reservationHour: Hour!
+  serviceType: ServiceType!
+  locationType: String!
+  location: Location!
+  note: String
+  status: String!
 }
 
 type Location {
-    region: String!
-    district: String!
-    ward: String!
-    address: String!
-    description: String
+  region: String!
+  district: String!
+  ward: String!
+  address: String!
+  description: String
 }
 
 enum LocationType {
-    HOME
-    STORE
+  HOME
+  STORE
 }
 
 enum ReservationStatus {
-    BOOKED
-    SUCCESS
-    CANCELED
+  BOOKED
+  SUCCESS
+  CANCELED
 }
 
-
-
 input ReservationInput {
-    userId: ID!
-    userName: String!
-    phoneNumber: String!
-    species: [ID!]!
-    breed: String!
-    weight: Float!
-    reservationDate: DateTime
-    reservationHour: ID!
-    serviceType: ID!
-    locationType: LocationType!
-    location: LocationInput!
-    note: String
-    status: ReservationStatus!
+  userId: ID!
+  userName: String!
+  phoneNumber: String!
+  species: String!
+  breed: String!
+  weight: Float!
+  reservationDate: DateTime
+  reservationHour: ID!
+  serviceType: ID!
+  locationType: LocationType!
+  location: LocationInput!
+  note: String
+  status: ReservationStatus!
 }
 
 input UpdateReservationInput {
-    userId: ID
-    userName: String
-    phoneNumber: String
-    species: [ID!]
-    breed: String
-    weight: Float
-    reservationDate: DateTime
-    reservationHour: ID
-    serviceType: ID
-    locationType: LocationType
-    location: LocationInput
-    note: String
-    status: ReservationStatus
+  userId: ID
+  userName: String
+  phoneNumber: String
+  species: String
+  breed: String
+  weight: Float
+  reservationDate: DateTime
+  reservationHour: ID
+  serviceType: ID
+  locationType: LocationType
+  location: LocationInput
+  note: String
+  status: ReservationStatus
 }
 
 input LocationInput {
-    region: String!
-    district: String!
-    ward: String!
-    address: String!
-    description: String
+  region: String!
+  district: String!
+  ward: String!
+  address: String!
+  description: String
 }
-

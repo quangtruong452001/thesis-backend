@@ -18,7 +18,7 @@ export class ReservationService {
     try {
       return await this.reservationModel
         .find()
-        .populate(['userId', 'species', 'reservationHour', 'serviceType']);
+        .populate(['userId', 'reservationHour', 'serviceType']);
     } catch (error) {
       throw new Error(`Could not fetch reservations: ${error.message}`);
     }
@@ -28,7 +28,7 @@ export class ReservationService {
     try {
       return await this.reservationModel
         .findById(id)
-        .populate(['userId', 'species', 'reservationHour', 'serviceType']);
+        .populate(['userId', 'reservationHour', 'serviceType']);
     } catch (error) {
       throw new Error(
         `Could not fetch reservation with id ${id}: ${error.message}`,

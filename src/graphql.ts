@@ -113,7 +113,7 @@ export class ReservationInput {
     userId: string;
     userName: string;
     phoneNumber: string;
-    species: string[];
+    species: string;
     breed: string;
     weight: number;
     reservationDate?: Nullable<DateTime>;
@@ -129,7 +129,7 @@ export class UpdateReservationInput {
     userId?: Nullable<string>;
     userName?: Nullable<string>;
     phoneNumber?: Nullable<string>;
-    species?: Nullable<string[]>;
+    species?: Nullable<string>;
     breed?: Nullable<string>;
     weight?: Nullable<number>;
     reservationDate?: Nullable<DateTime>;
@@ -292,19 +292,32 @@ export class NotificationMutation {
     data?: Nullable<Notification>;
 }
 
+export class Images {
+    _id: string;
+    image_name: string;
+    url: string;
+}
+
 export class CartItem {
-    productId: string;
+    id: string;
+    name: string;
+    price: number;
     quantity: number;
+    images: Nullable<Images>[];
 }
 
 export class Info {
-    name: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
     email: string;
+    company: string;
+    region: string;
+    district: string;
+    ward: string;
     address: string;
-    city: string;
-    state: string;
-    country: string;
-    postalCode: string;
+    orderComment?: Nullable<string>;
+    paymentMethod: string;
 }
 
 export class Order {
@@ -378,7 +391,7 @@ export class Reservation {
     userId: User;
     userName: string;
     phoneNumber: string;
-    species: Category[];
+    species: string;
     breed: string;
     weight: number;
     reservationDate: DateTime;

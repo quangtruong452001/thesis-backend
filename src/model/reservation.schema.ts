@@ -17,11 +17,8 @@ export class Reservation {
   @Prop({ type: String, required: true })
   phoneNumber: string;
 
-  @Prop({
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
-    required: true,
-  })
-  species: string[];
+  @Prop({ type: String, required: true })
+  species: string;
 
   @Prop({ type: String, required: true })
   breed: string;

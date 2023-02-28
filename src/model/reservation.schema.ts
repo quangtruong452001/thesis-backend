@@ -18,7 +18,7 @@ export class Reservation {
   phoneNumber: string;
 
   @Prop({
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
+    // type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
     required: true,
   })
   species: string;

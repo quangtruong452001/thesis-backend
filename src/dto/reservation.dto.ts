@@ -13,9 +13,9 @@ enum LocationType {
 }
 
 enum ReservationStatus {
-  BOOKED = 'booked',
-  SUCCESS = 'success',
-  CANCELED = 'canceled',
+  BOOKED = 'BOOKED',
+  SUCCESS = 'SUCCESS',
+  CANCELED = 'CANCELED',
 }
 
 class LocationInput {
@@ -37,7 +37,7 @@ class LocationInput {
 }
 
 export class ReservationInput {
-  @IsNotEmpty()
+  // @IsNotEmpty()
   userId: string;
 
   @IsString()
@@ -46,7 +46,8 @@ export class ReservationInput {
   @IsString()
   phoneNumber: string;
 
-  @ArrayMinSize(1)
+  // @ArrayMinSize(1)
+  @IsString()
   species: string;
 
   @IsString()
@@ -91,7 +92,8 @@ export class UpdateReservationInput {
   phoneNumber: string;
 
   @IsOptional()
-  @ArrayMinSize(1)
+  // @ArrayMinSize(1)
+  @IsString()
   species: string;
 
   @IsOptional()

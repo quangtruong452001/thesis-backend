@@ -26,6 +26,23 @@ type Reservation {
     status: String!
 }
 
+#type ReservationCreate {
+#    _id: ID!
+#    userId: ID!
+#    userName: String!
+#    phoneNumber: String!
+#    species: String
+#    breed: String!
+#    weight: Float!
+#    reservationDate: DateTime!
+#    reservationHour: ID!
+#    serviceType: ID!
+#    locationType: String!
+#    location: Location!
+#    note: String
+#    status: String!
+#}
+
 type Location {
     region: String!
     district: String!
@@ -48,7 +65,7 @@ enum ReservationStatus {
 
 
 input ReservationInput {
-    userId: ID!
+#    userId: ID!
     userName: String!
     phoneNumber: String!
     species: String
@@ -67,7 +84,6 @@ input UpdateReservationInput {
     userId: ID
     userName: String
     phoneNumber: String
-    # TODO: add enum if need
     species: String
     breed: String
     weight: Float

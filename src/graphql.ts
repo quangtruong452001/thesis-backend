@@ -110,7 +110,6 @@ export class CreateProductInput {
 }
 
 export class ReservationInput {
-    userId: string;
     userName: string;
     phoneNumber: string;
     species?: Nullable<string>;
@@ -228,6 +227,8 @@ export abstract class IQuery {
     abstract reservations(): Reservation[] | Promise<Reservation[]>;
 
     abstract reservation(id: string): Nullable<Reservation> | Promise<Nullable<Reservation>>;
+
+    abstract serviceTypes(): ServiceType[] | Promise<ServiceType[]>;
 }
 
 export class Category {
@@ -248,26 +249,6 @@ export class Hour {
     time?: Nullable<number>;
     timeFrame?: Nullable<string>;
     slot?: Nullable<number>;
-}
-
-export class ServiceType {
-    _id?: Nullable<string>;
-    name?: Nullable<string>;
-    price?: Nullable<Nullable<ServicePrice>[]>;
-    selectedCount?: Nullable<number>;
-    description?: Nullable<string>;
-    timeServe?: Nullable<string>;
-    type?: Nullable<string>;
-}
-
-export class ServicePrice {
-    name?: Nullable<string>;
-    serviceId?: Nullable<number>;
-    price?: Nullable<string>;
-    priceNumber?: Nullable<number>;
-    minWeight?: Nullable<number>;
-    maxWeight?: Nullable<number>;
-    updatedAt?: Nullable<DateTime>;
 }
 
 export class Image {
@@ -396,6 +377,26 @@ export class Location {
     ward: string;
     address: string;
     description?: Nullable<string>;
+}
+
+export class ServiceType {
+    _id?: Nullable<string>;
+    name?: Nullable<string>;
+    price?: Nullable<Nullable<ServicePrice>[]>;
+    selectedCount?: Nullable<number>;
+    description?: Nullable<string>;
+    timeServe?: Nullable<string>;
+    type?: Nullable<string>;
+}
+
+export class ServicePrice {
+    name?: Nullable<string>;
+    serviceId?: Nullable<number>;
+    price?: Nullable<string>;
+    priceNumber?: Nullable<number>;
+    minWeight?: Nullable<number>;
+    maxWeight?: Nullable<number>;
+    updatedAt?: Nullable<DateTime>;
 }
 
 export class User {

@@ -11,6 +11,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { GetUser } from '../decorator';
 
 @Resolver('Reservation')
 export class ReservationResolver {
@@ -40,11 +41,14 @@ export class ReservationResolver {
   }
 
   @Mutation('createReservation')
-  @UsePipes(new ValidationPipe())
+  // @UsePipes(new ValidationPipe())
   async createReservation(
     @Args('reservation') createReservationDto: ReservationInput,
+    @GetUser() user: any,
   ) {
     try {
+      // console.log(user);
+      createReservationDto.userId = user.id;
       const reservation = await this.reservationService.create(
         createReservationDto,
       );
@@ -55,7 +59,7 @@ export class ReservationResolver {
   }
 
   @Mutation('updateReservation')
-  @UsePipes(new ValidationPipe())
+  // @UsePipes(new ValidationPipe())
   async updateReservation(
     @Args('id', { type: () => ID }) id: string,
     @Args('reservation') updateReservationDto: UpdateReservationInput,

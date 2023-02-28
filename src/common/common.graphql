@@ -26,22 +26,3 @@ type Hour {
     slot: Int
 }
 
-type ServiceType {
-    _id: ID
-    name: String
-    price: [ServicePrice]
-    selectedCount: Int
-    description: String
-    timeServe: String
-    type: String
-}
-
-type ServicePrice {
-    name: String
-    serviceId: Int
-    price: String
-    priceNumber: Float
-    minWeight: Float
-    maxWeight: Float
-    updatedAt: DateTime
-}

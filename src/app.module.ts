@@ -13,6 +13,7 @@ import { AuthModule } from './auth/auth.module';
 import { OrderModule } from './order/order.module';
 import { NotificationModule } from './notification/notification.module';
 import { ReservationModule } from './reservation/reservation.module';
+import { ServiceTypeModule } from './service-type/service-type.module';
 const config: ConfigService = new ConfigService();
 
 @Module({
@@ -40,6 +41,7 @@ const config: ConfigService = new ConfigService();
     OrderModule,
     NotificationModule,
     ReservationModule,
+    ServiceTypeModule,
   ],
   controllers: [],
   providers: [],

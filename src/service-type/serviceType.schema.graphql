@@ -1,0 +1,28 @@
+
+extend type Query {
+    "Query service type"
+    serviceTypes: [ServiceType!]!
+}
+
+type ServiceType {
+    _id: ID
+    name: String
+    price: [ServicePrice]
+    selectedCount: Int
+    description: String
+    timeServe: String
+    type: String
+}
+
+type ServicePrice {
+    name: String
+    serviceId: Int
+    price: String
+    priceNumber: Float
+    minWeight: Float
+    maxWeight: Float
+    updatedAt: DateTime
+}
+
+
+

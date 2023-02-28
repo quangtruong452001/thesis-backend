@@ -41,7 +41,11 @@ export class ReservationService {
       const createdReservation = new this.reservationModel(
         createReservationDto,
       );
-      return await createdReservation.save();
+      await createdReservation.save();
+      const data = await this.reservationModel
+        .findById(createdReservation._id)
+        .populate('userId');
+      return data;
     } catch (error) {
       throw new Error(`Could not create reservation: ${error.message}`);
     }

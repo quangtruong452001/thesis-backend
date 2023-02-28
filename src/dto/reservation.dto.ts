@@ -37,7 +37,7 @@ class LocationInput {
 }
 
 export class ReservationInput {
-  @IsNotEmpty()
+  // @IsNotEmpty()
   userId: string;
 
   @IsString()
@@ -46,6 +46,10 @@ export class ReservationInput {
   @IsString()
   phoneNumber: string;
 
+<<<<<<< HEAD
+=======
+  // @ArrayMinSize(1)
+>>>>>>> 43703b87033b5800b1a0435aa61ccf3496081649
   @IsString()
   species: string;
 
@@ -91,6 +95,10 @@ export class UpdateReservationInput {
   phoneNumber: string;
 
   @IsOptional()
+<<<<<<< HEAD
+=======
+  // @ArrayMinSize(1)
+>>>>>>> 43703b87033b5800b1a0435aa61ccf3496081649
   @IsString()
   species: string;
 

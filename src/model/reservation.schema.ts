@@ -17,14 +17,10 @@ export class Reservation {
   @Prop({ type: String, required: true })
   phoneNumber: string;
 
-<<<<<<< HEAD
-  @Prop({ type: String, required: true })
-=======
   @Prop({
     // type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
     required: true,
   })
->>>>>>> 43703b87033b5800b1a0435aa61ccf3496081649
   species: string;
 
   @Prop({ type: String, required: true })

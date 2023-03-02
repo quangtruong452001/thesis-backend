@@ -10,12 +10,11 @@ extend type Mutation {
 }
 
 type Reservation {
-<<<<<<< HEAD
   _id: ID!
   userId: User!
   userName: String!
   phoneNumber: String!
-  species: String!
+  species: String
   breed: String!
   weight: Float!
   reservationDate: DateTime!
@@ -25,22 +24,6 @@ type Reservation {
   location: Location!
   note: String
   status: String!
-=======
-    _id: ID!
-    userId: User!
-    userName: String!
-    phoneNumber: String!
-    species: String
-    breed: String!
-    weight: Float!
-    reservationDate: DateTime!
-    reservationHour: Hour!
-    serviceType: ServiceType!
-    locationType: String!
-    location: Location!
-    note: String
-    status: String!
->>>>>>> 43703b87033b5800b1a0435aa61ccf3496081649
 }
 
 #type ReservationCreate {
@@ -80,11 +63,10 @@ enum ReservationStatus {
 }
 
 input ReservationInput {
-<<<<<<< HEAD
-  userId: ID!
+  #    userId: ID!
   userName: String!
   phoneNumber: String!
-  species: String!
+  species: String
   breed: String!
   weight: Float!
   reservationDate: DateTime
@@ -110,37 +92,6 @@ input UpdateReservationInput {
   location: LocationInput
   note: String
   status: ReservationStatus
-=======
-#    userId: ID!
-    userName: String!
-    phoneNumber: String!
-    species: String
-    breed: String!
-    weight: Float!
-    reservationDate: DateTime
-    reservationHour: ID!
-    serviceType: ID!
-    locationType: LocationType!
-    location: LocationInput!
-    note: String
-    status: ReservationStatus!
-}
-
-input UpdateReservationInput {
-    userId: ID
-    userName: String
-    phoneNumber: String
-    species: String
-    breed: String
-    weight: Float
-    reservationDate: DateTime
-    reservationHour: ID
-    serviceType: ID
-    locationType: LocationType
-    location: LocationInput
-    note: String
-    status: ReservationStatus
->>>>>>> 43703b87033b5800b1a0435aa61ccf3496081649
 }
 
 input LocationInput {

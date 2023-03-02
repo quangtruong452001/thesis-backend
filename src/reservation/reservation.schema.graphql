@@ -1,12 +1,18 @@
 extend type Query {
-  reservations: [Reservation!]!
-  reservation(id: ID!): Reservation
+    "List of reservations"
+    reservations: [Reservation!]!
+    "Detail of reservation"
+    reservation(id: ID!): Reservation
 }
 
 extend type Mutation {
-  createReservation(reservation: ReservationInput!): Reservation!
-  updateReservation(id: ID!, reservation: UpdateReservationInput!): Reservation!
-  deleteReservation(id: ID!): Reservation
+    "Create reservation"
+    createReservation(reservation: ReservationInput!): Reservation!
+    "Update reservation"
+    updateReservation(id: ID!, reservation: UpdateReservationInput!): Reservation!
+    "Delete reservation"
+    deleteReservation(id: ID!): Reservation
+
 }
 
 type Reservation {

@@ -4,7 +4,7 @@ import {
   IsOptional,
   IsEnum,
   IsNotEmpty,
-  ArrayMinSize,
+  Length,
 } from 'class-validator';
 
 enum LocationType {
@@ -42,7 +42,7 @@ export class ReservationInput {
 
   @IsString()
   userName: string;
-
+  @Length(10, 10)
   @IsString()
   phoneNumber: string;
 
@@ -89,6 +89,7 @@ export class UpdateReservationInput {
 
   @IsOptional()
   @IsString()
+  @Length(10, 10)
   phoneNumber: string;
 
   @IsOptional()

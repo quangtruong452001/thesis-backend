@@ -1,7 +1,11 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { ProductService } from './product.service';
 import { handleProductFilters, handleProductSorts } from '../utils/helper';
-import { ProductFilters } from 'src/dto/product.dto';
+import {
+  CreateProductDto,
+  ProductFilters,
+  UpdateProductDto,
+} from 'src/dto/product.dto';
 import { sortProduct } from '../utils/config';
 
 @Resolver('Product')
@@ -84,7 +88,7 @@ export class ProductResolver {
   }
 
   @Mutation('deleteProduct')
-  async deleteProduct(id: string) {
+  async deleteProduct(@Args('id') id: string) {
     try {
       const product = await this.productService.deleteProduct(id);
       if (product) {
@@ -102,6 +106,53 @@ export class ProductResolver {
     } catch (err) {
       console.error(err);
       throw new Error('An error occurred while trying to delete products');
+    }
+  }
+
+  @Mutation('updateProduct')
+  async updateProduct(
+    @Args('id') id: string,
+    @Args('input') input: UpdateProductDto,
+  ) {
+    try {
+      const product = this.productService.updateProduct(id, input);
+      if (product) {
+        return {
+          success: true,
+          msg: 'Update product successfully',
+          data: product,
+        };
+      } else {
+        return {
+          success: false,
+          msg: 'Update product failed',
+        };
+      }
+    } catch (err) {
+      console.error(err);
+      throw new Error('An error occurred while trying to update products');
+    }
+  }
+
+  @Mutation('createProduct')
+  async createProduct(@Args('input') input: CreateProductDto) {
+    try {
+      const product = this.productService.createProduct(input);
+      if (product) {
+        return {
+          success: true,
+          msg: 'Create product successfully',
+          data: product,
+        };
+      } else {
+        return {
+          success: false,
+          msg: 'Create product failed',
+        };
+      }
+    } catch (err) {
+      console.error(err);
+      throw new Error('An error occurred while trying to create products');
     }
   }
 }

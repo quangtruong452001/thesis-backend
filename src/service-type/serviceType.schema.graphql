@@ -1,28 +1,57 @@
-
 extend type Query {
-    "Query service type"
-    serviceTypes: [ServiceType!]!
+  "Query service type"
+  serviceTypes: [ServiceType!]!
+  serviceType(id: ID!): ServiceType
+}
+
+extend type Mutation {
+  createServiceType(serviceType: ServiceTypeInput!): ServiceType!
+  updateServiceType(id: ID!, serviceType: UpdateServiceTypeInput!): ServiceType!
+  deleteServiceType(id: ID!): ServiceType
 }
 
 type ServiceType {
-    _id: ID
-    name: String
-    price: [ServicePrice]
-    selectedCount: Int
-    description: String
-    timeServe: String
-    type: String
+  _id: ID!
+  name: String
+  price: [ServicePrice]
+  selectedCount: Int
+  description: String
+  timeServe: String
+  typeId: Int
 }
 
 type ServicePrice {
-    name: String
-    serviceId: Int
-    price: String
-    priceNumber: Float
-    minWeight: Float
-    maxWeight: Float
-    updatedAt: DateTime
+  name: String
+  serviceId: Int
+  price: String
+  priceNumber: Float
+  minWeight: Float
+  maxWeight: Float
+  updatedAt: DateTime
+}
+input ServicePriceInput {
+  name: String
+  serviceId: Int
+  price: String
+  priceNumber: Float
+  minWeight: Float
+  maxWeight: Float
+  updatedAt: DateTime
+}
+input ServiceTypeInput {
+  name: String
+  price: [ServicePriceInput]
+  description: String
+  timeServe: String
+  typeId: Int
 }
 
-
-
+input UpdateServiceTypeInput {
+  _id: ID
+  name: String
+  price: [ServicePriceInput]
+  selectedCount: Int
+  description: String
+  timeServe: String
+  typeId: Int
+}

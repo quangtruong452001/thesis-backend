@@ -158,6 +158,34 @@ export class LocationInput {
     description?: Nullable<string>;
 }
 
+export class ServicePriceInput {
+    name?: Nullable<string>;
+    serviceId?: Nullable<number>;
+    price?: Nullable<string>;
+    priceNumber?: Nullable<number>;
+    minWeight?: Nullable<number>;
+    maxWeight?: Nullable<number>;
+    updatedAt?: Nullable<DateTime>;
+}
+
+export class ServiceTypeInput {
+    name?: Nullable<string>;
+    price?: Nullable<Nullable<ServicePriceInput>[]>;
+    description?: Nullable<string>;
+    timeServe?: Nullable<string>;
+    typeId?: Nullable<number>;
+}
+
+export class UpdateServiceTypeInput {
+    _id?: Nullable<string>;
+    name?: Nullable<string>;
+    price?: Nullable<Nullable<ServicePriceInput>[]>;
+    selectedCount?: Nullable<number>;
+    description?: Nullable<string>;
+    timeServe?: Nullable<string>;
+    typeId?: Nullable<number>;
+}
+
 export class UserInput {
     name: string;
     email: string;
@@ -210,6 +238,12 @@ export abstract class IMutation {
     abstract updateReservation(id: string, reservation: UpdateReservationInput): Reservation | Promise<Reservation>;
 
     abstract deleteReservation(id: string): Nullable<Reservation> | Promise<Nullable<Reservation>>;
+
+    abstract createServiceType(serviceType: ServiceTypeInput): ServiceType | Promise<ServiceType>;
+
+    abstract updateServiceType(id: string, serviceType: UpdateServiceTypeInput): ServiceType | Promise<ServiceType>;
+
+    abstract deleteServiceType(id: string): Nullable<ServiceType> | Promise<Nullable<ServiceType>>;
 }
 
 export class AuthPayload {
@@ -243,6 +277,8 @@ export abstract class IQuery {
     abstract reservation(id: string): Nullable<Reservation> | Promise<Nullable<Reservation>>;
 
     abstract serviceTypes(): ServiceType[] | Promise<ServiceType[]>;
+
+    abstract serviceType(id: string): Nullable<ServiceType> | Promise<Nullable<ServiceType>>;
 }
 
 export class Category {
@@ -287,19 +323,32 @@ export class NotificationMutation {
     data?: Nullable<Notification>;
 }
 
+export class Images {
+    _id: string;
+    image_name: string;
+    url: string;
+}
+
 export class CartItem {
-    productId: string;
+    id: string;
+    name: string;
+    price: number;
     quantity: number;
+    images: Nullable<Images>[];
 }
 
 export class Info {
-    name: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
     email: string;
+    company: string;
+    region: string;
+    district: string;
+    ward: string;
     address: string;
-    city: string;
-    state: string;
-    country: string;
-    postalCode: string;
+    orderComment?: Nullable<string>;
+    paymentMethod: string;
 }
 
 export class Order {
@@ -394,13 +443,13 @@ export class Location {
 }
 
 export class ServiceType {
-    _id?: Nullable<string>;
+    _id: string;
     name?: Nullable<string>;
     price?: Nullable<Nullable<ServicePrice>[]>;
     selectedCount?: Nullable<number>;
     description?: Nullable<string>;
     timeServe?: Nullable<string>;
-    type?: Nullable<string>;
+    typeId?: Nullable<number>;
 }
 
 export class ServicePrice {

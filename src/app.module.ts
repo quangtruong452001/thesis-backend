@@ -31,6 +31,7 @@ const config: ConfigService = new ConfigService();
         path: join(process.cwd(), 'src/graphql.ts'),
         outputAs: 'class',
       },
+
       // autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     ProductModule,

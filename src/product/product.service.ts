@@ -5,27 +5,19 @@ import {
 import { Model, PaginateModel } from 'mongoose';
 import { Product, ProductDocument } from '../model/product.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateProductDto, UpdateProductDto } from '../dto/product.dto';
-
+import { CreateProductDto } from '../dto/product.dto';
+import { OrderService } from 'src/order/order.service';
 // import { ConfigService } from '@nestjs/config';
 
 // import { ProductDto } from './dto/product.dto';
-
-import { Request } from 'express';
-import { productQuery, productSort } from '../utils/type';
-import {
-  getDefaultPagingOptions,
-  handleProductFilters,
-  handleProductSorts,
-} from '../utils/helper';
-
 @Injectable()
 export class ProductService {
   constructor(
     @InjectModel(Product.name)
     private productModel: Model<ProductDocument>, // private config: ConfigService,
     @InjectModel(Product.name)
-    private productModelPagination: PaginateModel<ProductDocument>,
+    private productModelPagination: PaginateModel<ProductDocument>, //private orderService: OrderService,
+    private orderService: OrderService,
   ) {}
 
   // Return list of products base on options
@@ -55,7 +47,17 @@ export class ProductService {
       throw error;
     }
   }
-
+  async getAllProduct(filters: any) {
+    try {
+      const query = filters;
+      return this.productModelPagination.paginate(query, {
+        populate: ['images', 'categories'],
+      });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
   // Return Product details
   async productDetail(id: string) {
     try {
@@ -77,6 +79,13 @@ export class ProductService {
       console.log(error);
       throw error;
     }
+  }
+
+  // Create products
+
+  async createProduct(productDto: CreateProductDto) {
+    // console.log(productDto);
+    return await this.productModel.create(productDto);
   }
 
   // Get number of total products
@@ -128,26 +137,6 @@ export class ProductService {
 
   // TODO: Add create and update
 
-  async createProduct(input: CreateProductDto) {
-    try {
-      const data = await this.productModel.create(input);
-      return data;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  }
-
-  async updateProduct(id: string, input: UpdateProductDto) {
-    try {
-      const data = await this.productModel.findByIdAndUpdate(id, input);
-      return data;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  }
-
   async similarProducts(options) {
     try {
       const similarProducts = await this.products(options, 1, 4);
@@ -171,4 +160,15 @@ export class ProductService {
       throw err;
     }
   }
+  // async getRecommend(userId: string) {
+  //   try {
+  //     const list = this.orderService.userRecommendation(userId);
+  //     return await this.productModel.find({
+  //       _id: { $in: list },
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //     throw err;
+  //   }
+  // }
 }

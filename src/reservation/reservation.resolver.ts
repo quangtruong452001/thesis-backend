@@ -39,7 +39,24 @@ export class ReservationResolver {
       }
     }
   }
+  @Query('totalReservationSales')
+  async getTotal() {
+    try {
+      return await this.reservationService.getSales();
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 
+  @Query('todayReservations')
+  async getTodayReservations() {
+    try {
+      return await this.reservationService.getTodayReservation();
+    } catch (error) {
+      console.log(error);
+    }
+  }
   @Mutation('createReservation')
   // @UsePipes(new ValidationPipe())
   async createReservation(

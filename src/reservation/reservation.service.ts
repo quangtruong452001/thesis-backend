@@ -76,4 +76,78 @@ export class ReservationService {
       );
     }
   }
+  async getSales() {
+    try {
+      const pipeline = [
+        { $match: { status: 'SUCCESS' } },
+        {
+          $lookup: {
+            from: 'servicetypes',
+            localField: 'serviceType',
+            foreignField: '_id',
+            as: 'service',
+          },
+        },
+        {
+          $unwind: '$service',
+        },
+        {
+          $unwind: '$service.price',
+        },
+        {
+          $addFields: {
+            totalPrice: {
+              $cond: {
+                if: {
+                  $and: [
+                    { $gte: ['$weight', '$service.price.minWeight'] },
+                    { $lt: ['$weight', '$service.price.maxWeight'] },
+                  ],
+                },
+                then: '$service.price.priceNumber',
+                else: 0,
+              },
+            },
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            totalSales: { $sum: '$totalPrice' },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            totalSales: 1,
+          },
+        },
+      ];
+      const sales = await this.reservationModel.aggregate(pipeline).exec();
+      return {
+        totalSales: sales.length > 0 ? sales[0].totalSales : 0,
+      };
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
+  async getTodayReservation() {
+    try {
+      return await this.reservationModel
+        .find({
+          reservationDate: {
+            $gte: new Date(new Date().setHours(0, 0, 0)),
+            $lt: new Date(new Date().setHours(23, 59, 59)),
+          },
+        })
+        .populate('userId')
+        .populate('reservationHour')
+        .populate('serviceType');
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 }

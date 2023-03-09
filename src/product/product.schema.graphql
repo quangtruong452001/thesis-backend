@@ -1,119 +1,103 @@
 extend type Mutation {
-    "Create product"
-    createProduct(input: CreateProductInput!): ProductMutation
-    "Update product"
-    updateProduct(id:ID!, input: UpdateProductInput!): ProductMutation
-    "Delete product"
-    deleteProduct(id: ID!): ProductMutation
+  "Delete product"
+  deleteProduct(id: ID!): ProductMutation
+  createProduct(product: CreateProductInput!): Product
 }
 
-
 type Query {
-    "Products lists"
-    products(
-        page: Int = 1
-        limit: Int = 9
-        sort: String,
-        filters: ProductFilter,
-    ): ProductPagination
-    "Product details"
-    productDetail(id: ID!): Product
-    "Total number of products"
-    totalProducts: Int
-    "A list of id of products"
-    productsId: [ID]
-    "Min price of product"
-    minPrice: Float
-    "Max price of product"
-    maxPrice: Float
-#    "Count number of product base on option"
-#    countProduct: Int
+  "Products lists"
+  products(
+    page: Int = 1
+    limit: Int = 9
+    sort: String
+    filters: ProductFilter
+  ): ProductPagination
+  "All product"
+  allProducts(filters: ProductFilter): ProductPagination
+  "Product details"
+  productDetail(id: ID!): Product
+  "Total number of products"
+  totalProducts: Int
+  "A list of id of products"
+  productsId: [ID]
+  "Min price of product"
+  minPrice: Float
+  "Max price of product"
+  maxPrice: Float
+  #    "Count number of product base on option"
+  #    countProduct: Int
+  recommendProduct: [Product]
 }
 
 type ProductPagination implements Paginator {
-    "Products lists"
-    docs: [Product]
-    hasNextPage: Boolean
-    limit: Int
-    page: Int
-    prevPage: Int
-    total: Int
-    hasPrevPage: Boolean
-    nextPage: Int
-    pagingCounter: Int
-    totalPages: Int
+  "Products lists"
+  docs: [Product]
+  hasNextPage: Boolean
+  limit: Int
+  page: Int
+  prevPage: Int
+  total: Int
+  hasPrevPage: Boolean
+  nextPage: Int
+  pagingCounter: Int
+  totalPages: Int
 }
 
 type Product {
-    "The unique identifier for a product"
-    id: ID!
-    "The name of the product"
-    name: String,
-    "Product code"
-    productCode: String,
-    "SKU"
-    productSKU: String,
-    "The description of the product"
-    description: String,
-    "The price of the product"
-    price: Float,
-    "Short description of the product"
-    shortDescription: String,
-    "Additional information about the product"
-    additionalInfo: String,
-    "Stock status of the product"
-    stock: Int,
-    "Image of the product"
-    images: [Image],
-    "Product category"
-    categories: [Category],
-#    "Status of the product"
-#    status: String,
+  "The unique identifier for a product"
+  id: ID!
+  "The name of the product"
+  name: String
+  "Product code"
+  productCode: String
+  "SKU"
+  productSKU: String
+  "The description of the product"
+  description: String
+  "The price of the product"
+  price: Float
+  "Short description of the product"
+  shortDescription: String
+  "Additional information about the product"
+  additionalInfo: String
+  "Stock status of the product"
+  stock: Int
+  "Image of the product"
+  images: [Image]
+  "Product category"
+  categories: [Category]
+  #    "Status of the product"
+  #    status: String,
 }
 
 input ProductFilter {
-    "Filter by product name"
-    name: String,
-    "Filter by category"
-    categories: ID,
-    "Filter by min price"
-    minPrice: Float,
-    "Filter by max price"
-    maxPrice: Float,
+  "Filter by product name"
+  name: String
+  "Filter by category"
+  categories: ID
+  "Filter by min price"
+  minPrice: Float
+  "Filter by max price"
+  maxPrice: Float
 }
 
 input CreateProductInput {
-    name: String!
-    productCode: String!
-    productSKU: String!
-    price: Float!
-    description: String!
-    shortDescription: String
-    additionalInfos: String
-#    images: [ID]!
-    categories: [ID]!
+  name: String!
+  productCode: String!
+  productSKU: String!
+  price: Float!
+  description: String!
+  shortDescription: String
+  additionalInfos: String
+  images: [ID]!
+  categories: [ID]!
 }
 
-input UpdateProductInput {
-    name: String
-    productCode: String
-    productSKU: String
-    price: Float
-    description: String
-    shortDescription: String
-    additionalInfos: String
-    #    images: [ID]!
-    categories: [ID]
+type ProductMutation implements MutationOf {
+  "Mutation status"
+  success: Boolean
+  "Mutation message"
+  msg: String
+  "Data"
+  data: Product
 }
-
-type ProductMutation implements MutationOf{
-    "Mutation status"
-    success: Boolean
-    "Mutation message"
-    msg: String
-    "Data"
-    data: Product
-}
-
-
-

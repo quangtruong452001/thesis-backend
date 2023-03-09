@@ -27,7 +27,14 @@ export class OrderResolver {
   async order(@Args('id') id: string) {
     return this.orderService.getOrderById(id);
   }
-
+  @Query('totalOrderandSales')
+  async totalOrdersAndSales() {
+    return this.orderService.getTotal();
+  }
+  @Query('latestOrders')
+  async getLatestOrders() {
+    return this.orderService.getLatestOrder();
+  }
   @Mutation('createOrder')
   async createOrder(@Args('input') input: CreateOrderInput, @GetUser() user) {
     try {

@@ -43,15 +43,13 @@ input ServiceTypeInput {
   price: [ServicePriceInput]
   description: String
   timeServe: String
+  selectedCount: Int
   typeId: Int
 }
 
 input UpdateServiceTypeInput {
-  _id: ID
   name: String
   price: [ServicePriceInput]
-  selectedCount: Int
   description: String
   timeServe: String
-  typeId: Int
 }

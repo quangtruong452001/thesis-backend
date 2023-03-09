@@ -8,6 +8,9 @@ extend type Query {
   ): OrderPagination
   "Get order by id"
   order(id: ID!): Order
+
+  totalOrderandSales: OrderSales
+  latestOrders: [Order]
 }
 
 extend type Mutation {
@@ -22,7 +25,12 @@ extend type Mutation {
 input OrderFilter {
   status: OrderStatus
 }
-
+type OrderSales {
+  totalOrder: Int
+  totalPendingOrder: Int
+  totalFinishedOrder: Int
+  totalSales: Float
+}
 type Images {
   _id: ID!
   image_name: String!

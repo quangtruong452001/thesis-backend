@@ -25,12 +25,14 @@ const config: ConfigService = new ConfigService();
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       typePaths: ['./**/*.graphql'],
+      installSubscriptionHandlers: true,
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       definitions: {
         path: join(process.cwd(), 'src/graphql.ts'),
         outputAs: 'class',
       },
+
       // autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     ProductModule,

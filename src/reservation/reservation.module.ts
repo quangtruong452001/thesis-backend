@@ -8,6 +8,8 @@ import { Hour, HourSchema } from '../model/hour.schema';
 import { ServiceType, ServiceTypeSchema } from '../model/serviceType.schema';
 import { ReservationService } from './reservation.service';
 import { ReservationResolver } from './reservation.resolver';
+import { NotificationSchema, Notification } from '../model/notification.schema';
+import { NotificationService } from '../notification/notification.service';
 @Module({
   imports: [
     MongooseModule.forFeature([
@@ -16,8 +18,9 @@ import { ReservationResolver } from './reservation.resolver';
       { name: Category.name, schema: CategorySchema },
       { name: Hour.name, schema: HourSchema },
       { name: ServiceType.name, schema: ServiceTypeSchema },
+      { name: Notification.name, schema: NotificationSchema },
     ]),
   ],
-  providers: [ReservationService, ReservationResolver],
+  providers: [ReservationService, ReservationResolver, NotificationService],
 })
 export class ReservationModule {}

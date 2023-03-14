@@ -57,18 +57,18 @@ export class Cart {
   quantity: number;
 
   @Prop({ required: true })
-  images: object[];
+  images: Image[];
 }
 
 @Schema({ timestamps: false, _id: false })
 export class Info {
-  @Prop()
+  @Prop({ require: true })
   firstName: string;
 
-  @Prop()
+  @Prop({ require: true })
   lastName: string;
 
-  @Prop()
+  @Prop({ require: true })
   phone: string;
 
   @Prop()
@@ -77,22 +77,22 @@ export class Info {
   @Prop()
   company: string;
 
-  @Prop()
+  @Prop({ require: true })
   region: string;
 
-  @Prop()
+  @Prop({ require: true })
   district: string;
 
-  @Prop()
+  @Prop({ require: true })
   ward: string;
 
-  @Prop()
+  @Prop({ require: true })
   address: string;
 
   @Prop()
   orderComment: string;
 
-  @Prop()
+  @Prop({ require: true })
   paymentMethod: string;
 }
 

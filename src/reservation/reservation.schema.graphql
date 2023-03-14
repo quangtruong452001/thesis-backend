@@ -1,3 +1,8 @@
+extend type Subscription {
+  newReservationNotification(title: String!): Notification
+  #    newNotification : Notification
+}
+
 extend type Query {
   reservations: [Reservation!]!
   reservation(id: ID!): Reservation
@@ -79,7 +84,7 @@ input ReservationInput {
   locationType: LocationType!
   location: LocationInput!
   note: String
-  status: ReservationStatus!
+#  status: ReservationStatus!
 }
 
 input UpdateReservationInput {

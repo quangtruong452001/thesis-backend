@@ -1,16 +1,25 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { OrderService } from './order.service';
 import {
-  OrderFilter,
   CreateOrderInput,
+  OrderFilter,
   UpdateOrderInput,
 } from '../dto/order.dto';
 import { handleOrderFilters } from '../utils/helper';
 import { GetUser } from '../decorator';
+import { PubSub } from 'graphql-subscriptions';
+import { NotificationService } from '../notification/notification.service';
+import { NotificationDto, notificationType } from '../dto/notification.dto';
 
 @Resolver('Order')
 export class OrderResolver {
-  constructor(private readonly orderService: OrderService) {}
+  private pubSub: PubSub;
+  constructor(
+    private readonly orderService: OrderService,
+    private readonly notificationService: NotificationService,
+  ) {
+    this.pubSub = new PubSub();
+  }
 
   @Query('orders')
   async orders(
@@ -41,6 +50,18 @@ export class OrderResolver {
       input.user = user.id;
       const data = await this.orderService.createOrder(input);
       if (data) {
+        const notificationDto: NotificationDto = {
+          title: 'You have new order',
+          type: notificationType.ORDER,
+          orderId: data._id ? data._id : data.id,
+        };
+        const notification = await this.notificationService.create(
+          notificationDto,
+        );
+        // console.log(notification);
+        await this.pubSub.publish('newOrderNotification', {
+          newOrderNotification: notification,
+        });
         return {
           success: true,
           msg: 'Create order successfully',
@@ -103,5 +124,17 @@ export class OrderResolver {
       console.error(`Error in deleteOrder mutation: ${error}`);
       throw new Error('Could not delete order');
     }
+  }
+
+  @Subscription(
+    'newOrderNotification',
+    //   , {
+    //   filter: (payload, variables) =>
+    //     payload.commentAdded.title === variables.title,
+    // }
+  )
+  newNotification() {
+    // console.log(this.pubSub.asyncIterator('newNotification'));
+    return this.pubSub.asyncIterator('newOrderNotification');
   }
 }

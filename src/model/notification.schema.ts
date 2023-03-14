@@ -1,12 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
+import { Reservation } from './reservation.schema';
+
+export type NotificationDocument = Notification & Document;
 
 @Schema()
 export class Notification extends Document {
   @Prop({ required: true })
   title: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, enum: ['RESERVATION', 'ORDER'] })
   type: string;
 
   @Prop({ type: Types.ObjectId, ref: 'Order', required: false })

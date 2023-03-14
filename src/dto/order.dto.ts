@@ -7,6 +7,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import { ImageDto } from './common.dto';
 
 enum OrderStatus {
   PENDING = 'PENDING',
@@ -19,17 +20,37 @@ enum OrderStatus {
 class CartItemInput {
   @IsNotEmpty()
   @IsString()
-  productId: string;
+  id: string;
 
   @IsNotEmpty()
   @IsString()
+  name: string;
+
+  @IsNotEmpty()
   quantity: number;
+
+  @IsNotEmpty()
+  price: number;
+
+  @IsNotEmpty()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ImageDto)
+  image: ImageDto[];
 }
 
 class InfoInput {
   @IsNotEmpty()
   @IsString()
-  name: string;
+  firstName: string;
+
+  @IsNotEmpty()
+  @IsString()
+  lastName: string;
+
+  @IsNotEmpty()
+  @IsString()
+  phone: string;
 
   @IsNotEmpty()
   @IsString()
@@ -37,23 +58,31 @@ class InfoInput {
 
   @IsNotEmpty()
   @IsString()
+  company: string;
+
+  @IsNotEmpty()
+  @IsString()
+  region: string;
+
+  @IsNotEmpty()
+  @IsString()
+  district: string;
+
+  @IsNotEmpty()
+  @IsString()
+  ward: string;
+
+  @IsNotEmpty()
+  @IsString()
   address: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  city: string;
+  orderComment?: string;
 
   @IsNotEmpty()
   @IsString()
-  state: string;
-
-  @IsNotEmpty()
-  @IsString()
-  country: string;
-
-  @IsNotEmpty()
-  @IsString()
-  postalCode: string;
+  paymentMethod: string;
 }
 
 export class CreateOrderInput {

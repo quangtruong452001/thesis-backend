@@ -1,4 +1,11 @@
-import { Resolver, Query, Mutation, Args, ID } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ID,
+  Subscription,
+} from '@nestjs/graphql';
 import { Reservation } from '../model/reservation.schema';
 import { ReservationService } from './reservation.service';
 import {
@@ -8,14 +15,21 @@ import {
 import {
   BadRequestException,
   InternalServerErrorException,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { GetUser } from '../decorator';
+import { PubSub } from 'graphql-subscriptions';
+import { NotificationService } from '../notification/notification.service';
+import { NotificationDto, notificationType } from '../dto/notification.dto';
 
 @Resolver('Reservation')
 export class ReservationResolver {
-  constructor(private reservationService: ReservationService) {}
+  private pubSub: PubSub;
+  constructor(
+    private reservationService: ReservationService,
+    private notificationService: NotificationService,
+  ) {
+    this.pubSub = new PubSub();
+  }
 
   @Query('reservations')
   async reservations() {
@@ -69,6 +83,20 @@ export class ReservationResolver {
       const reservation = await this.reservationService.create(
         createReservationDto,
       );
+      if (reservation) {
+        const notificationDto: NotificationDto = {
+          title: 'You have new reservation',
+          type: notificationType.RESERVATION,
+          orderId: reservation._id ? reservation._id : reservation.id,
+        };
+        const notification = await this.notificationService.create(
+          notificationDto,
+        );
+        // console.log(notification);
+        await this.pubSub.publish('newReservationNotification', {
+          newReservationNotification: notification,
+        });
+      }
       return reservation;
     } catch (error) {
       throw new Error(`Failed to create reservation: ${error.message}`);
@@ -100,5 +128,17 @@ export class ReservationResolver {
     } catch (error) {
       throw new Error(`Failed to delete reservation: ${error.message}`);
     }
+  }
+
+  @Subscription(
+    'newReservationNotification',
+    //   , {
+    //   filter: (payload, variables) =>
+    //     payload.commentAdded.title === variables.title,
+    // }
+  )
+  newNotification() {
+    // console.log(this.pubSub.asyncIterator('newNotification'));
+    return this.pubSub.asyncIterator('newReservationNotification');
   }
 }

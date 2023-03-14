@@ -4,6 +4,7 @@ import { handleProductFilters, handleProductSorts } from '../utils/helper';
 import { ProductFilters } from 'src/dto/product.dto';
 import { sortProduct } from '../utils/config';
 import { CreateProductInput } from 'src/graphql';
+import { GetUser } from '../decorator';
 
 @Resolver('Product')
 export class ProductResolver {
@@ -92,15 +93,16 @@ export class ProductResolver {
       );
     }
   }
-  // @Query('recommendProduct')
-  // async recommendProduct(@Args('userId') userId: string) {
-  //   try {
-  //     return this.productService.getRecommend(userId);
-  //   } catch (error) {
-  //     console.error(error);
-  //     throw error;
-  //   }
-  // }
+  @Query('recommendProduct')
+  async recommendProduct(@GetUser() user: any) {
+    try {
+      const userId = user.id;
+      return this.productService.getRecommend(userId);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
   @Mutation('createProduct')
   async createProduct(@Args('product') createProductDto: CreateProductInput) {
     try {

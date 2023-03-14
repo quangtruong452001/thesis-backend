@@ -36,7 +36,7 @@ export class OrderService {
   // Get a single order by id
   async getOrderById(id: string): Promise<Order> {
     try {
-      const order = await this.orderModel.findById(id);
+      const order = await this.orderModel.findById(id).populate('user');
       return order;
     } catch (error) {
       console.log(error);
@@ -49,6 +49,7 @@ export class OrderService {
     try {
       const newOrder = await this.orderModel.create(createOrderInput);
       await newOrder.save();
+      const data = await newOrder.populate('user');
       return newOrder;
     } catch (error) {
       console.log(error);
@@ -59,11 +60,9 @@ export class OrderService {
   // Update an existing order
   async updateOrder(id: string, updateOrderInput: UpdateOrderInput) {
     try {
-      const updatedOrder = await this.orderModel.findByIdAndUpdate(
-        id,
-        updateOrderInput,
-        { new: true },
-      );
+      const updatedOrder = await this.orderModel
+        .findByIdAndUpdate(id, updateOrderInput, { new: true })
+        .populate('user');
       return updatedOrder;
     } catch (error) {
       console.log(error);

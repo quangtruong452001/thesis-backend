@@ -160,15 +160,16 @@ export class ProductService {
       throw err;
     }
   }
-  // async getRecommend(userId: string) {
-  //   try {
-  //     const list = this.orderService.userRecommendation(userId);
-  //     return await this.productModel.find({
-  //       _id: { $in: list },
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //     throw err;
-  //   }
-  // }
+
+  async getRecommend(userId: string) {
+    try {
+      const list = await this.orderService.userRecommendation(userId);
+      return this.productModel.find({
+        _id: { $in: list },
+      });
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  }
 }

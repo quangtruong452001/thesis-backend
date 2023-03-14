@@ -1,3 +1,8 @@
+type Subscription {
+  newOrderNotification(title: String!): Notification
+  #    newNotification : Notification
+}
+
 extend type Query {
   "Orders List"
   orders(
@@ -83,18 +88,25 @@ enum OrderStatus {
 scalar DateTime
 
 input CartItemInput {
-  productId: ID!
+  id: ID!
+  name: String!
   quantity: Int!
+  price: Float!
+  images: [ImageInput!]!
 }
 
 input InfoInput {
-  name: String!
+  firstName: String!
+  lastName: String!
+  phone: String!
   email: String!
+  company: String!
+  region: String!
+  district: String!
+  ward: String!
   address: String!
-  city: String!
-  state: String!
-  country: String!
-  postalCode: String!
+  orderComment: String
+  paymentMethod: String!
 }
 
 input CreateOrderInput {

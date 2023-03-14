@@ -61,13 +61,17 @@ export class CartItemInput {
 }
 
 export class InfoInput {
-    name: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
     email: string;
+    company: string;
+    region: string;
+    district: string;
+    ward: string;
     address: string;
-    city: string;
-    state: string;
-    country: string;
-    postalCode: string;
+    orderComment?: Nullable<string>;
+    paymentMethod: string;
 }
 
 export class CreateOrderInput {

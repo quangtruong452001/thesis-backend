@@ -44,6 +44,12 @@ export class AuthInput {
     firstName?: Nullable<string>;
 }
 
+export class ImageInput {
+    id?: Nullable<string>;
+    url: string;
+    image_name?: Nullable<string>;
+}
+
 export class CreateNotificationInput {
     title: string;
     type: NotificationType;
@@ -56,18 +62,25 @@ export class OrderFilter {
 }
 
 export class CartItemInput {
-    productId: string;
+    id: string;
+    name: string;
     quantity: number;
+    price: number;
+    images: ImageInput[];
 }
 
 export class InfoInput {
-    name: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
     email: string;
+    company: string;
+    region: string;
+    district: string;
+    ward: string;
     address: string;
-    city: string;
-    state: string;
-    country: string;
-    postalCode: string;
+    orderComment?: Nullable<string>;
+    paymentMethod: string;
 }
 
 export class CreateOrderInput {
@@ -305,6 +318,7 @@ export class Image {
     id?: Nullable<string>;
     url: string;
     image_name?: Nullable<string>;
+    createdDay?: Nullable<DateTime>;
 }
 
 export class Notification {
@@ -314,13 +328,19 @@ export class Notification {
     order?: Nullable<Order>;
     reservation?: Nullable<Reservation>;
     isRead: boolean;
-    createdAt?: Nullable<string>;
+    createdAt?: Nullable<DateTime>;
 }
 
 export class NotificationMutation {
     success: boolean;
     msg: string;
     data?: Nullable<Notification>;
+}
+
+export abstract class ISubscription {
+    abstract newOrderNotification(title: string): Nullable<Notification> | Promise<Nullable<Notification>>;
+
+    abstract newReservationNotification(title: string): Nullable<Notification> | Promise<Nullable<Notification>>;
 }
 
 export class Images {

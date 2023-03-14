@@ -5,8 +5,8 @@ export type imageDocument = Image & Document;
 
 @Schema()
 export class Image {
-  @Prop()
-  id: mongoose.Types.ObjectId;
+  // @Prop()
+  // id: mongoose.Types.ObjectId;
   @Prop({ required: true })
   image_name: string;
   @Prop({ required: true })

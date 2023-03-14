@@ -1,11 +1,17 @@
+#type Subscription {
+#    newNotification(title: String!): Notification
+##    newNotification : Notification
+#}
+
+
 #extend type Query {
 #    notifications: [Notification!]!
-#
 #}
 #
 #extend type Mutation {
 #    createNotification(input: CreateNotificationInput!): NotificationMutation!
 #    markNotificationAsRead(id: ID!): NotificationMutation!
+#    deleteNotification(id: ID!): NotificationMutation!
 #}
 
 type Notification {
@@ -15,10 +21,8 @@ type Notification {
     order: Order
     reservation: Reservation
     isRead: Boolean!
-    createdAt: String
+    createdAt: DateTime
 }
-
-
 
 enum NotificationType {
     RESERVATION

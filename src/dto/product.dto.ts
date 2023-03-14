@@ -5,7 +5,6 @@ import {
   IsArray,
   ArrayNotEmpty,
   ValidateNested,
-  IsOptional,
 } from 'class-validator';
 
 export class CreateProductDto {
@@ -40,50 +39,6 @@ export class CreateProductDto {
   images: string[];
 
   @IsArray()
-  @ArrayNotEmpty()
-  categories: string[];
-}
-
-export class UpdateProductDto {
-  @IsString()
-  @IsNotEmpty()
-  @IsOptional()
-  name: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @IsOptional()
-  productCode: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @IsOptional()
-  productSKU: string;
-
-  @IsNumber()
-  @IsNotEmpty()
-  price: number;
-
-  @IsString()
-  @IsNotEmpty()
-  @IsOptional()
-  description: string;
-
-  @IsString()
-  @IsOptional()
-  shortDescription?: string;
-
-  @IsString()
-  @IsOptional()
-  additionalInfos?: string;
-
-  @IsArray()
-  @IsOptional()
-  // @ArrayNotEmpty()
-  images: string[];
-
-  @IsArray()
-  @IsOptional()
   @ArrayNotEmpty()
   categories: string[];
 }

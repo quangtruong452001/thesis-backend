@@ -1,8 +1,8 @@
-import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { ServiceType, ServiceTypeSchema } from '../model/serviceType.schema';
-import { serviceTypeService } from './serviceType.service';
-import { ServiceTypeResolver } from './serviceType.resolver';
+import { Module } from "@nestjs/common";
+import { MongooseModule } from "@nestjs/mongoose";
+import { ServiceType, ServiceTypeSchema } from "../model/serviceType.schema";
+import { serviceTypeService } from "./serviceType.service";
+import { ServiceTypeResolver } from "./serviceType.resolver";
 
 @Module({
   imports: [

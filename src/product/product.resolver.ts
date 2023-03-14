@@ -1,12 +1,9 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { ProductService } from './product.service';
 import { handleProductFilters, handleProductSorts } from '../utils/helper';
-import {
-  CreateProductDto,
-  ProductFilters,
-  UpdateProductDto,
-} from 'src/dto/product.dto';
+import { ProductFilters } from 'src/dto/product.dto';
 import { sortProduct } from '../utils/config';
+import { CreateProductInput } from 'src/graphql';
 
 @Resolver('Product')
 export class ProductResolver {
@@ -28,7 +25,16 @@ export class ProductResolver {
       throw error;
     }
   }
-
+  @Query('allProducts')
+  async getAllProducts(@Args('filters') filters: ProductFilters) {
+    try {
+      const options = handleProductFilters(filters);
+      return this.productService.getAllProduct(options);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
   @Query('productDetail')
   async productDetail(@Args('id') id: string) {
     try {
@@ -86,9 +92,26 @@ export class ProductResolver {
       );
     }
   }
-
+  // @Query('recommendProduct')
+  // async recommendProduct(@Args('userId') userId: string) {
+  //   try {
+  //     return this.productService.getRecommend(userId);
+  //   } catch (error) {
+  //     console.error(error);
+  //     throw error;
+  //   }
+  // }
+  @Mutation('createProduct')
+  async createProduct(@Args('product') createProductDto: CreateProductInput) {
+    try {
+      return await this.productService.createProduct(createProductDto);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
   @Mutation('deleteProduct')
-  async deleteProduct(@Args('id') id: string) {
+  async deleteProduct(id: string) {
     try {
       const product = await this.productService.deleteProduct(id);
       if (product) {
@@ -106,53 +129,6 @@ export class ProductResolver {
     } catch (err) {
       console.error(err);
       throw new Error('An error occurred while trying to delete products');
-    }
-  }
-
-  @Mutation('updateProduct')
-  async updateProduct(
-    @Args('id') id: string,
-    @Args('input') input: UpdateProductDto,
-  ) {
-    try {
-      const product = this.productService.updateProduct(id, input);
-      if (product) {
-        return {
-          success: true,
-          msg: 'Update product successfully',
-          data: product,
-        };
-      } else {
-        return {
-          success: false,
-          msg: 'Update product failed',
-        };
-      }
-    } catch (err) {
-      console.error(err);
-      throw new Error('An error occurred while trying to update products');
-    }
-  }
-
-  @Mutation('createProduct')
-  async createProduct(@Args('input') input: CreateProductDto) {
-    try {
-      const product = this.productService.createProduct(input);
-      if (product) {
-        return {
-          success: true,
-          msg: 'Create product successfully',
-          data: product,
-        };
-      } else {
-        return {
-          success: false,
-          msg: 'Create product failed',
-        };
-      }
-    } catch (err) {
-      console.error(err);
-      throw new Error('An error occurred while trying to create products');
     }
   }
 }

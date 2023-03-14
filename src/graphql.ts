@@ -118,18 +118,8 @@ export class CreateProductInput {
     description: string;
     shortDescription?: Nullable<string>;
     additionalInfos?: Nullable<string>;
+    images: Nullable<string>[];
     categories: Nullable<string>[];
-}
-
-export class UpdateProductInput {
-    name?: Nullable<string>;
-    productCode?: Nullable<string>;
-    productSKU?: Nullable<string>;
-    price?: Nullable<number>;
-    description?: Nullable<string>;
-    shortDescription?: Nullable<string>;
-    additionalInfos?: Nullable<string>;
-    categories?: Nullable<Nullable<string>[]>;
 }
 
 export class ReservationInput {
@@ -144,7 +134,6 @@ export class ReservationInput {
     locationType: LocationType;
     location: LocationInput;
     note?: Nullable<string>;
-    status: ReservationStatus;
 }
 
 export class UpdateReservationInput {
@@ -186,17 +175,15 @@ export class ServiceTypeInput {
     price?: Nullable<Nullable<ServicePriceInput>[]>;
     description?: Nullable<string>;
     timeServe?: Nullable<string>;
+    selectedCount?: Nullable<number>;
     typeId?: Nullable<number>;
 }
 
 export class UpdateServiceTypeInput {
-    _id?: Nullable<string>;
     name?: Nullable<string>;
     price?: Nullable<Nullable<ServicePriceInput>[]>;
-    selectedCount?: Nullable<number>;
     description?: Nullable<string>;
     timeServe?: Nullable<string>;
-    typeId?: Nullable<number>;
 }
 
 export class UserInput {
@@ -240,11 +227,9 @@ export abstract class IMutation {
 
     abstract deleteOrder(id: string): Nullable<OrderMutation> | Promise<Nullable<OrderMutation>>;
 
-    abstract createProduct(input: CreateProductInput): Nullable<ProductMutation> | Promise<Nullable<ProductMutation>>;
-
-    abstract updateProduct(id: string, input: UpdateProductInput): Nullable<ProductMutation> | Promise<Nullable<ProductMutation>>;
-
     abstract deleteProduct(id: string): Nullable<ProductMutation> | Promise<Nullable<ProductMutation>>;
+
+    abstract createProduct(product: CreateProductInput): Nullable<Product> | Promise<Nullable<Product>>;
 
     abstract createReservation(reservation: ReservationInput): Reservation | Promise<Reservation>;
 
@@ -273,7 +258,13 @@ export abstract class IQuery {
 
     abstract order(id: string): Nullable<Order> | Promise<Nullable<Order>>;
 
+    abstract totalOrderandSales(): Nullable<OrderSales> | Promise<Nullable<OrderSales>>;
+
+    abstract latestOrders(): Nullable<Nullable<Order>[]> | Promise<Nullable<Nullable<Order>[]>>;
+
     abstract products(page?: Nullable<number>, limit?: Nullable<number>, sort?: Nullable<string>, filters?: Nullable<ProductFilter>): Nullable<ProductPagination> | Promise<Nullable<ProductPagination>>;
+
+    abstract allProducts(filters?: Nullable<ProductFilter>): Nullable<ProductPagination> | Promise<Nullable<ProductPagination>>;
 
     abstract productDetail(id: string): Nullable<Product> | Promise<Nullable<Product>>;
 
@@ -285,9 +276,15 @@ export abstract class IQuery {
 
     abstract maxPrice(): Nullable<number> | Promise<Nullable<number>>;
 
+    abstract recommendProduct(): Nullable<Nullable<Product>[]> | Promise<Nullable<Nullable<Product>[]>>;
+
     abstract reservations(): Reservation[] | Promise<Reservation[]>;
 
     abstract reservation(id: string): Nullable<Reservation> | Promise<Nullable<Reservation>>;
+
+    abstract totalReservationSales(): Nullable<Sales> | Promise<Nullable<Sales>>;
+
+    abstract todayReservations(): Nullable<Nullable<Reservation>[]> | Promise<Nullable<Nullable<Reservation>[]>>;
 
     abstract serviceTypes(): ServiceType[] | Promise<ServiceType[]>;
 
@@ -341,6 +338,13 @@ export abstract class ISubscription {
     abstract newOrderNotification(title: string): Nullable<Notification> | Promise<Nullable<Notification>>;
 
     abstract newReservationNotification(title: string): Nullable<Notification> | Promise<Nullable<Notification>>;
+}
+
+export class OrderSales {
+    totalOrder?: Nullable<number>;
+    totalPendingOrder?: Nullable<number>;
+    totalFinishedOrder?: Nullable<number>;
+    totalSales?: Nullable<number>;
 }
 
 export class Images {
@@ -435,6 +439,10 @@ export class ProductMutation implements MutationOf {
     success?: Nullable<boolean>;
     msg?: Nullable<string>;
     data?: Nullable<Product>;
+}
+
+export class Sales {
+    totalSales?: Nullable<number>;
 }
 
 export class Reservation {

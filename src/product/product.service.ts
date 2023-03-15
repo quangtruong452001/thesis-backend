@@ -164,9 +164,17 @@ export class ProductService {
   async getRecommend(userId: string) {
     try {
       const list = await this.orderService.userRecommendation(userId);
-      return this.productModel.find({
-        _id: { $in: list },
+      const listProducts = await this.productModel.find({
+        name: { $in: list },
       });
+      const numRandomProducts = 3 - listProducts.length;
+
+      const randomProducts = await this.productModel.aggregate([
+        { $match: { _id: { $nin: listProducts.map((p) => p._id) } } },
+        { $sample: { size: numRandomProducts < 0 ? 0 : numRandomProducts } },
+      ]);
+      const recommendedProducts = [...listProducts, ...randomProducts];
+      return recommendedProducts;
     } catch (err) {
       console.log(err);
       throw err;

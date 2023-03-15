@@ -422,7 +422,7 @@ export class ProductPagination implements Paginator {
 }
 
 export class Product {
-    id: string;
+    _id: string;
     name?: Nullable<string>;
     productCode?: Nullable<string>;
     productSKU?: Nullable<string>;

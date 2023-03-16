@@ -64,7 +64,7 @@ type Info {
 }
 
 type Order {
-  id: ID!
+  _id: ID!
   cart: [CartItem!]!
   bill: Info!
   user: User

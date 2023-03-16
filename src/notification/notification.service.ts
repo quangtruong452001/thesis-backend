@@ -15,16 +15,30 @@ export class NotificationService {
 
   async findAll() {
     try {
-      return await this.NotificationModel.find().populate([
+      return await this.NotificationModel.aggregate([
         {
-          path: 'orderId',
-          match: { _id: { $ne: null } },
+          $lookup: {
+            from: 'orders',
+            localField: 'orderId',
+            foreignField: '_id',
+            as: 'order',
+          },
         },
         {
-          path: 'reservationId',
-          match: { _id: { $ne: null } },
+          $lookup: {
+            from: 'reservations',
+            localField: 'reservationId',
+            foreignField: '_id',
+            as: 'reservation',
+          },
+        },
+        {
+          $match: {
+            $or: [{ order: { $ne: [] } }, { reservation: { $ne: [] } }],
+          },
         },
       ]);
+
       // TODO: update populate later
     } catch (error) {
       throw new Error(`Could not fetch Notifications: ${error.message}`);

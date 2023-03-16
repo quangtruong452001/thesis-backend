@@ -75,7 +75,7 @@ export class OrderResolver {
       }
     } catch (error) {
       console.error(`Error in createOrder mutation: ${error}`);
-      throw new Error('Could not create order');
+      throw new Error(`Could not create order ${error}`);
     }
   }
 

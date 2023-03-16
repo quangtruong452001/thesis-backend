@@ -45,7 +45,7 @@ type ProductPagination implements Paginator {
 
 type Product {
   "The unique identifier for a product"
-  id: ID!
+  _id: ID!
   "The name of the product"
   name: String
   "Product code"

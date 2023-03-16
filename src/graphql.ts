@@ -221,6 +221,12 @@ export abstract class IMutation {
 
     abstract addCategory(name?: Nullable<string>): Nullable<CategoryMutation> | Promise<Nullable<CategoryMutation>>;
 
+    abstract createNotification(input: CreateNotificationInput): NotificationMutation | Promise<NotificationMutation>;
+
+    abstract markNotificationAsRead(id: string): NotificationMutation | Promise<NotificationMutation>;
+
+    abstract deleteNotification(id: string): NotificationMutation | Promise<NotificationMutation>;
+
     abstract createOrder(input: CreateOrderInput): Nullable<OrderMutation> | Promise<Nullable<OrderMutation>>;
 
     abstract updateOrder(id: string, input: UpdateOrderInput): Nullable<OrderMutation> | Promise<Nullable<OrderMutation>>;
@@ -253,6 +259,8 @@ export class AuthPayload {
 
 export abstract class IQuery {
     abstract categories(): Nullable<Nullable<Category>[]> | Promise<Nullable<Nullable<Category>[]>>;
+
+    abstract notifications(): Notification[] | Promise<Notification[]>;
 
     abstract orders(page?: Nullable<number>, limit?: Nullable<number>, sort?: Nullable<string>, filters?: Nullable<OrderFilter>): Nullable<OrderPagination> | Promise<Nullable<OrderPagination>>;
 
@@ -318,12 +326,20 @@ export class Image {
     createdDay?: Nullable<DateTime>;
 }
 
+export abstract class ISubscription {
+    abstract newNotification(title: string): Nullable<Notification> | Promise<Nullable<Notification>>;
+
+    abstract newOrderNotification(title: string): Nullable<Notification> | Promise<Nullable<Notification>>;
+
+    abstract newReservationNotification(title: string): Nullable<Notification> | Promise<Nullable<Notification>>;
+}
+
 export class Notification {
-    id: string;
+    _id: string;
     title: string;
     type: NotificationType;
-    order?: Nullable<Order>;
-    reservation?: Nullable<Reservation>;
+    order?: Nullable<Nullable<Order>[]>;
+    reservation?: Nullable<Nullable<Reservation>[]>;
     isRead: boolean;
     createdAt?: Nullable<DateTime>;
 }
@@ -332,12 +348,6 @@ export class NotificationMutation {
     success: boolean;
     msg: string;
     data?: Nullable<Notification>;
-}
-
-export abstract class ISubscription {
-    abstract newOrderNotification(title: string): Nullable<Notification> | Promise<Nullable<Notification>>;
-
-    abstract newReservationNotification(title: string): Nullable<Notification> | Promise<Nullable<Notification>>;
 }
 
 export class OrderSales {
@@ -376,7 +386,7 @@ export class Info {
 }
 
 export class Order {
-    id: string;
+    _id: string;
     cart: CartItem[];
     bill: Info;
     user?: Nullable<User>;
@@ -422,7 +432,7 @@ export class ProductPagination implements Paginator {
 }
 
 export class Product {
-    id: string;
+    _id: string;
     name?: Nullable<string>;
     productCode?: Nullable<string>;
     productSKU?: Nullable<string>;

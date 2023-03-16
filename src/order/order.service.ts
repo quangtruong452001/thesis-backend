@@ -6,6 +6,7 @@ import { Model, PaginateModel } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { OrderDocument, Order } from '../model/order.schema';
 import { CreateOrderInput, UpdateOrderInput } from '../dto/order.dto';
+
 interface Itemset {
   items: string[];
   support?: number;
@@ -127,79 +128,78 @@ export class OrderService {
     }
   }
 
-  async userRecommendation(userId: string) {
+  async userRecommendation(user: string) {
     try {
       const orders = await this.orderModel.find();
-      const userOrders = orders.filter((order) => order.user === userId);
-      const itemSets = userOrders.flatMap((order) =>
-        order.cart.map((product) => product.name),
+      const users = Array.from(new Set(orders.map((order) => order.user)));
+      const products = Array.from(
+        new Set(
+          orders.flatMap((order) => order.cart.map((product) => product.id)),
+        ),
       );
-
-      //Apriori
-
-      // Generate frequent itemsets using the Apriori algorithm
-      const frequentItemsets: Itemset[] = [];
-      let candidates: Itemset[] = [{ items: itemSets }];
-      let k = 1;
-      const minSupport = Math.ceil(0.4 * userOrders.length);
-
-      while (candidates.length > 0) {
-        // Count the support of each candidate itemset
-        const supportCounts = new Map<string, number>();
-        for (const order of userOrders) {
-          for (const candidate of candidates) {
-            if (
-              candidate.items.every((item) =>
-                order.cart.map((p) => p.name).includes(item),
-              )
-            ) {
-              const key = candidate.items.join(',');
-              supportCounts.set(key, (supportCounts.get(key) ?? 0) + 1);
-            }
+      const userItemMatrix: number[][] = [];
+      for (const user of users) {
+        const userRow = new Array(products.length).fill(0);
+        for (const order of orders.filter((order) => order.user === user)) {
+          for (const product of order.cart) {
+            const productIndex = products.indexOf(product.id);
+            userRow[productIndex] += 1;
           }
         }
-
-        // Prune candidate itemsets that don't meet the minimum support
-        candidates = candidates.filter((candidate) => {
-          const key = candidate.items.join(',');
-          const support = supportCounts.get(key) ?? 0;
-          candidate.support = support;
-          if (support < minSupport) {
-            return false;
-          }
-          frequentItemsets.push(candidate);
-          return true;
-        });
-
-        // Generate new candidate itemsets
-        const newCandidates: Itemset[] = [];
-        for (let i = 0; i < candidates.length; i++) {
-          const itemset1 = candidates[i];
-          for (let j = i + 1; j < candidates.length; j++) {
-            const itemset2 = candidates[j];
-            if (
-              itemset1.items.slice(0, k - 1).join() ===
-              itemset2.items.slice(0, k - 1).join()
-            ) {
-              const newItemset = {
-                items: [...new Set([...itemset1.items, ...itemset2.items])],
-              };
-              newCandidates.push(newItemset);
-            }
-          }
-        }
-
-        candidates = newCandidates;
-        k++;
+        userItemMatrix.push(userRow);
       }
-      const recommendedProducts = frequentItemsets
-        .flatMap((itemSet) => itemSet.items)
-        .filter((product, idx, arr) => {
-          return !itemSets.includes(product) && arr.indexOf(product) === idx;
-        })
-        .map((product) => parseInt(product));
 
-      return recommendedProducts;
+      // compute similarities
+      const similarities: number[][] = [];
+      for (let i = 0; i < users.length; i++) {
+        const similarityRow = new Array(users.length).fill(0);
+        for (let j = 0; j < users.length; j++) {
+          const user1 = userItemMatrix[i];
+          const user2 = userItemMatrix[j];
+          const similarity = cosineSimilarity(user1, user2);
+          similarityRow[j] = similarity;
+        }
+        similarities.push(similarityRow);
+      }
+
+      function cosineSimilarity(u: number[], v: number[]): number {
+        const dotProduct = u.reduce((sum, _, i) => sum + u[i] * v[i], 0);
+        const uMagnitude = Math.sqrt(u.reduce((sum, x) => sum + x * x, 0));
+        const vMagnitude = Math.sqrt(v.reduce((sum, x) => sum + x * x, 0));
+        return dotProduct / (uMagnitude * vMagnitude);
+      }
+      console.log(users, user);
+      const userIndex = users.indexOf(user);
+      if (userIndex === -1) {
+        // user not found in orders, return empty list of recommendations
+        return [];
+      }
+      const similarUsers: string[] = [];
+      for (let i = 0; i < users.length; i++) {
+        if (i !== userIndex && similarities[userIndex][i] > 0) {
+          similarUsers.push(users[i]);
+        }
+      }
+      console.log(userIndex, similarUsers);
+      const recommendedProducts = new Set<string>();
+      for (const similarUser of similarUsers) {
+        const similarUserIndex = users.indexOf(similarUser);
+        const similarUserRow = userItemMatrix[similarUserIndex];
+        for (let i = 0; i < similarUserRow.length; i++) {
+          if (similarUserRow[i] > 0 && userItemMatrix[userIndex][i] === 0) {
+            recommendedProducts.add(products[i]);
+            if (recommendedProducts.size === 4) {
+              // stop adding more recommended products
+              break;
+            }
+          }
+        }
+        if (recommendedProducts.size === 4) {
+          // stop iterating over similar users if we already have 4 recommendations
+          break;
+        }
+      }
+      return Array.from(recommendedProducts);
     } catch (error) {
       console.log(error);
       throw error;

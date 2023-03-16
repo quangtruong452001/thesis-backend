@@ -8,10 +8,10 @@ const pubSub = new PubSub();
 export class NotificationResolver {
   constructor(private readonly notificationService: NotificationService) {}
 
-  // @Query(() => [Notification])
-  // async notifications() {
-  //   return this.notificationService.findAll();
-  // }
+  @Query(() => [Notification])
+  async notifications() {
+    return this.notificationService.findAll();
+  }
 
   // @Mutation(() => Notification)
   // async createNotification(

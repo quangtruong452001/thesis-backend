@@ -167,7 +167,7 @@ export class ProductService {
       const listProducts = await this.productModel.find({
         name: { $in: list },
       });
-      const numRandomProducts = 3 - listProducts.length;
+      const numRandomProducts = 4 - listProducts.length;
 
       const randomProducts = await this.productModel.aggregate([
         { $match: { _id: { $nin: listProducts.map((p) => p._id) } } },

@@ -134,6 +134,7 @@ export class ReservationInput {
     locationType: LocationType;
     location: LocationInput;
     note?: Nullable<string>;
+    status: ReservationStatus;
 }
 
 export class UpdateReservationInput {

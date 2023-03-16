@@ -133,7 +133,7 @@ export class OrderResolver {
     //     payload.commentAdded.title === variables.title,
     // }
   )
-  newNotification() {
+  newOrderNotification() {
     // console.log(this.pubSub.asyncIterator('newNotification'));
     return this.pubSub.asyncIterator('newOrderNotification');
   }

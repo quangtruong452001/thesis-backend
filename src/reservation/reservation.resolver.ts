@@ -137,7 +137,7 @@ export class ReservationResolver {
     //     payload.commentAdded.title === variables.title,
     // }
   )
-  newNotification() {
+  newReservationNotification() {
     // console.log(this.pubSub.asyncIterator('newNotification'));
     return this.pubSub.asyncIterator('newReservationNotification');
   }

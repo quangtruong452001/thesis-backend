@@ -45,9 +45,11 @@ export class AuthInput {
 }
 
 export class ImageInput {
-    id?: Nullable<string>;
+    _id?: Nullable<string>;
     url: string;
     image_name?: Nullable<string>;
+    createdAt?: Nullable<DateTime>;
+    updatedAt?: Nullable<DateTime>;
 }
 
 export class CreateNotificationInput {
@@ -62,11 +64,11 @@ export class OrderFilter {
 }
 
 export class CartItemInput {
-    id: string;
-    name: string;
-    quantity: number;
-    price: number;
-    images: ImageInput[];
+    id?: Nullable<string>;
+    name?: Nullable<string>;
+    quantity?: Nullable<number>;
+    price?: Nullable<number>;
+    images?: Nullable<Nullable<ImageInput>[]>;
 }
 
 export class InfoInput {
@@ -103,6 +105,15 @@ export class UpdateOrderInput {
     status?: Nullable<OrderStatus>;
 }
 
+export class CreatePaymentInput {
+    externalId: string;
+    payerFistName: string;
+    payerLastName: string;
+    currencyCode: string;
+    totalAmount: string;
+    type: string;
+}
+
 export class ProductFilter {
     name?: Nullable<string>;
     categories?: Nullable<string>;
@@ -134,6 +145,7 @@ export class ReservationInput {
     locationType: LocationType;
     location: LocationInput;
     note?: Nullable<string>;
+    status: ReservationStatus;
 }
 
 export class UpdateReservationInput {
@@ -223,7 +235,7 @@ export abstract class IMutation {
 
     abstract createNotification(input: CreateNotificationInput): NotificationMutation | Promise<NotificationMutation>;
 
-    abstract markNotificationAsRead(id: string): NotificationMutation | Promise<NotificationMutation>;
+    abstract markNotificationAsRead(id: string): Nullable<string> | Promise<Nullable<string>>;
 
     abstract deleteNotification(id: string): NotificationMutation | Promise<NotificationMutation>;
 
@@ -232,6 +244,8 @@ export abstract class IMutation {
     abstract updateOrder(id: string, input: UpdateOrderInput): Nullable<OrderMutation> | Promise<Nullable<OrderMutation>>;
 
     abstract deleteOrder(id: string): Nullable<OrderMutation> | Promise<Nullable<OrderMutation>>;
+
+    abstract createPayment(input: CreatePaymentInput): Nullable<Payment> | Promise<Nullable<Payment>>;
 
     abstract deleteProduct(id: string): Nullable<ProductMutation> | Promise<Nullable<ProductMutation>>;
 
@@ -261,6 +275,8 @@ export abstract class IQuery {
     abstract categories(): Nullable<Nullable<Category>[]> | Promise<Nullable<Nullable<Category>[]>>;
 
     abstract notifications(): Notification[] | Promise<Notification[]>;
+
+    abstract countIsRead(): Nullable<number> | Promise<Nullable<number>>;
 
     abstract orders(page?: Nullable<number>, limit?: Nullable<number>, sort?: Nullable<string>, filters?: Nullable<OrderFilter>): Nullable<OrderPagination> | Promise<Nullable<OrderPagination>>;
 
@@ -338,6 +354,7 @@ export class Notification {
     _id: string;
     title: string;
     type: NotificationType;
+    orderId: string;
     order?: Nullable<Nullable<Order>[]>;
     reservation?: Nullable<Nullable<Reservation>[]>;
     isRead: boolean;
@@ -395,6 +412,19 @@ export class Order {
     shippingFee: number;
     totalPrice: number;
     status: OrderStatus;
+    createdAt?: Nullable<DateTime>;
+    updatedAt?: Nullable<DateTime>;
+}
+
+export class Payment {
+    _id: string;
+    externalId: string;
+    payerFistName: string;
+    payerLastName: string;
+    currencyCode: string;
+    totalAmount: string;
+    type: string;
+    user: string;
     createdAt?: Nullable<DateTime>;
     updatedAt?: Nullable<DateTime>;
 }

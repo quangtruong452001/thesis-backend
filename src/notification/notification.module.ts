@@ -7,12 +7,14 @@ import { Notification, NotificationSchema } from '../model/notification.schema';
 // import { OrderResolver } from "../order/order.resolver";
 import { NotificationService } from './notification.service';
 import { NotificationResolver } from './notification.resolver';
+import { Reservation, ReservationSchema } from 'src/model/reservation.schema';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Order.name, schema: OrderSchema },
       { name: Notification.name, schema: NotificationSchema },
+      { name: Reservation.name, schema: ReservationSchema },
     ]),
   ],
   providers: [NotificationService, NotificationResolver],

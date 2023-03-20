@@ -84,7 +84,7 @@ input ReservationInput {
   locationType: LocationType!
   location: LocationInput!
   note: String
-#  status: ReservationStatus!
+  status: ReservationStatus!
 }
 
 input UpdateReservationInput {

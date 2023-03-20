@@ -6,7 +6,8 @@ import { Model, PaginateModel } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { OrderDocument, Order } from '../model/order.schema';
 import { CreateOrderInput, UpdateOrderInput } from '../dto/order.dto';
-
+import { PaymentDocument, Payment } from '../model/payment.schema';
+import { createPaymentInput } from 'src/dto/payment.dto';
 interface Itemset {
   items: string[];
   support?: number;
@@ -16,6 +17,8 @@ export class OrderService {
   constructor(
     @InjectModel(Order.name)
     private orderModel: Model<OrderDocument>,
+    @InjectModel(Payment.name)
+    private paymentModel: Model<PaymentDocument>,
     @InjectModel(Order.name)
     private PaginationOrderModel: PaginateModel<OrderDocument>,
   ) {}
@@ -200,6 +203,16 @@ export class OrderService {
         }
       }
       return Array.from(recommendedProducts);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+  async createPayment(createPaymentInput: createPaymentInput) {
+    try {
+      const newPayment = await this.paymentModel.create(createPaymentInput);
+      await newPayment.save();
+      return newPayment;
     } catch (error) {
       console.log(error);
       throw error;

@@ -6,6 +6,7 @@ import { OrderService } from './order.service';
 import { OrderResolver } from './order.resolver';
 import { NotificationService } from '../notification/notification.service';
 import { Notification, NotificationSchema } from '../model/notification.schema';
+import { Payment, PaymentSchema } from 'src/model/payment.schema';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { Notification, NotificationSchema } from '../model/notification.schema';
       { name: Order.name, schema: OrderSchema },
       { name: User.name, schema: UserSchema },
       { name: Notification.name, schema: NotificationSchema },
+      { name: Payment.name, schema: PaymentSchema },
     ]),
   ],
   providers: [OrderService, OrderResolver, NotificationService],

@@ -5,11 +5,12 @@ type Subscription {
 
 extend type Query {
   notifications: [Notification!]!
+  countIsRead: Int
 }
 
 extend type Mutation {
   createNotification(input: CreateNotificationInput!): NotificationMutation!
-  markNotificationAsRead(id: ID!): NotificationMutation!
+  markNotificationAsRead(id: ID!): ID
   deleteNotification(id: ID!): NotificationMutation!
 }
 
@@ -17,6 +18,7 @@ type Notification {
   _id: ID!
   title: String!
   type: NotificationType!
+  orderId: ID!
   order: [Order]
   reservation: [Reservation]
   isRead: Boolean!

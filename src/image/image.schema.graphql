@@ -1,19 +1,21 @@
 type Image {
-    "The image's unique identifier"
-    id: ID
-    "Url of the image"
-    url: String!
-    "The image's title"
-    image_name: String
-    "Created day"
-    createdDay: DateTime
+  "The image's unique identifier"
+  id: ID
+  "Url of the image"
+  url: String!
+  "The image's title"
+  image_name: String
+  "Created day"
+  createdDay: DateTime
 }
-
+scalar DateTime
 input ImageInput {
-    "The image's unique identifier"
-    id: ID
-    "Url of the image"
-    url: String!
-    "The image's title"
-    image_name: String
+  "The image's unique identifier"
+  _id: ID
+  "Url of the image"
+  url: String!
+  "The image's title"
+  image_name: String
+  createdAt: DateTime
+  updatedAt: DateTime
 }

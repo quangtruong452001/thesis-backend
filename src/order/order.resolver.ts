@@ -10,6 +10,7 @@ import { GetUser } from '../decorator';
 import { PubSub } from 'graphql-subscriptions';
 import { NotificationService } from '../notification/notification.service';
 import { NotificationDto, notificationType } from '../dto/notification.dto';
+import { createPaymentInput } from 'src/dto/payment.dto';
 
 @Resolver('Order')
 export class OrderResolver {
@@ -78,7 +79,20 @@ export class OrderResolver {
       throw new Error(`Could not create order ${error}`);
     }
   }
-
+  @Mutation('createPayment')
+  async createPayment(
+    @Args('input') input: createPaymentInput,
+    @GetUser() user,
+  ) {
+    try {
+      input.user = user.id;
+      const data = await this.orderService.createPayment(input);
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
   @Mutation('updateOrder')
   async updateOrder(
     @Args('id') id: string,

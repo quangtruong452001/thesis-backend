@@ -7,6 +7,7 @@ import { Image, ImageSchema } from '../model/image.schema';
 import { ProductResolver } from './product.resolver';
 import { OrderService } from 'src/order/order.service';
 import { OrderSchema, Order } from 'src/model/order.schema';
+import { Payment, PaymentSchema } from 'src/model/payment.schema';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { OrderSchema, Order } from 'src/model/order.schema';
       { name: Image.name, schema: ImageSchema },
       { name: Category.name, schema: CategorySchema },
       { name: Order.name, schema: OrderSchema },
+      { name: Payment.name, schema: PaymentSchema },
     ]),
   ],
   providers: [ProductService, ProductResolver, OrderService],

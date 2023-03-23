@@ -1,19 +1,19 @@
-import { Resolver, Query, Mutation, Args, ID } from "@nestjs/graphql";
-import { serviceTypeService } from "./serviceType.service";
+import { Resolver, Query, Mutation, Args, ID } from '@nestjs/graphql';
+import { serviceTypeService } from './serviceType.service';
 import {
   BadRequestException,
   InternalServerErrorException,
-} from "@nestjs/common";
+} from '@nestjs/common';
 import {
   ServiceTypeInput,
   UpdateServiceTypeInput,
-} from "src/dto/serviceType.dto";
+} from 'src/dto/serviceType.dto';
 
-@Resolver("ServiceType")
+@Resolver('ServiceType')
 export class ServiceTypeResolver {
   constructor(private readonly serviceTypeService: serviceTypeService) {}
 
-  @Query("serviceTypes")
+  @Query('serviceTypes')
   async serviceTypes() {
     try {
       const data = await this.serviceTypeService.findAll();
@@ -24,26 +24,26 @@ export class ServiceTypeResolver {
     }
   }
 
-  @Query("serviceType")
-  async serviceType(@Args("id", { type: () => ID }) id: string) {
+  @Query('serviceType')
+  async serviceType(@Args('id', { type: () => ID }) id: string) {
     try {
       return await this.serviceTypeService.findOne(id);
     } catch (error) {
-      if (error.name === "CastError") {
-        throw new BadRequestException("Invalid service ID");
+      if (error.name === 'CastError') {
+        throw new BadRequestException('Invalid service ID');
       } else {
-        throw new InternalServerErrorException("Something went wrong");
+        throw new InternalServerErrorException('Something went wrong');
       }
     }
   }
 
-  @Mutation("createServiceType")
+  @Mutation('createServiceType')
   async createServiceType(
-    @Args("serviceType") createServiceTypeDto: ServiceTypeInput
+    @Args('serviceType') createServiceTypeDto: ServiceTypeInput,
   ) {
     try {
       const service = await this.serviceTypeService.create(
-        createServiceTypeDto
+        createServiceTypeDto,
       );
       return service;
     } catch (error) {
@@ -51,15 +51,15 @@ export class ServiceTypeResolver {
     }
   }
 
-  @Mutation("updateServiceType")
+  @Mutation('updateServiceType')
   async updateServiceType(
-    @Args("id", { type: () => ID }) id: string,
-    @Args("serviceType") updateServiceTypeDto: UpdateServiceTypeInput
+    @Args('id', { type: () => ID }) id: string,
+    @Args('serviceType') updateServiceTypeDto: UpdateServiceTypeInput,
   ) {
     try {
       const service = await this.serviceTypeService.update(
         id,
-        updateServiceTypeDto
+        updateServiceTypeDto,
       );
       return service;
     } catch (error) {
@@ -67,8 +67,8 @@ export class ServiceTypeResolver {
     }
   }
 
-  @Mutation("deleteServiceType")
-  async deleteServiceType(@Args("id", { type: () => ID }) id: string) {
+  @Mutation('deleteServiceType')
+  async deleteServiceType(@Args('id', { type: () => ID }) id: string) {
     try {
       const deletedServiceType = await this.serviceTypeService.delete(id);
       return deletedServiceType;

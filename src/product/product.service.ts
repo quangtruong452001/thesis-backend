@@ -164,14 +164,32 @@ export class ProductService {
   async getRecommend(userId: string) {
     try {
       const list = await this.orderService.userRecommendation(userId);
-      const listProducts = await this.productModel.find({
-        name: { $in: list },
-      });
+      const listProducts = await this.productModel
+        .find({
+          name: { $in: list },
+        })
+        .populate(['images', 'categories']);
       const numRandomProducts = 4 - listProducts.length;
 
       const randomProducts = await this.productModel.aggregate([
         { $match: { _id: { $nin: listProducts.map((p) => p._id) } } },
         { $sample: { size: numRandomProducts < 0 ? 0 : numRandomProducts } },
+        {
+          $lookup: {
+            from: 'images', // name of the collection to join
+            localField: 'images', // name of the field in the product collection
+            foreignField: '_id', // name of the field in the images collection
+            as: 'images', // name of the field to add in the product document
+          },
+        },
+        {
+          $lookup: {
+            from: 'categories', // name of the collection to join
+            localField: 'categories', // name of the field in the product collection
+            foreignField: '_id', // name of the field in the categories collection
+            as: 'categories', // name of the field to add in the product document
+          },
+        },
       ]);
       const recommendedProducts = [...listProducts, ...randomProducts];
       return recommendedProducts;

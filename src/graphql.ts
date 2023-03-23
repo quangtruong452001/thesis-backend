@@ -310,6 +310,8 @@ export abstract class IQuery {
 
     abstract todayReservations(): Nullable<Nullable<Reservation>[]> | Promise<Nullable<Nullable<Reservation>[]>>;
 
+    abstract getHours(): Nullable<Nullable<Hour>[]> | Promise<Nullable<Nullable<Hour>[]>>;
+
     abstract serviceTypes(): ServiceType[] | Promise<ServiceType[]>;
 
     abstract serviceType(id: string): Nullable<ServiceType> | Promise<Nullable<ServiceType>>;

@@ -6,12 +6,16 @@ import {
   ReservationInput,
   UpdateReservationInput,
 } from '../dto/reservation.dto';
+import { Hour, HourDocument } from 'src/model/hour.schema';
 
 @Injectable()
 export class ReservationService {
   constructor(
     @InjectModel(Reservation.name)
     private reservationModel: Model<ReservationDocument>,
+
+    @InjectModel(Hour.name)
+    private hourModel: Model<HourDocument>,
   ) {}
 
   async findAll() {
@@ -145,6 +149,14 @@ export class ReservationService {
         .populate('userId')
         .populate('reservationHour')
         .populate('serviceType');
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+  async getHours() {
+    try {
+      return await this.hourModel.find();
     } catch (error) {
       console.log(error);
       throw error;

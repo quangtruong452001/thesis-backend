@@ -71,6 +71,14 @@ export class ReservationResolver {
       console.log(error);
     }
   }
+  @Query('getHours')
+  async getHours() {
+    try {
+      return await this.reservationService.getHours();
+    } catch (error) {
+      console.log(error);
+    }
+  }
   @Mutation('createReservation')
   // @UsePipes(new ValidationPipe())
   async createReservation(

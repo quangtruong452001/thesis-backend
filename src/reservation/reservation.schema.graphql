@@ -8,6 +8,7 @@ extend type Query {
   reservation(id: ID!): Reservation
   totalReservationSales: Sales
   todayReservations: [Reservation]
+  getHours: [Hour]
 }
 
 extend type Mutation {
@@ -59,7 +60,13 @@ type Location {
   address: String!
   description: String
 }
-
+type Hour {
+  _id: ID
+  name: String
+  time: Int
+  timeFrame: String
+  slot: Int
+}
 enum LocationType {
   HOME
   STORE

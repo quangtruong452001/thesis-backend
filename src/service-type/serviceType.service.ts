@@ -1,17 +1,17 @@
-import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
-import { ServiceType, ServiceTypeDocument } from "../model/serviceType.schema";
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { ServiceType, ServiceTypeDocument } from '../model/serviceType.schema';
 import {
   ServiceTypeInput,
   UpdateServiceTypeInput,
-} from "src/dto/serviceType.dto";
+} from 'src/dto/serviceType.dto';
 
 @Injectable()
 export class serviceTypeService {
   constructor(
     @InjectModel(ServiceType.name)
-    private serviceTypeModel: Model<ServiceTypeDocument>
+    private serviceTypeModel: Model<ServiceTypeDocument>,
   ) {}
 
   async findAll() {
@@ -30,13 +30,16 @@ export class serviceTypeService {
       return data;
     } catch (error) {
       throw new Error(
-        `Could not fetch serviceType with id ${id}: ${error.message}`
+        `Could not fetch serviceType with id ${id}: ${error.message}`,
       );
     }
   }
   async create(createServiceTypeDto: ServiceTypeInput) {
     try {
-      const createServiceType = new this.serviceTypeModel(createServiceTypeDto);
+      const createServiceType = new this.serviceTypeModel({
+        ...createServiceTypeDto,
+        selectedCount: 0,
+      });
       await createServiceType.save();
       const data = await this.serviceTypeModel.findById(createServiceType._id);
       return data;
@@ -52,11 +55,11 @@ export class serviceTypeService {
         updateServiceTypeDto,
         {
           new: true,
-        }
+        },
       );
     } catch (error) {
       throw new Error(
-        `Could not update ServiceType with id ${id}: ${error.message}`
+        `Could not update ServiceType with id ${id}: ${error.message}`,
       );
     }
   }
@@ -66,7 +69,7 @@ export class serviceTypeService {
       return await this.serviceTypeModel.findByIdAndDelete(id);
     } catch (error) {
       throw new Error(
-        `Could not delete serviceType with id ${id}: ${error.message}`
+        `Could not delete serviceType with id ${id}: ${error.message}`,
       );
     }
   }

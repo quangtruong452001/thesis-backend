@@ -1,11 +1,11 @@
-import { Type } from "class-transformer";
+import { Type } from 'class-transformer';
 import {
   IsString,
   IsNumber,
   IsOptional,
   ArrayMinSize,
   ValidateNested,
-} from "class-validator";
+} from 'class-validator';
 
 class ServicePrice {
   @IsString()

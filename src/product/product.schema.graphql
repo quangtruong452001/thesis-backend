@@ -1,7 +1,9 @@
+scalar Upload
+
 extend type Mutation {
   "Delete product"
   deleteProduct(id: ID!): ProductMutation
-  createProduct(product: CreateProductInput!): Product
+  createProduct(product: CreateProductInput!, files: [Upload!]): Product
 }
 
 type Query {
@@ -89,7 +91,8 @@ input CreateProductInput {
   description: String!
   shortDescription: String
   additionalInfos: String
-  images: [ID]!
+  # images: [ID]!
+#  images: [Upload!]!
   categories: [ID]!
 }
 

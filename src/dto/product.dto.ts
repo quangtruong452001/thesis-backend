@@ -5,6 +5,7 @@ import {
   IsArray,
   ArrayNotEmpty,
   ValidateNested,
+  IsOptional,
 } from 'class-validator';
 
 export class CreateProductDto {
@@ -35,6 +36,7 @@ export class CreateProductDto {
   additionalInfos?: string;
 
   @IsArray()
+  // @IsOptional()
   // @ArrayNotEmpty()
   images: string[];
 

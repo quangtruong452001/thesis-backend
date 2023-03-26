@@ -1,4 +1,4 @@
-/* eslint-disable prettier/prettier */
+
 /*
  * -------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
@@ -129,7 +129,6 @@ export class CreateProductInput {
     description: string;
     shortDescription?: Nullable<string>;
     additionalInfos?: Nullable<string>;
-    images: Nullable<string>[];
     categories: Nullable<string>[];
 }
 
@@ -249,7 +248,7 @@ export abstract class IMutation {
 
     abstract deleteProduct(id: string): Nullable<ProductMutation> | Promise<Nullable<ProductMutation>>;
 
-    abstract createProduct(product: CreateProductInput): Nullable<Product> | Promise<Nullable<Product>>;
+    abstract createProduct(product: CreateProductInput, files?: Nullable<Upload[]>): Nullable<Product> | Promise<Nullable<Product>>;
 
     abstract createReservation(reservation: ReservationInput): Reservation | Promise<Reservation>;
 
@@ -541,4 +540,5 @@ export class User {
 }
 
 export type DateTime = any;
+export type Upload = any;
 type Nullable<T> = T | null;

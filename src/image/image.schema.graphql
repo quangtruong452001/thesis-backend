@@ -8,7 +8,7 @@ type Image {
   "Created day"
   createdDay: DateTime
 }
-scalar DateTime
+#scalar DateTime
 input ImageInput {
   "The image's unique identifier"
   _id: ID

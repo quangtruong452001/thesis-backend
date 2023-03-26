@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import {
   Notification,
   NotificationDocument,
@@ -15,22 +15,51 @@ export class NotificationService {
 
   async findAll() {
     try {
-      return await this.NotificationModel.find().populate([
+      return await this.NotificationModel.aggregate([
         {
-          path: 'orderId',
-          match: { _id: { $ne: null } },
+          $lookup: {
+            from: 'orders',
+            localField: 'orderId',
+            foreignField: '_id',
+            as: 'order',
+          },
         },
         {
-          path: 'reservationId',
-          match: { _id: { $ne: null } },
+          $lookup: {
+            from: 'reservations',
+            localField: 'orderId',
+            foreignField: '_id',
+            as: 'reservation',
+          },
+        },
+        {
+          $match: {
+            $or: [{ order: { $ne: [] } }, { reservation: { $ne: [] } }],
+          },
+        },
+        {
+          $sort: {
+            createdAt: -1,
+          },
         },
       ]);
+
       // TODO: update populate later
     } catch (error) {
       throw new Error(`Could not fetch Notifications: ${error.message}`);
     }
   }
-
+  async countIsRead() {
+    try {
+      const notifications = await this.findAll();
+      const count = notifications.filter(
+        (notification) => !notification.isRead,
+      ).length;
+      return count;
+    } catch (error) {
+      throw new Error(`Could not fetch Notifications: ${error.message}`);
+    }
+  }
   async findOne(id: string) {
     try {
       return await this.NotificationModel.findById(id).populate([
@@ -93,25 +122,41 @@ export class NotificationService {
   // Marks as read
   async markNotificationAsRead(id: string) {
     try {
-      return await this.NotificationModel.findByIdAndUpdate(
-        id,
-        { isRead: true },
+      const updatedNotification =
+        await this.NotificationModel.findByIdAndUpdate(
+          id,
+          { isRead: true },
+          { new: true }, // <-- Return the modified document instead of the original
+        ).populate('orderId');
+
+      return id;
+      return await this.NotificationModel.aggregate([
+        { $match: { _id: new mongoose.Types.ObjectId(id) } },
         {
-          new: true,
+          $lookup: {
+            from: 'orders',
+            localField: 'orderId',
+            foreignField: '_id',
+            as: 'order',
+          },
         },
-      ).populate([
         {
-          path: 'orderId',
-          match: { _id: { $ne: null } },
+          $lookup: {
+            from: 'reservations',
+            localField: 'orderId',
+            foreignField: '_id',
+            as: 'reservation',
+          },
         },
         {
-          path: 'reservationId',
-          match: { _id: { $ne: null } },
+          $match: {
+            $or: [{ order: { $ne: [] } }, { reservation: { $ne: [] } }],
+          },
         },
       ]);
     } catch (error) {
       throw new Error(
-        `Could not update reservation with id ${id}: ${error.message}`,
+        `Could not update notification with id ${id}: ${error.message}`,
       );
     }
   }

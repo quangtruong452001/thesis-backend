@@ -25,6 +25,7 @@ extend type Mutation {
   updateOrder(id: ID!, input: UpdateOrderInput!): OrderMutation
   "Delete Order by ID"
   deleteOrder(id: ID!): OrderMutation
+  createPayment(input: CreatePaymentInput!): Payment
 }
 
 input OrderFilter {
@@ -64,7 +65,7 @@ type Info {
 }
 
 type Order {
-  id: ID!
+  _id: ID!
   cart: [CartItem!]!
   bill: Info!
   user: User
@@ -76,7 +77,18 @@ type Order {
   createdAt: DateTime
   updatedAt: DateTime
 }
-
+type Payment {
+  _id: ID!
+  externalId: String!
+  payerFistName: String!
+  payerLastName: String!
+  currencyCode: String!
+  totalAmount: String!
+  type: String!
+  user: ID!
+  createdAt: DateTime
+  updatedAt: DateTime
+}
 enum OrderStatus {
   PENDING
   CONFIRMED
@@ -88,11 +100,11 @@ enum OrderStatus {
 scalar DateTime
 
 input CartItemInput {
-  id: ID!
-  name: String!
-  quantity: Int!
-  price: Float!
-  images: [ImageInput!]!
+  id: ID
+  name: String
+  quantity: Int
+  price: Float
+  images: [ImageInput]
 }
 
 input InfoInput {
@@ -152,4 +164,13 @@ type OrderMutation implements MutationOf {
   msg: String
   "Data"
   data: Order
+}
+
+input CreatePaymentInput {
+  externalId: String!
+  payerFistName: String!
+  payerLastName: String!
+  currencyCode: String!
+  totalAmount: String!
+  type: String!
 }

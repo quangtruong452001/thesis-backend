@@ -8,11 +8,18 @@ const pubSub = new PubSub();
 export class NotificationResolver {
   constructor(private readonly notificationService: NotificationService) {}
 
-  // @Query(() => [Notification])
-  // async notifications() {
-  //   return this.notificationService.findAll();
-  // }
-
+  @Query(() => [Notification])
+  async notifications() {
+    return this.notificationService.findAll();
+  }
+  @Query('countIsRead')
+  async countIsRead() {
+    return this.notificationService.countIsRead();
+  }
+  @Mutation('markNotificationAsRead')
+  async markNotificationAsRead(@Args('id') id: string) {
+    return this.notificationService.markNotificationAsRead(id);
+  }
   // @Mutation(() => Notification)
   // async createNotification(
   //   @Args('createNotificationInput')

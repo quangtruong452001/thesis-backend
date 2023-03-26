@@ -87,7 +87,7 @@ export class ReservationResolver {
         const notificationDto: NotificationDto = {
           title: 'You have new reservation',
           type: notificationType.RESERVATION,
-          orderId: reservation._id ? reservation._id : reservation.id,
+          reservationId: reservation._id ? reservation._id : reservation.id,
         };
         const notification = await this.notificationService.create(
           notificationDto,
@@ -137,7 +137,7 @@ export class ReservationResolver {
     //     payload.commentAdded.title === variables.title,
     // }
   )
-  newNotification() {
+  newReservationNotification() {
     // console.log(this.pubSub.asyncIterator('newNotification'));
     return this.pubSub.asyncIterator('newReservationNotification');
   }

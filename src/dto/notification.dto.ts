@@ -14,7 +14,7 @@ export class NotificationDto {
   type: notificationType;
 
   @IsOptional()
-  orderId: string;
+  orderId?: string;
 
   @IsOptional()
   reservationId?: string;

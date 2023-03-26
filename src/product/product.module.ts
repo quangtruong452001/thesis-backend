@@ -8,6 +8,7 @@ import { ProductResolver } from './product.resolver';
 import { OrderService } from 'src/order/order.service';
 import { OrderSchema, Order } from 'src/model/order.schema';
 import { Payment, PaymentSchema } from 'src/model/payment.schema';
+import { ImageService } from '../image/image.service';
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import { Payment, PaymentSchema } from 'src/model/payment.schema';
       { name: Payment.name, schema: PaymentSchema },
     ]),
   ],
-  providers: [ProductService, ProductResolver, OrderService],
+  providers: [ProductService, ProductResolver, OrderService, ImageService],
 })
 export class ProductModule {}

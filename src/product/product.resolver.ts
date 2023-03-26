@@ -1,14 +1,17 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { ProductService } from './product.service';
 import { handleProductFilters, handleProductSorts } from '../utils/helper';
-import { ProductFilters } from 'src/dto/product.dto';
+import { CreateProductDto, ProductFilters } from 'src/dto/product.dto';
 import { sortProduct } from '../utils/config';
 import { CreateProductInput } from 'src/graphql';
 import { GetUser } from '../decorator';
-
+import { ImageService } from '../image/image.service';
 @Resolver('Product')
 export class ProductResolver {
-  constructor(private readonly productService: ProductService) {}
+  constructor(
+    private readonly productService: ProductService,
+    private readonly imageService: ImageService,
+  ) {}
 
   @Query('products')
   async products(
@@ -104,9 +107,35 @@ export class ProductResolver {
     }
   }
   @Mutation('createProduct')
-  async createProduct(@Args('product') createProductDto: CreateProductInput) {
+  async createProduct(
+    @Args('product') createProductDto: CreateProductInput,
+    @Args({
+      name: 'files',
+      type: async () => {
+        return [(await import('graphql-upload/GraphQLUpload.mjs')).default];
+      },
+    })
+    files, // Test upload file
+  ) {
     try {
-      return await this.productService.createProduct(createProductDto);
+      let imgs = [];
+      // for (let i = 0; i < fileList.length; i++) {
+      //   const img = fileList[i];
+      //   // console.log(img);
+      //   const image = await this.imageService.createImage(img);
+      //   // console.log(image);
+      //   imgs.push(image.id);
+      for (const file of files) {
+        const fileUp = await file.file;
+        const img = await this.imageService.uploadImage(fileUp);
+        const image = await this.imageService.createImage(img);
+        imgs.push(image.id);
+      }
+      const newProduct: CreateProductDto = {
+        ...createProductDto,
+        images: imgs,
+      };
+      return await this.productService.createProduct(newProduct);
     } catch (error) {
       console.error(error);
       throw error;

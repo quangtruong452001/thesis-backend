@@ -85,7 +85,19 @@ export class ProductService {
 
   async createProduct(productDto: CreateProductDto) {
     // console.log(productDto);
-    return await this.productModel.create(productDto);
+    try {
+      const newProduct = await this.productModel.create(productDto);
+      // console.log(newProduct);
+      await newProduct.save();
+      if (newProduct.images) {
+        return await newProduct.populate(['images', 'categories']);
+      } else {
+        return await newProduct.populate('categories');
+      }
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   }
 
   // Get number of total products

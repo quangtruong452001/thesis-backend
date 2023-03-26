@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+//    "module": "node16",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
+//    "target": "es2022",
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
@@ -16,6 +18,7 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "moduleResolution": "node16",
   }
 }

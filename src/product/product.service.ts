@@ -34,7 +34,7 @@ export class ProductService {
       //   .limit(limit)
       //   .sort(sort)
       //   .populate(['images', 'categories']);
-
+      sorts.createdAt = -1;
       const data = await this.productModelPagination.paginate(query, {
         page: page,
         limit: limit,
@@ -181,7 +181,7 @@ export class ProductService {
           name: { $in: list },
         })
         .populate(['images', 'categories']);
-      const numRandomProducts = 4 - listProducts.length;
+      const numRandomProducts = 6 - listProducts.length;
 
       const randomProducts = await this.productModel.aggregate([
         { $match: { _id: { $nin: listProducts.map((p) => p._id) } } },

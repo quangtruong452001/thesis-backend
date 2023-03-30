@@ -5,7 +5,7 @@ import {
 import { Model, PaginateModel } from 'mongoose';
 import { Product, ProductDocument } from '../model/product.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateProductDto } from '../dto/product.dto';
+import { CreateProductDto, UpdateProductDto } from '../dto/product.dto';
 import { OrderService } from 'src/order/order.service';
 // import { ConfigService } from '@nestjs/config';
 
@@ -99,7 +99,26 @@ export class ProductService {
       throw error;
     }
   }
-
+  //Update product
+  async updateProduct(id: string, productDto: UpdateProductDto) {
+    try {
+      const upProduct = await this.productModel.findByIdAndUpdate(
+        id,
+        productDto,
+        {
+          new: true,
+        },
+      );
+      if (upProduct.images) {
+        return await upProduct.populate(['images', 'categories']);
+      } else {
+        return await upProduct.populate('categories');
+      }
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
   // Get number of total products
   async getTotalProducts() {
     try {

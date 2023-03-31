@@ -76,7 +76,7 @@ enum LocationType {
 enum ReservationStatus {
   BOOKED
   SUCCESS
-  CANCELED
+  CANCELLED
 }
 
 input ReservationInput {

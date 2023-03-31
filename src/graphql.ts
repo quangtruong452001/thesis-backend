@@ -18,7 +18,7 @@ export enum OrderStatus {
     CONFIRMED = "CONFIRMED",
     FINISHED = "FINISHED",
     RETURNED = "RETURNED",
-    CANCELED = "CANCELED"
+    CANCELLED = "CANCELLED"
 }
 
 export enum LocationType {
@@ -29,7 +29,7 @@ export enum LocationType {
 export enum ReservationStatus {
     BOOKED = "BOOKED",
     SUCCESS = "SUCCESS",
-    CANCELED = "CANCELED"
+    CANCELLED = "CANCELLED"
 }
 
 export enum UserRole {

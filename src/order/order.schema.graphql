@@ -94,7 +94,7 @@ enum OrderStatus {
   CONFIRMED
   FINISHED
   RETURNED
-  CANCELED
+  CANCELLED
 }
 
 scalar DateTime

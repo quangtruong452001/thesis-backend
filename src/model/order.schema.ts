@@ -38,7 +38,7 @@ export class Order {
 
   @Prop({
     default: 'PENDING',
-    enum: ['PENDING', 'CONFIRMED', 'FINISHED', 'RETURNED', 'CANCELED'],
+    enum: ['PENDING', 'CONFIRMED', 'FINISHED', 'RETURNED', 'CANCELLED'],
   })
   status: string;
 }

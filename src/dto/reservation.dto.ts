@@ -15,7 +15,7 @@ enum LocationType {
 enum ReservationStatus {
   BOOKED = 'BOOKED',
   SUCCESS = 'SUCCESS',
-  CANCELED = 'CANCELED',
+  CANCELLED = 'CANCELLED',
 }
 
 class LocationInput {

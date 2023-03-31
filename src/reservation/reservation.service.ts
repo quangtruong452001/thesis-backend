@@ -34,7 +34,7 @@ export class ReservationService {
       return await this.reservationModel
         .find({ userId: userId })
         .populate(['userId', 'reservationHour', 'serviceType'])
-        .sort({ createdAt: -1 });
+        .sort({ reservationDate: -1 });
     } catch (error) {
       throw new Error(`Could not fetch user reservations: ${error.message}`);
     }

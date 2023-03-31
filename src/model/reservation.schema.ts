@@ -68,7 +68,7 @@ export class Reservation {
 
   @Prop({
     type: String,
-    enum: ['BOOKED', 'SUCCESS', 'CANCELED'],
+    enum: ['BOOKED', 'SUCCESS', 'CANCELLED'],
     required: true,
   })
   status: string;

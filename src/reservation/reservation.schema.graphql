@@ -4,6 +4,7 @@ extend type Subscription {
 }
 
 extend type Query {
+  userReservations: [Reservation]!
   reservations: [Reservation!]!
   reservation(id: ID!): Reservation
   totalReservationSales: Sales

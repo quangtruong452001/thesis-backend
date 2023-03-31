@@ -180,7 +180,7 @@ export class ProductResolver {
     }
   }
   @Mutation('deleteProduct')
-  async deleteProduct(id: string) {
+  async deleteProduct(@Args('id') id: string) {
     try {
       const product = await this.productService.deleteProduct(id);
       if (product) {

@@ -17,6 +17,7 @@ export class AuthResolver {
   @Mutation('signUp')
   @UsePipes(new ValidationPipe())
   async signUp(@Args('input') input: AuthDto) {
+    // console.log(input);
     return this.authService.signup(input);
   }
 }

@@ -122,8 +122,8 @@ export class ProductResolver {
     files, // Test upload file
   ) {
     try {
-      console.log('be files', files);
-      const imgs = [];
+      // console.log(files);
+      let imgs = [];
       // for (let i = 0; i < fileList.length; i++) {
       //   const img = fileList[i];
       //   // console.log(img);
@@ -132,7 +132,7 @@ export class ProductResolver {
       //   imgs.push(image.id);
       for (const file of files) {
         const fileUp = await file.file;
-        console.log('fileUp', fileUp);
+        // console.log('fileUp', fileUp);
         const img = await this.imageService.uploadImage(fileUp);
         const image = await this.imageService.createImage(img);
         imgs.push(image.id);

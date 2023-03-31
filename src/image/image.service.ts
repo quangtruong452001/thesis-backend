@@ -56,6 +56,7 @@ export class ImageService {
 
   async uploadImage(file: any) {
     return new Promise((resolve, reject) => {
+      // console.log(file);
       const { createReadStream, filename } = file;
       const storage = getStorage(firebase);
       const chunks = [];

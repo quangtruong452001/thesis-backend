@@ -29,6 +29,17 @@ export class ReservationService {
     }
   }
 
+  async userReservations(userId: string) {
+    try {
+      return await this.reservationModel
+        .find({ userId: userId })
+        .populate(['userId', 'reservationHour', 'serviceType'])
+        .sort({ createdAt: -1 });
+    } catch (error) {
+      throw new Error(`Could not fetch user reservations: ${error.message}`);
+    }
+  }
+
   async findOne(id: string) {
     try {
       return await this.reservationModel

@@ -314,6 +314,8 @@ export abstract class IQuery {
 
     abstract recommendProduct(): Nullable<Nullable<Product>[]> | Promise<Nullable<Nullable<Product>[]>>;
 
+    abstract userReservations(): Nullable<Reservation>[] | Promise<Nullable<Reservation>[]>;
+
     abstract reservations(): Reservation[] | Promise<Reservation[]>;
 
     abstract reservation(id: string): Nullable<Reservation> | Promise<Nullable<Reservation>>;

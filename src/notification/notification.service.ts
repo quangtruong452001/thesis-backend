@@ -27,7 +27,7 @@ export class NotificationService {
         {
           $lookup: {
             from: 'reservations',
-            localField: 'orderId',
+            localField: 'reservationId',
             foreignField: '_id',
             as: 'reservation',
           },

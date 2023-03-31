@@ -5,7 +5,7 @@ import {
 import { Model, PaginateModel } from 'mongoose';
 import { Product, ProductDocument } from '../model/product.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import { CreateProductDto } from '../dto/product.dto';
+import { CreateProductDto, UpdateProductDto } from '../dto/product.dto';
 import { OrderService } from 'src/order/order.service';
 // import { ConfigService } from '@nestjs/config';
 
@@ -34,7 +34,7 @@ export class ProductService {
       //   .limit(limit)
       //   .sort(sort)
       //   .populate(['images', 'categories']);
-
+      sorts.createdAt = -1;
       const data = await this.productModelPagination.paginate(query, {
         page: page,
         limit: limit,
@@ -99,7 +99,26 @@ export class ProductService {
       throw error;
     }
   }
-
+  //Update product
+  async updateProduct(id: string, productDto: UpdateProductDto) {
+    try {
+      const upProduct = await this.productModel.findByIdAndUpdate(
+        id,
+        productDto,
+        {
+          new: true,
+        },
+      );
+      if (upProduct.images) {
+        return await upProduct.populate(['images', 'categories']);
+      } else {
+        return await upProduct.populate('categories');
+      }
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
   // Get number of total products
   async getTotalProducts() {
     try {
@@ -181,7 +200,7 @@ export class ProductService {
           name: { $in: list },
         })
         .populate(['images', 'categories']);
-      const numRandomProducts = 4 - listProducts.length;
+      const numRandomProducts = 6 - listProducts.length;
 
       const randomProducts = await this.productModel.aggregate([
         { $match: { _id: { $nin: listProducts.map((p) => p._id) } } },

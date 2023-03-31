@@ -1,7 +1,11 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { ProductService } from './product.service';
 import { handleProductFilters, handleProductSorts } from '../utils/helper';
-import { CreateProductDto, ProductFilters } from 'src/dto/product.dto';
+import {
+  CreateProductDto,
+  ProductFilters,
+  UpdateProductDto,
+} from 'src/dto/product.dto';
 import { sortProduct } from '../utils/config';
 import { CreateProductInput } from 'src/graphql';
 import { GetUser } from '../decorator';
@@ -118,7 +122,7 @@ export class ProductResolver {
     files, // Test upload file
   ) {
     try {
-      console.log(files);
+      // console.log(files);
       let imgs = [];
       // for (let i = 0; i < fileList.length; i++) {
       //   const img = fileList[i];
@@ -128,6 +132,7 @@ export class ProductResolver {
       //   imgs.push(image.id);
       for (const file of files) {
         const fileUp = await file.file;
+        // console.log('fileUp', fileUp);
         const img = await this.imageService.uploadImage(fileUp);
         const image = await this.imageService.createImage(img);
         imgs.push(image.id);
@@ -142,8 +147,40 @@ export class ProductResolver {
       throw error;
     }
   }
+  @Mutation('updateProduct')
+  async updateProduct(
+    @Args('id') id: string,
+    @Args('input') input: UpdateProductDto,
+    @Args({
+      name: 'files',
+      type: async () => {
+        return [(await import('graphql-upload/GraphQLUpload.mjs')).default];
+      },
+    })
+    files,
+  ) {
+    try {
+      console.log('be files', files);
+      const imgs = [];
+      for (const file of files) {
+        const fileUp = await file.file;
+        console.log('fileUp', fileUp);
+        const img = await this.imageService.uploadImage(fileUp);
+        const image = await this.imageService.createImage(img);
+        imgs.push(image.id);
+      }
+      const upProduct = {
+        ...input,
+        images: imgs,
+      };
+      return await this.productService.updateProduct(id, upProduct);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
   @Mutation('deleteProduct')
-  async deleteProduct(id: string) {
+  async deleteProduct(@Args('id') id: string) {
     try {
       const product = await this.productService.deleteProduct(id);
       if (product) {

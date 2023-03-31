@@ -18,7 +18,8 @@ type Notification {
   _id: ID!
   title: String!
   type: NotificationType!
-  orderId: ID!
+  orderId: ID
+  reservationId: ID
   order: [Order]
   reservation: [Reservation]
   isRead: Boolean!

@@ -132,6 +132,17 @@ export class CreateProductInput {
     categories: Nullable<string>[];
 }
 
+export class UpdateProductInput {
+    name?: Nullable<string>;
+    productCode?: Nullable<string>;
+    productSKU?: Nullable<string>;
+    price?: Nullable<number>;
+    description?: Nullable<string>;
+    shortDescription?: Nullable<string>;
+    additionalInfos?: Nullable<string>;
+    categories?: Nullable<Nullable<string>[]>;
+}
+
 export class ReservationInput {
     userName: string;
     phoneNumber: string;
@@ -250,6 +261,8 @@ export abstract class IMutation {
 
     abstract createProduct(product: CreateProductInput, files?: Nullable<Upload[]>): Nullable<Product> | Promise<Nullable<Product>>;
 
+    abstract updateProduct(id: string, input?: Nullable<UpdateProductInput>, files?: Nullable<Nullable<Upload>[]>): Nullable<Product> | Promise<Nullable<Product>>;
+
     abstract createReservation(reservation: ReservationInput): Reservation | Promise<Reservation>;
 
     abstract updateReservation(id: string, reservation: UpdateReservationInput): Reservation | Promise<Reservation>;
@@ -300,6 +313,8 @@ export abstract class IQuery {
     abstract maxPrice(): Nullable<number> | Promise<Nullable<number>>;
 
     abstract recommendProduct(): Nullable<Nullable<Product>[]> | Promise<Nullable<Nullable<Product>[]>>;
+
+    abstract userReservations(): Nullable<Reservation>[] | Promise<Nullable<Reservation>[]>;
 
     abstract reservations(): Reservation[] | Promise<Reservation[]>;
 
@@ -355,7 +370,8 @@ export class Notification {
     _id: string;
     title: string;
     type: NotificationType;
-    orderId: string;
+    orderId?: Nullable<string>;
+    reservationId?: Nullable<string>;
     order?: Nullable<Nullable<Order>[]>;
     reservation?: Nullable<Nullable<Reservation>[]>;
     isRead: boolean;
@@ -470,7 +486,7 @@ export class Product {
     description?: Nullable<string>;
     price?: Nullable<number>;
     shortDescription?: Nullable<string>;
-    additionalInfo?: Nullable<string>;
+    additionalInfos?: Nullable<string>;
     stock?: Nullable<number>;
     images?: Nullable<Nullable<Image>[]>;
     categories?: Nullable<Nullable<Category>[]>;

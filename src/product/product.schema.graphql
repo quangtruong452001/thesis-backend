@@ -4,6 +4,7 @@ extend type Mutation {
   "Delete product"
   deleteProduct(id: ID!): ProductMutation
   createProduct(product: CreateProductInput!, files: [Upload!]): Product
+  updateProduct(id: ID!, input: UpdateProductInput, files: [Upload]): Product
 }
 
 type Query {
@@ -61,7 +62,7 @@ type Product {
   "Short description of the product"
   shortDescription: String
   "Additional information about the product"
-  additionalInfo: String
+  additionalInfos: String
   "Stock status of the product"
   stock: Int
   "Image of the product"
@@ -92,10 +93,19 @@ input CreateProductInput {
   shortDescription: String
   additionalInfos: String
   # images: [ID]!
-#  images: [Upload!]!
+  #  images: [Upload!]!
   categories: [ID]!
 }
-
+input UpdateProductInput {
+  name: String
+  productCode: String
+  productSKU: String
+  price: Float
+  description: String
+  shortDescription: String
+  additionalInfos: String
+  categories: [ID]
+}
 type ProductMutation implements MutationOf {
   "Mutation status"
   success: Boolean

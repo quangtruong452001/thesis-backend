@@ -31,6 +31,17 @@ export class ReservationResolver {
     this.pubSub = new PubSub();
   }
 
+  @Query('userReservations')
+  async userReservation(@GetUser() user: any) {
+    try {
+      const userId = user.id;
+      return await this.reservationService.userReservations(userId);
+    } catch (error) {
+      console.error(error);
+      throw new Error('Failed to retrieve reservations.');
+    }
+  }
+
   @Query('reservations')
   async reservations() {
     try {
@@ -100,7 +111,7 @@ export class ReservationResolver {
         const notification = await this.notificationService.create(
           notificationDto,
         );
-        // console.log(notification);
+        console.log(notification);
         await this.pubSub.publish('newReservationNotification', {
           newReservationNotification: notification,
         });

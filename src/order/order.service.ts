@@ -191,14 +191,14 @@ export class OrderService {
         for (let i = 0; i < similarUserRow.length; i++) {
           if (similarUserRow[i] > 0 && userItemMatrix[userIndex][i] === 0) {
             recommendedProducts.add(products[i]);
-            if (recommendedProducts.size === 4) {
+            if (recommendedProducts.size === 6) {
               // stop adding more recommended products
               break;
             }
           }
         }
-        if (recommendedProducts.size === 4) {
-          // stop iterating over similar users if we already have 4 recommendations
+        if (recommendedProducts.size === 6) {
+          // stop iterating over similar users if we already have 6 recommendations
           break;
         }
       }

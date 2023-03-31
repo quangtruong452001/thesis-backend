@@ -22,9 +22,21 @@ export class ReservationService {
     try {
       return await this.reservationModel
         .find()
-        .populate(['userId', 'reservationHour', 'serviceType']);
+        .populate(['userId', 'reservationHour', 'serviceType'])
+        .sort({ createdAt: -1 });
     } catch (error) {
       throw new Error(`Could not fetch reservations: ${error.message}`);
+    }
+  }
+
+  async userReservations(userId: string) {
+    try {
+      return await this.reservationModel
+        .find({ userId: userId })
+        .populate(['userId', 'reservationHour', 'serviceType'])
+        .sort({ createdAt: -1 });
+    } catch (error) {
+      throw new Error(`Could not fetch user reservations: ${error.message}`);
     }
   }
 

@@ -14,10 +14,14 @@ import { OrderModule } from './order/order.module';
 import { NotificationModule } from './notification/notification.module';
 import { ReservationModule } from './reservation/reservation.module';
 import { ServiceTypeModule } from './service-type/service-type.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { TasksModule } from './tasks/tasks.module';
+
 const config: ConfigService = new ConfigService();
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
@@ -44,6 +48,7 @@ const config: ConfigService = new ConfigService();
     NotificationModule,
     ReservationModule,
     ServiceTypeModule,
+    TasksModule,
   ],
   controllers: [],
   providers: [],

@@ -118,6 +118,7 @@ export class ProductResolver {
     files, // Test upload file
   ) {
     try {
+      console.log(files);
       let imgs = [];
       // for (let i = 0; i < fileList.length; i++) {
       //   const img = fileList[i];

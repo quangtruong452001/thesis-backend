@@ -1,6 +1,5 @@
 import nodemailer from 'nodemailer';
 import { google } from 'googleapis';
-
 const CLIENT_ID =
   '95919188152-vvksvjvbafh5p0lfp03go6fv9ri743ko.apps.googleusercontent.com';
 const CLIENT_SECRET = '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';

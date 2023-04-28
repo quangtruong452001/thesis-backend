@@ -2,6 +2,7 @@ extend type Query {
   "Query service type"
   serviceTypes: [ServiceType!]!
   serviceType(id: ID!): ServiceType
+  recommendService: [ServiceType!]!
 }
 
 extend type Mutation {

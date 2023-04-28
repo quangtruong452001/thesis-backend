@@ -124,7 +124,7 @@ export class OrderService {
   }
   async getLatestOrder() {
     try {
-      return await this.orderModel.find().sort({ createdAt: -1 }).limit(5);
+      return await this.orderModel.find({ status: 'PENDING' });
     } catch (error) {
       console.log(error);
       throw error;

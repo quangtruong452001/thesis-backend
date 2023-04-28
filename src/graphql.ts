@@ -329,6 +329,8 @@ export abstract class IQuery {
     abstract serviceTypes(): ServiceType[] | Promise<ServiceType[]>;
 
     abstract serviceType(id: string): Nullable<ServiceType> | Promise<Nullable<ServiceType>>;
+
+    abstract recommendService(): ServiceType[] | Promise<ServiceType[]>;
 }
 
 export class Category {

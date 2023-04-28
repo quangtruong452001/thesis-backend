@@ -8,6 +8,7 @@ import {
   ServiceTypeInput,
   UpdateServiceTypeInput,
 } from 'src/dto/serviceType.dto';
+import { GetUser } from 'src/decorator';
 
 @Resolver('ServiceType')
 export class ServiceTypeResolver {
@@ -36,7 +37,16 @@ export class ServiceTypeResolver {
       }
     }
   }
-
+  @Query('recommendService')
+  async getRecommend(@GetUser() user: any) {
+    try {
+      const userId = user.id;
+      return this.serviceTypeService.recommendServiceType(userId);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
   @Mutation('createServiceType')
   async createServiceType(
     @Args('serviceType') createServiceTypeDto: ServiceTypeInput,

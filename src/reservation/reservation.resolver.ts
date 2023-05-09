@@ -111,7 +111,7 @@ export class ReservationResolver {
         const notification = await this.notificationService.create(
           notificationDto,
         );
-        console.log(notification);
+        // console.log(notification);
         await this.pubSub.publish('newReservationNotification', {
           newReservationNotification: notification,
         });

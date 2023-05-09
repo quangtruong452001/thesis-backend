@@ -204,13 +204,13 @@ export class ReservationService {
         },
         {},
       );
-
+      console.log('similarities: ', similarities);
       // Sort other users by decreasing similarity and select the top k
       const k = 5;
       const similarUsers = Object.keys(similarities)
         .sort((a, b) => similarities[b] - similarities[a])
         .slice(0, k);
-
+      console.log('similarUsers', similarUsers);
       // For each service type not used by the target user, calculate a weighted sum of the service types used by the top k similar users
       const usedServiceTypes = new Set(
         targetUserReservations.map((reservation) => reservation.serviceType),

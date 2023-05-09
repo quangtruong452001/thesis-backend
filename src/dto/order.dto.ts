@@ -14,7 +14,7 @@ enum OrderStatus {
   CONFIRMED = 'CONFIRMED',
   FINISHED = 'FINISHED',
   RETURNED = 'RETURNED',
-  CANCELED = 'CANCELED',
+  CANCELLED = 'CANCELLED',
 }
 
 class CartItemInput {

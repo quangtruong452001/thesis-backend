@@ -34,7 +34,7 @@ export class ReservationService {
       return await this.reservationModel
         .find({ userId: userId })
         .populate(['userId', 'reservationHour', 'serviceType'])
-        .sort({ createdAt: -1 });
+        .sort({ reservationDate: -1 });
     } catch (error) {
       throw new Error(`Could not fetch user reservations: ${error.message}`);
     }
@@ -174,6 +174,7 @@ export class ReservationService {
       throw error;
     }
   }
+<<<<<<< HEAD
 
   async assignReservation(staffId: string, reservationId: string) {
     try {
@@ -185,6 +186,74 @@ export class ReservationService {
       return reservation;
     } catch (error) {
       throw error;
+=======
+  // async getRecommend(userId: string) {
+  //   try {
+  //     return '639d74634fcc337e576abc49';
+  //   } catch (error) {
+  //     console.log(error);
+  //     throw error;
+  //   }
+  // }
+  async getRecommend(userId: string) {
+    try {
+      const reservations = await this.reservationModel.find();
+      const targetUserReservations = reservations.filter(
+        (reservation) => reservation.userId === userId,
+      );
+
+      //Calculate the Jaccard similarity
+      const similarities = reservations.reduce<{ [userId: string]: number }>(
+        (acc, reservation) => {
+          if (reservation.userId !== userId) {
+            const intersection = targetUserReservations.filter(
+              (r) => reservation.serviceType === r.serviceType,
+            );
+            const union = [...targetUserReservations, reservation];
+            const similarity = intersection.length / union.length;
+            acc[reservation.userId] = similarity;
+          }
+          return acc;
+        },
+        {},
+      );
+      console.log("similarities: ", similarities);
+      // Sort other users by decreasing similarity and select the top k
+      const k = 5;
+      const similarUsers = Object.keys(similarities)
+        .sort((a, b) => similarities[b] - similarities[a])
+        .slice(0, k);
+      console.log("similarUsers",similarUsers);
+      // For each service type not used by the target user, calculate a weighted sum of the service types used by the top k similar users
+      const usedServiceTypes = new Set(
+        targetUserReservations.map((reservation) => reservation.serviceType),
+      );
+      const serviceTypeScores = reservations.reduce<{
+        [serviceType: string]: number;
+      }>((acc, reservation) => {
+        if (!usedServiceTypes.has(reservation.serviceType)) {
+          const similaritySum = similarUsers.reduce((sum, userId) => {
+            const similarity = similarities[userId];
+            const userReservations = reservations.filter(
+              (r) => r.userId === userId,
+            );
+            const serviceTypeCount = userReservations.filter(
+              (r) => r.serviceType === reservation.serviceType,
+            ).length;
+            return sum + similarity * serviceTypeCount;
+          }, 0);
+          acc[reservation.serviceType] = similaritySum;
+        }
+        return acc;
+      }, {});
+
+      // Recommend the service type with the highest weighted sum
+      return Object.keys(serviceTypeScores).reduce((a, b) =>
+        serviceTypeScores[a] > serviceTypeScores[b] ? a : b,
+      );
+    } catch (error) {
+      throw new Error(error);
+>>>>>>> b6b4b351b4104e41490e450b571957ea6c423cd0
     }
   }
 }

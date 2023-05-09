@@ -6,12 +6,14 @@ import {
   ServiceTypeInput,
   UpdateServiceTypeInput,
 } from 'src/dto/serviceType.dto';
-
+import { ReservationService } from 'src/reservation/reservation.service';
 @Injectable()
 export class serviceTypeService {
   constructor(
     @InjectModel(ServiceType.name)
     private serviceTypeModel: Model<ServiceTypeDocument>,
+    // @InjectModel(ServiceType.name)
+    private reservationService: ReservationService,
   ) {}
 
   async findAll() {
@@ -71,6 +73,20 @@ export class serviceTypeService {
       throw new Error(
         `Could not delete serviceType with id ${id}: ${error.message}`,
       );
+    }
+  }
+  async recommendServiceType(id: string) {
+    try {
+      // console.log('userid', id);
+      const recommend = await this.reservationService.getRecommend(id);
+      console.log('recommend: ', recommend);
+      const recommendServices = await this.serviceTypeModel.findById(recommend);
+      const other = await this.serviceTypeModel.find({
+        _id: { $nin: [recommend] },
+      });
+      return [recommendServices, ...other];
+    } catch (error) {
+      throw new Error(error.message);
     }
   }
 }

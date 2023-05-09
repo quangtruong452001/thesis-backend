@@ -127,4 +127,7 @@ export class UpdateReservationInput {
   @IsOptional()
   @IsEnum(ReservationStatus)
   status: ReservationStatus;
+
+  // @IsOptional()
+  // staffId: string;
 }

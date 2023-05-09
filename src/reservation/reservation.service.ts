@@ -174,6 +174,19 @@ export class ReservationService {
       throw error;
     }
   }
+<<<<<<< HEAD
+
+  async assignReservation(staffId: string, reservationId: string) {
+    try {
+      const reservation = await this.reservationModel.findByIdAndUpdate(
+        reservationId,
+        { staffId: staffId },
+        { new: true },
+      );
+      return reservation;
+    } catch (error) {
+      throw error;
+=======
   // async getRecommend(userId: string) {
   //   try {
   //     return '639d74634fcc337e576abc49';
@@ -240,6 +253,7 @@ export class ReservationService {
       );
     } catch (error) {
       throw new Error(error);
+>>>>>>> b6b4b351b4104e41490e450b571957ea6c423cd0
     }
   }
 }

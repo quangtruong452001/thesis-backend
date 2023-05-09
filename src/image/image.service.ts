@@ -98,7 +98,7 @@ export class ImageService {
     });
   }
   async uploadImages(files: any) {
-    let fileList = [];
+    const fileList = [];
     for (let i = 0; i < files.length; i++) {
       const file = await this.uploadImage(files[i]);
       fileList.push(file);

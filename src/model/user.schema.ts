@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
+import { Image } from './image.schema';
+// import { Reservation } from 'src/graphql';
 
 export type UserDocument = User & Document;
 
@@ -17,7 +19,7 @@ export class User {
   @Prop({ required: true })
   lastName: string;
 
-  @Prop({ enum: ['USER', 'ADMIN'], default: 'USER' })
+  @Prop({ enum: ['USER', 'ADMIN', 'STAFF'], default: 'USER' })
   role: string;
 
   @Prop({ default: 0 })
@@ -37,6 +39,28 @@ export class User {
 
   @Prop({ default: 0 })
   successfulOrders: number;
+
+  // prop for staff
+  @Prop({
+    type: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Image',
+    },
+  })
+  avatar: Image;
+
+  @Prop()
+  phone: string;
+
+  // @Prop({
+  //   type: [
+  //     {
+  //       type: mongoose.Schema.Types.ObjectId,
+  //       ref: 'Reservation',
+  //     },
+  //   ],
+  // })
+  // reservationsAssign: Reservation[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

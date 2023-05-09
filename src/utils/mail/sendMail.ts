@@ -1,8 +1,5 @@
 import { google } from 'googleapis';
-<<<<<<< HEAD
 import nodemailer, { TransportOptions } from 'nodemailer';
-=======
->>>>>>> b6b4b351b4104e41490e450b571957ea6c423cd0
 const CLIENT_ID =
   '95919188152-vvksvjvbafh5p0lfp03go6fv9ri743ko.apps.googleusercontent.com';
 const CLIENT_SECRET = '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';

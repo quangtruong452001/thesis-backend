@@ -66,4 +66,14 @@ export class UserResolver {
       throw error;
     }
   }
+
+  @Mutation('deleteUser')
+  async deleteUser(@Args('id') id: string) {
+    try {
+      return this.userService.deleteUser(id);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 }

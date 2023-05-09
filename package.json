@@ -30,6 +30,7 @@
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/schedule": "^2.2.0",
+    "@types/nodemailer": "^6.4.7",
     "apollo-server-express": "^3.11.1",
     "apollo-upload-client": "^17.0.0",
     "argon2": "^0.30.3",

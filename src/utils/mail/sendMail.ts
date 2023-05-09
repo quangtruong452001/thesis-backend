@@ -1,5 +1,5 @@
-import nodemailer from 'nodemailer';
 import { google } from 'googleapis';
+import nodemailer, { TransportOptions } from 'nodemailer';
 const CLIENT_ID =
   '95919188152-vvksvjvbafh5p0lfp03go6fv9ri743ko.apps.googleusercontent.com';
 const CLIENT_SECRET = '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';
@@ -17,8 +17,11 @@ oAuth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
 export const sendMail = async (context: any) => {
   try {
     const accessToken = await oAuth2Client.getAccessToken();
-    const transporter = await nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
       service: 'gmail',
+      // host: 'smtp.gmail.com',
+      // port: 465,
+      // secure: true,
       auth: {
         type: 'OAuth2',
         user: 'nhuv5576@gmail.com',
@@ -32,7 +35,7 @@ export const sendMail = async (context: any) => {
       tls: {
         rejectUnauthorized: false,
       },
-    });
+    } as TransportOptions);
 
     const info = await transporter.sendMail(context);
 

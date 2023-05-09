@@ -149,6 +149,23 @@ export class ReservationResolver {
     }
   }
 
+  @Mutation('assignReservation')
+  async assignReservation(
+    @Args('staffId', { type: () => ID }) staffId: string,
+    @Args('reservationId', { type: () => ID }) reservationId: string,
+  ) {
+    try {
+      const reservation = await this.reservationService.assignReservation(
+        staffId,
+        reservationId,
+      );
+      return reservation;
+    } catch (error) {
+      throw new Error(`Failed to assign reservation: ${error.message}`);
+      console.log(error);
+    }
+  }
+
   @Subscription(
     'newReservationNotification',
     //   , {

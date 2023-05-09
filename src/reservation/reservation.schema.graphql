@@ -10,12 +10,15 @@ extend type Query {
   totalReservationSales: Sales
   todayReservations: [Reservation]
   getHours: [Hour]
+
 }
 
 extend type Mutation {
   createReservation(reservation: ReservationInput!): Reservation!
   updateReservation(id: ID!, reservation: UpdateReservationInput!): Reservation!
   deleteReservation(id: ID!): Reservation
+  "Assign a reservation to a staff member "
+  assignReservation(staffId: ID!, reservationId: ID!): User
 }
 type Sales {
   totalSales: Float
@@ -35,6 +38,7 @@ type Reservation {
   location: Location!
   note: String
   status: String!
+  staffId: String
 }
 
 #type ReservationCreate {
@@ -109,6 +113,7 @@ input UpdateReservationInput {
   location: LocationInput
   note: String
   status: ReservationStatus
+  staffId: String
 }
 
 input LocationInput {

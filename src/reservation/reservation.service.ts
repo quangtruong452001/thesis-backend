@@ -174,4 +174,17 @@ export class ReservationService {
       throw error;
     }
   }
+
+  async assignReservation(staffId: string, reservationId: string) {
+    try {
+      const reservation = await this.reservationModel.findByIdAndUpdate(
+        reservationId,
+        { staffId: staffId },
+        { new: true },
+      );
+      return reservation;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

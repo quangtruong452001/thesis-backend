@@ -34,7 +34,8 @@ export enum ReservationStatus {
 
 export enum UserRole {
     ADMIN = "ADMIN",
-    USER = "USER"
+    USER = "USER",
+    STAFF = "STAFF"
 }
 
 export class AuthInput {
@@ -172,6 +173,7 @@ export class UpdateReservationInput {
     location?: Nullable<LocationInput>;
     note?: Nullable<string>;
     status?: Nullable<ReservationStatus>;
+    staffId?: Nullable<string>;
 }
 
 export class LocationInput {
@@ -209,9 +211,18 @@ export class UpdateServiceTypeInput {
 }
 
 export class UserInput {
-    name: string;
+    firstName: string;
+    lastName: string;
     email: string;
     role?: Nullable<UserRole>;
+    password: string;
+}
+
+export class StaffInput {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
     password: string;
 }
 
@@ -269,11 +280,17 @@ export abstract class IMutation {
 
     abstract deleteReservation(id: string): Nullable<Reservation> | Promise<Nullable<Reservation>>;
 
+    abstract assignReservation(staffId: string, reservationId: string): Nullable<User> | Promise<Nullable<User>>;
+
     abstract createServiceType(serviceType: ServiceTypeInput): ServiceType | Promise<ServiceType>;
 
     abstract updateServiceType(id: string, serviceType: UpdateServiceTypeInput): ServiceType | Promise<ServiceType>;
 
     abstract deleteServiceType(id: string): Nullable<ServiceType> | Promise<Nullable<ServiceType>>;
+
+    abstract createStaff(data?: Nullable<StaffInput>): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract deleteUser(id: string): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export class AuthPayload {
@@ -329,6 +346,12 @@ export abstract class IQuery {
     abstract serviceTypes(): ServiceType[] | Promise<ServiceType[]>;
 
     abstract serviceType(id: string): Nullable<ServiceType> | Promise<Nullable<ServiceType>>;
+
+    abstract users(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
+
+    abstract user(id: string): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract staffs(): Nullable<Nullable<Staff>[]> | Promise<Nullable<Nullable<Staff>[]>>;
 }
 
 export class Category {
@@ -517,6 +540,7 @@ export class Reservation {
     location: Location;
     note?: Nullable<string>;
     status: string;
+    staffId?: Nullable<string>;
 }
 
 export class Location {
@@ -553,6 +577,15 @@ export class User {
     lastName: string;
     email: string;
     role?: Nullable<string>;
+    avatar?: Nullable<Image>;
+}
+
+export class Staff {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    avatar?: Nullable<Image>;
 }
 
 export type DateTime = any;

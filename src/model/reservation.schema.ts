@@ -72,6 +72,14 @@ export class Reservation {
     required: true,
   })
   status: string;
+
+  // assign staff to reservation
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null,
+  })
+  staffId: string;
 }
 
 export const ReservationSchema = SchemaFactory.createForClass(Reservation);

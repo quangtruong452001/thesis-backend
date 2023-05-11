@@ -131,8 +131,9 @@ export class ProductResolver {
       //   // console.log(image);
       //   imgs.push(image.id);
       for (const file of files) {
+        console.log('file', file);
         const fileUp = await file.file;
-        // console.log('fileUp', fileUp);
+        console.log('fileUp', fileUp);
         const img = await this.imageService.uploadImage(fileUp);
         const image = await this.imageService.createImage(img);
         imgs.push(image.id);
@@ -169,11 +170,16 @@ export class ProductResolver {
         const image = await this.imageService.createImage(img);
         imgs.push(image.id);
       }
-      const upProduct = {
-        ...input,
-        images: imgs,
-      };
-      return await this.productService.updateProduct(id, upProduct);
+      if (imgs.length > 0) {
+        const upProduct = {
+          ...input,
+          images: imgs,
+        };
+        return await this.productService.updateProduct(id, upProduct);
+      } else {
+        const upProduct = input;
+        return await this.productService.updateProduct(id, upProduct);
+      }
     } catch (error) {
       console.error(error);
       throw error;

@@ -219,11 +219,11 @@ export class UserInput {
 }
 
 export class StaffInput {
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-    password: string;
+    firstName?: Nullable<string>;
+    lastName?: Nullable<string>;
+    email?: Nullable<string>;
+    phone?: Nullable<string>;
+    password?: Nullable<string>;
 }
 
 export interface MutationOf {
@@ -288,9 +288,11 @@ export abstract class IMutation {
 
     abstract deleteServiceType(id: string): Nullable<ServiceType> | Promise<Nullable<ServiceType>>;
 
-    abstract createStaff(data?: Nullable<StaffInput>): Nullable<User> | Promise<Nullable<User>>;
+    abstract createStaff(data: StaffInput, files?: Nullable<Nullable<Upload>[]>): Nullable<User> | Promise<Nullable<User>>;
 
     abstract deleteUser(id: string): Nullable<User> | Promise<Nullable<User>>;
+
+    abstract updateUser(id: string, input?: Nullable<StaffInput>, files?: Nullable<Nullable<Upload>[]>): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export class AuthPayload {
@@ -378,7 +380,7 @@ export class Hour {
 
 export class Image {
     id?: Nullable<string>;
-    url: string;
+    url?: Nullable<string>;
     image_name?: Nullable<string>;
     createdDay?: Nullable<DateTime>;
 }
@@ -579,6 +581,7 @@ export class User {
     lastName: string;
     email: string;
     role?: Nullable<string>;
+    phone?: Nullable<string>;
     avatar?: Nullable<Image>;
 }
 

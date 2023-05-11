@@ -22,32 +22,30 @@ export class User {
   @Prop({ enum: ['USER', 'ADMIN', 'STAFF'], default: 'USER' })
   role: string;
 
-  @Prop({ default: 0 })
-  canceledAppointments: number;
+  // @Prop({ default: 0 })
+  // canceledAppointments: number;
 
-  @Prop({ default: 0 })
-  canceledOrders: number;
+  // @Prop({ default: 0 })
+  // canceledOrders: number;
 
-  @Prop({ default: 0 })
-  orderCount: number;
+  // @Prop({ default: 0 })
+  // orderCount: number;
 
-  @Prop({ default: 0 })
-  reservationCount: number;
+  // @Prop({ default: 0 })
+  // reservationCount: number;
 
-  @Prop({ default: 0 })
-  successfulAppointments: number;
+  // @Prop({ default: 0 })
+  // successfulAppointments: number;
 
-  @Prop({ default: 0 })
-  successfulOrders: number;
+  // @Prop({ default: 0 })
+  // successfulOrders: number;
 
   // prop for staff
   @Prop({
-    type: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Image',
-    },
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Image',
   })
-  avatar: Image;
+  avatar: string;
 
   @Prop()
   phone: string;

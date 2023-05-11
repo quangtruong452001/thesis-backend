@@ -2,6 +2,12 @@ import { ReservationService } from '../reservation/reservation.service';
 import { UserService } from './user.service';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { ImageService } from '../image/image.service';
+import {
+  CreateUserDto,
+  CreateUserInput,
+  UpdateUserDto,
+  UpdateUserInput,
+} from 'src/dto/user.dto';
 @Resolver('User')
 export class UserResolver {
   constructor(
@@ -33,7 +39,7 @@ export class UserResolver {
   @Query('staffs')
   async staffs() {
     try {
-      return this.userService.finds({ role: 'staff' });
+      return this.userService.finds({ role: 'STAFF' });
     } catch (error) {
       console.log(error);
       throw error;
@@ -42,28 +48,74 @@ export class UserResolver {
 
   @Mutation('createStaff')
   async createStaff(
-    @Args('input') input: any,
+    @Args('data') input: CreateUserInput,
     @Args({
-      name: 'file',
+      name: 'files',
       type: async () => {
         return (await import('graphql-upload/GraphQLUpload.mjs')).default;
       },
     })
-    file,
+    files,
   ) {
     try {
-      if (file.file) {
+      let avatar;
+      console.log('FILES', files);
+      for (const file of files) {
+        console.log('file', file);
         const fileUp = await file.file;
-        // console.log('fileUp', fileUp);
+        console.log('fileUp', fileUp);
         const img = await this.imageService.uploadImage(fileUp);
         const image = await this.imageService.createImage(img);
-        input.avatar = image.id;
+        avatar = image.id;
       }
-
-      return this.userService.createStaff(input);
+      const newInput: CreateUserDto = {
+        ...input,
+        avatar: avatar,
+      };
+      console.log(newInput);
+      return this.userService.createStaff(newInput);
     } catch (error) {
       console.log(error);
       throw error;
+    }
+  }
+
+  @Mutation('updateUser')
+  async updateUser(
+    @Args('id') id: string,
+    @Args('input') input: UpdateUserInput,
+    @Args({
+      name: 'files',
+      type: async () => {
+        return (await import('graphql-upload/GraphQLUpload.mjs')).default;
+      },
+    })
+    files,
+  ) {
+    try {
+      let avatar;
+      console.log('FILES', input, id);
+      for (const file of files) {
+        console.log('file', file);
+        const fileUp = await file.file;
+        console.log('fileUp', fileUp);
+        const img = await this.imageService.uploadImage(fileUp);
+        const image = await this.imageService.createImage(img);
+        avatar = image.id;
+      }
+      if (avatar) {
+        const newInput: UpdateUserDto = {
+          ...input,
+          avatar: avatar,
+        };
+        const user = await this.userService.updateUser(id, newInput);
+        return user;
+      } else {
+        const user = await this.userService.updateUser(id, input);
+        return user;
+      }
+    } catch (error) {
+      throw new Error(`Failed to update user: ${error.message}`);
     }
   }
 

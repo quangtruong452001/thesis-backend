@@ -29,6 +29,7 @@ type Staff {
   firstName: String!
   lastName: String!
   email: String!
+  phone: String
   #    role: String
   avatar: Image
   #    reservationsAssign: [Reservation]

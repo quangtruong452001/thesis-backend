@@ -419,7 +419,7 @@ export class OrderSales {
 }
 
 export class Images {
-    _id: string;
+    id: string;
     image_name: string;
     url: string;
 }
@@ -447,7 +447,7 @@ export class Info {
 }
 
 export class Order {
-    _id: string;
+    id: string;
     cart: CartItem[];
     bill: Info;
     user?: Nullable<User>;
@@ -461,7 +461,7 @@ export class Order {
 }
 
 export class Payment {
-    _id: string;
+    id: string;
     externalId: string;
     payerFistName: string;
     payerLastName: string;
@@ -544,7 +544,7 @@ export class Reservation {
     location: Location;
     note?: Nullable<string>;
     status: string;
-    staffId?: Nullable<string>;
+    staffId?: Nullable<User>;
 }
 
 export class Location {
@@ -590,6 +590,7 @@ export class Staff {
     firstName: string;
     lastName: string;
     email: string;
+    phone?: Nullable<string>;
     avatar?: Nullable<Image>;
 }
 

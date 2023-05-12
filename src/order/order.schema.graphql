@@ -38,7 +38,7 @@ type OrderSales {
   totalSales: Float
 }
 type Images {
-  _id: ID!
+  id: ID!
   image_name: String!
   url: String!
 }
@@ -65,7 +65,7 @@ type Info {
 }
 
 type Order {
-  _id: ID!
+  id: ID!
   cart: [CartItem!]!
   bill: Info!
   user: User
@@ -78,7 +78,7 @@ type Order {
   updatedAt: DateTime
 }
 type Payment {
-  _id: ID!
+  id: ID!
   externalId: String!
   payerFistName: String!
   payerLastName: String!

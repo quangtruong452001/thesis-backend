@@ -23,10 +23,10 @@ export class User {
   role: string;
 
   // @Prop({ default: 0 })
-  // canceledAppointments: number;
+  // CANCELLEDAppointments: number;
 
   // @Prop({ default: 0 })
-  // canceledOrders: number;
+  // CANCELLEDOrders: number;
 
   // @Prop({ default: 0 })
   // orderCount: number;

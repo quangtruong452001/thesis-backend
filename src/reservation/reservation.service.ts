@@ -22,7 +22,12 @@ export class ReservationService {
     try {
       return await this.reservationModel
         .find()
-        .populate(['userId', 'reservationHour', 'serviceType'])
+        .populate([
+          'userId',
+          'reservationHour',
+          'serviceType',
+          { path: 'staffId', populate: { path: 'avatar' } },
+        ])
         .sort({ createdAt: -1 });
     } catch (error) {
       throw new Error(`Could not fetch reservations: ${error.message}`);
@@ -33,7 +38,12 @@ export class ReservationService {
     try {
       return await this.reservationModel
         .find({ userId: userId })
-        .populate(['userId', 'reservationHour', 'serviceType'])
+        .populate([
+          'userId',
+          'reservationHour',
+          'serviceType',
+          { path: 'staffId', populate: { path: 'avatar' } },
+        ])
         .sort({ reservationDate: -1 });
     } catch (error) {
       throw new Error(`Could not fetch user reservations: ${error.message}`);
@@ -44,7 +54,12 @@ export class ReservationService {
     try {
       return await this.reservationModel
         .findById(id)
-        .populate(['userId', 'reservationHour', 'serviceType']);
+        .populate([
+          'userId',
+          'reservationHour',
+          'serviceType',
+          { path: 'staffId', populate: { path: 'avatar' } },
+        ]);
     } catch (error) {
       throw new Error(
         `Could not fetch reservation with id ${id}: ${error.message}`,
@@ -158,9 +173,12 @@ export class ReservationService {
             $lt: new Date(new Date().setHours(23, 59, 59)),
           },
         })
-        .populate('userId')
-        .populate('reservationHour')
-        .populate('serviceType');
+        .populate([
+          'userId',
+          'reservationHour',
+          'serviceType',
+          { path: 'staffId', populate: { path: 'avatar' } },
+        ]);
     } catch (error) {
       console.log(error);
       throw error;

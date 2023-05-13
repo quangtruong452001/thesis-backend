@@ -79,7 +79,7 @@ export class serviceTypeService {
     try {
       // console.log('userid', id);
       const recommend = await this.reservationService.getRecommend(id);
-      console.log('recommend: ', recommend);
+      // console.log('recommend: ', recommend);
       const recommendServices = await this.serviceTypeModel.findById(recommend);
       const other = await this.serviceTypeModel.find({
         _id: { $nin: [recommend] },

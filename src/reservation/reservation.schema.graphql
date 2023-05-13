@@ -38,7 +38,7 @@ type Reservation {
   location: Location!
   note: String
   status: String!
-  staffId: String
+  staffId: User
 }
 
 #type ReservationCreate {

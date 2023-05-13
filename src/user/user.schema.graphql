@@ -1,59 +1,59 @@
-
-extend type Mutation{
-    "Create a new staff member"
-    createStaff(data: StaffInput): User
-    "Delete a user"
-    deleteUser(id: ID!): User
-    #updateUser(id: ID!, input: UserInput): User
-
+extend type Mutation {
+  "Create a new staff member"
+  createStaff(data: StaffInput!, files: [Upload]): User
+  "Delete a user"
+  deleteUser(id: ID!): User
+  updateUser(id: ID!, input: StaffInput, files: [Upload]): User
 }
-extend type Query{
-    "Get all users"
-    users: [User]
-    "Get a user by id"
-    user(id: ID!): User
-    "Get all staff members"
-    staffs: [Staff]
+extend type Query {
+  "Get all users"
+  users: [User]
+  "Get a user by id"
+  user(id: ID!): User
+  "Get all staff members"
+  staffs: [Staff]
 }
 
 type User {
-    id: ID!
-    firstName: String!
-    lastName: String!
-    email: String!
-    role: String
-    avatar: Image
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  role: String
+  phone: String
+  avatar: Image
 }
 
 type Staff {
-    id: ID!
-    firstName: String!
-    lastName: String!
-    email: String!
-#    role: String
-    avatar: Image
-#    reservationsAssign: [Reservation]
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String
+  #    role: String
+  avatar: Image
+  #    reservationsAssign: [Reservation]
 }
 
-input UserInput{
-    firstName: String!
-    lastName: String!
-    email: String!
-    role: UserRole
-    password: String!
+input UserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  role: UserRole
+  password: String!
 }
 
-input StaffInput{
-    firstName: String!
-    lastName: String!
-    email: String!
-    phone: String!
-#    role: UserRole
-    password: String!
+input StaffInput {
+  firstName: String
+  lastName: String
+  email: String
+  phone: String
+  #    role: UserRole
+  password: String
 }
 
-enum UserRole{
-    ADMIN
-    USER
-    STAFF
+enum UserRole {
+  ADMIN
+  USER
+  STAFF
 }

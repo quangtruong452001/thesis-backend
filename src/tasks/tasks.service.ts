@@ -19,10 +19,10 @@ export class TasksService {
     @InjectModel(Hour.name)
     private hourModel: Model<HourDocument>,
   ) {}
-  @Cron('45 * * * * *')
-  handleCron() {
-    console.log('Called when the second is 45');
-  }
+  // @Cron('45 * * * * *')
+  // handleCron() {
+  //   console.log('Called when the second is 45');
+  // }
   // @Interval(10000)
   // handleInterval() {
   //   this.logger.debug('Called every 10 seconds');
@@ -86,7 +86,7 @@ export class TasksService {
       const r: any = reservations[i];
       if (r.reservationHour.time < 12 && r.status == 'BOOKED') {
         await this.reservationModel.findByIdAndUpdate(r._id, {
-          status: 'CANCELED',
+          status: 'CANCELLED',
         });
         const context = generateBookingLink(r);
         await sendMail(context);
@@ -121,7 +121,7 @@ export class TasksService {
       const r: any = reservations[i];
       if (r.reservationHour.time < 21 && r.status == 'BOOKED') {
         await this.reservationModel.findByIdAndUpdate(r._id, {
-          status: 'CANCELED',
+          status: 'CANCELLED',
         });
         const context = generateBookingLink(r);
         await sendMail(context);

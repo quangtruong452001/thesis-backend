@@ -3,6 +3,7 @@ import mongoose, { Document } from 'mongoose';
 import { Info, InfoSchema, Cart, CartSchema } from './common.schema';
 
 import * as paginate from 'mongoose-paginate-v2';
+import { Product, ProductSchema } from './product.schema';
 
 export type OrderDocument = Order & Document;
 
@@ -44,4 +45,8 @@ export class Order {
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);
-OrderSchema.plugin(paginate);
+function applyPaginatePlugin(schema: mongoose.Schema<Order>) {
+  schema.plugin(paginate);
+}
+applyPaginatePlugin(OrderSchema);
+// OrderSchema.plugin(paginate);

@@ -58,4 +58,10 @@ export class Product {
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
-ProductSchema.plugin(paginate);
+
+function applyPaginatePlugin(schema: mongoose.Schema<Product>) {
+  schema.plugin(paginate);
+}
+applyPaginatePlugin(ProductSchema);
+
+// ProductSchema.plugin(paginate);

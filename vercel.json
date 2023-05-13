@@ -1,19 +1,15 @@
 {
   "version": 2,
-  "env": {
-    "DATABASE_URL": "mongodb+srv://namvo:DSwjGDspr0m6Lh9r@e-commerce.yx9dq1w.mongodb.net/petstore?retryWrites=true&w=majority",
-    "JWT_SECRET": "super-secret"
-  },
   "builds": [
     {
-      "src": "src/main.ts",
+      "src": "dist/main.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "src/main.ts",
+      "dest": "dist/main.js"
     }
-  ]
+  ],
 }

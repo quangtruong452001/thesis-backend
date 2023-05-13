@@ -1,8 +1,4 @@
 {
   "version": 2,
-  "env": {
-    "DATABASE_URL": "mongodb+srv://namvo:DSwjGDspr0m6Lh9r@e-commerce.yx9dq1w.mongodb.net/petstore?retryWrites=true",
-    "JWT_SECRET": "super-secret"
-  },
   "rewrites": [{ "source": "/(.*)", "destination": "/src" }]
 }

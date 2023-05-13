@@ -355,6 +355,8 @@ export abstract class IQuery {
 
     abstract user(id: string): Nullable<User> | Promise<Nullable<User>>;
 
+    abstract getAccount(): Nullable<User> | Promise<Nullable<User>>;
+
     abstract staffs(): Nullable<Nullable<Staff>[]> | Promise<Nullable<Nullable<Staff>[]>>;
 }
 

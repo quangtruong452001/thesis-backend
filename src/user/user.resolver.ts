@@ -8,6 +8,7 @@ import {
   UpdateUserDto,
   UpdateUserInput,
 } from 'src/dto/user.dto';
+import { GetUser } from 'src/decorator';
 @Resolver('User')
 export class UserResolver {
   constructor(
@@ -35,7 +36,16 @@ export class UserResolver {
       throw error;
     }
   }
-
+  @Query('getAccount')
+  async getAccount(@GetUser() user: any) {
+    try {
+      const userId = user.id;
+      return this.userService.user(userId);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
   @Query('staffs')
   async staffs() {
     try {

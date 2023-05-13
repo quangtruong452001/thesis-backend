@@ -10,6 +10,8 @@ extend type Query {
   users: [User]
   "Get a user by id"
   user(id: ID!): User
+  "Get information of the Account"
+  getAccount: User
   "Get all staff members"
   staffs: [Staff]
 }

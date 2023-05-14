@@ -6,7 +6,7 @@ import { OrderService } from './order.service';
 import { OrderResolver } from './order.resolver';
 import { NotificationService } from '../notification/notification.service';
 import { Notification, NotificationSchema } from '../model/notification.schema';
-import { Payment, PaymentSchema } from 'src/model/payment.schema';
+import { Payment, PaymentSchema } from '../model/payment.schema';
 
 @Module({
   imports: [

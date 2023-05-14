@@ -7,7 +7,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { OrderDocument, Order } from '../model/order.schema';
 import { CreateOrderInput, UpdateOrderInput } from '../dto/order.dto';
 import { PaymentDocument, Payment } from '../model/payment.schema';
-import { createPaymentInput } from 'src/dto/payment.dto';
+import { createPaymentInput } from '../dto/payment.dto';
 interface Itemset {
   items: string[];
   support?: number;
@@ -18,9 +18,8 @@ export class OrderService {
     @InjectModel(Order.name)
     private orderModel: Model<OrderDocument>,
     @InjectModel(Payment.name)
-    private paymentModel: Model<PaymentDocument>,
-  ) // @InjectModel(Order.name)
-  // private PaginationOrderModel: PaginateModel<OrderDocument>,
+    private paymentModel: Model<PaymentDocument>, // @InjectModel(Order.name)
+  ) // private PaginationOrderModel: PaginateModel<OrderDocument>,
   {}
   // async orders(options: any, page: number, limit: number, sorts: string) {
   //   try {

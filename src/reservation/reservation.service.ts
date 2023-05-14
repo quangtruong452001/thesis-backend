@@ -6,7 +6,7 @@ import {
   ReservationInput,
   UpdateReservationInput,
 } from '../dto/reservation.dto';
-import { Hour, HourDocument } from 'src/model/hour.schema';
+import { Hour, HourDocument } from '../model/hour.schema';
 
 @Injectable()
 export class ReservationService {

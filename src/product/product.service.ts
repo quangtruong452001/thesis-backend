@@ -9,7 +9,7 @@ import {
 import { Product, ProductDocument } from '../model/product.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateProductDto, UpdateProductDto } from '../dto/product.dto';
-import { OrderService } from 'src/order/order.service';
+import { OrderService } from '../order/order.service';
 // import { ConfigService } from '@nestjs/config';
 
 // import { ProductDto } from './dto/product.dto';

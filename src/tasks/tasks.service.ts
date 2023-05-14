@@ -19,10 +19,10 @@ export class TasksService {
     @InjectModel(Hour.name)
     private hourModel: Model<HourDocument>,
   ) {}
-  // @Cron('45 * * * * *')
-  // handleCron() {
-  //   console.log('Called when the second is 45');
-  // }
+  @Cron('45 * * * * *')
+  handleCron() {
+    console.log('Called when the second is 45');
+  }
   // @Interval(10000)
   // handleInterval() {
   //   this.logger.debug('Called every 10 seconds');

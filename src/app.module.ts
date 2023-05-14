@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { join } from 'path';
+// import { join } from 'path';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
@@ -16,7 +16,6 @@ import { ReservationModule } from './reservation/reservation.module';
 import { ServiceTypeModule } from './service-type/service-type.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TasksModule } from './tasks/tasks.module';
-
 const config: ConfigService = new ConfigService();
 
 @Module({

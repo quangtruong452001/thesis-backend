@@ -309,15 +309,11 @@ export abstract class IQuery {
 
     abstract countIsRead(): Nullable<number> | Promise<Nullable<number>>;
 
-    abstract orders(page?: Nullable<number>, limit?: Nullable<number>, sort?: Nullable<string>, filters?: Nullable<OrderFilter>): Nullable<OrderPagination> | Promise<Nullable<OrderPagination>>;
-
     abstract order(id: string): Nullable<Order> | Promise<Nullable<Order>>;
 
     abstract totalOrderandSales(): Nullable<OrderSales> | Promise<Nullable<OrderSales>>;
 
     abstract latestOrders(): Nullable<Nullable<Order>[]> | Promise<Nullable<Nullable<Order>[]>>;
-
-    abstract products(page?: Nullable<number>, limit?: Nullable<number>, sort?: Nullable<string>, filters?: Nullable<ProductFilter>): Nullable<ProductPagination> | Promise<Nullable<ProductPagination>>;
 
     abstract allProducts(filters?: Nullable<ProductFilter>): Nullable<ProductPagination> | Promise<Nullable<ProductPagination>>;
 

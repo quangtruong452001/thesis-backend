@@ -3,12 +3,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Product, ProductSchema } from '../model/product.schema';
 import { Category, CategorySchema } from '../model/category.schema';
 import { ProductService } from '../product/product.service';
-import { ProductResolver } from '../product/product.resolver';
+// import { ProductResolver } from '../product/product.resolver';
 import { CategoryService } from './category.service';
 import { CategoryResolver } from './category.resolver';
 import { Order, OrderSchema } from '../model/order.schema';
-import { OrderService } from 'src/order/order.service';
-import { Payment, PaymentSchema } from 'src/model/payment.schema';
+import { OrderService } from '../order/order.service';
+import { Payment, PaymentSchema } from '../model/payment.schema';
 
 @Module({
   imports: [

@@ -7,8 +7,8 @@ import {
 import {
   ServiceTypeInput,
   UpdateServiceTypeInput,
-} from 'src/dto/serviceType.dto';
-import { GetUser } from 'src/decorator';
+} from '../dto/serviceType.dto';
+import { GetUser } from '../decorator';
 
 @Resolver('ServiceType')
 export class ServiceTypeResolver {

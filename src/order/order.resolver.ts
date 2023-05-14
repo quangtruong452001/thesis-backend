@@ -10,7 +10,7 @@ import { GetUser } from '../decorator';
 import { PubSub } from 'graphql-subscriptions';
 import { NotificationService } from '../notification/notification.service';
 import { NotificationDto, notificationType } from '../dto/notification.dto';
-import { createPaymentInput } from 'src/dto/payment.dto';
+import { createPaymentInput } from '../dto/payment.dto';
 
 @Resolver('Order')
 export class OrderResolver {

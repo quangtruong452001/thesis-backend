@@ -3,10 +3,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ServiceType, ServiceTypeSchema } from '../model/serviceType.schema';
 import { serviceTypeService } from './serviceType.service';
 import { ServiceTypeResolver } from './serviceType.resolver';
-import { ReservationService } from 'src/reservation/reservation.service';
-import { Hour, Reservation } from 'src/graphql';
-import { ReservationSchema } from 'src/model/reservation.schema';
-import { HourSchema } from 'src/model/hour.schema';
+import { ReservationService } from '../reservation/reservation.service';
+// import { Hour, Reservation } from '../graphql';
+import { ReservationSchema, Reservation } from '../model/reservation.schema';
+import { HourSchema, Hour } from '../model/hour.schema';
 
 @Module({
   imports: [

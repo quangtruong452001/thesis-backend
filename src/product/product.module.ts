@@ -5,9 +5,9 @@ import { ProductService } from './product.service';
 import { Product, ProductSchema } from '../model/product.schema';
 import { Image, ImageSchema } from '../model/image.schema';
 import { ProductResolver } from './product.resolver';
-import { OrderService } from 'src/order/order.service';
-import { OrderSchema, Order } from 'src/model/order.schema';
-import { Payment, PaymentSchema } from 'src/model/payment.schema';
+import { OrderService } from '../order/order.service';
+import { OrderSchema, Order } from '../model/order.schema';
+import { Payment, PaymentSchema } from '../model/payment.schema';
 import { ImageService } from '../image/image.service';
 
 @Module({

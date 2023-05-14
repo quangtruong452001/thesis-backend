@@ -5,9 +5,9 @@ import {
   CreateProductDto,
   ProductFilters,
   UpdateProductDto,
-} from 'src/dto/product.dto';
-import { sortProduct } from '../utils/config';
-import { CreateProductInput } from 'src/graphql';
+} from '../dto/product.dto';
+// import { sortProduct } from '../utils/config';
+// import { CreateProductInput } from 'src/graphql';
 import { GetUser } from '../decorator';
 import { ImageService } from '../image/image.service';
 @Resolver('Product')
@@ -112,7 +112,7 @@ export class ProductResolver {
   }
   @Mutation('createProduct')
   async createProduct(
-    @Args('product') createProductDto: CreateProductInput,
+    @Args('product') createProductDto: CreateProductDto,
     @Args({
       name: 'files',
       type: async () => {

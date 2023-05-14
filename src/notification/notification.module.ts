@@ -7,7 +7,7 @@ import { Notification, NotificationSchema } from '../model/notification.schema';
 // import { OrderResolver } from "../order/order.resolver";
 import { NotificationService } from './notification.service';
 import { NotificationResolver } from './notification.resolver';
-import { Reservation, ReservationSchema } from 'src/model/reservation.schema';
+import { Reservation, ReservationSchema } from '../model/reservation.schema';
 
 @Module({
   imports: [

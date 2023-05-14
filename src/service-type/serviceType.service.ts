@@ -5,8 +5,8 @@ import { ServiceType, ServiceTypeDocument } from '../model/serviceType.schema';
 import {
   ServiceTypeInput,
   UpdateServiceTypeInput,
-} from 'src/dto/serviceType.dto';
-import { ReservationService } from 'src/reservation/reservation.service';
+} from '../dto/serviceType.dto';
+import { ReservationService } from '../reservation/reservation.service';
 @Injectable()
 export class serviceTypeService {
   constructor(

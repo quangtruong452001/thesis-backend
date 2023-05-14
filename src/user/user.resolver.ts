@@ -7,8 +7,8 @@ import {
   CreateUserInput,
   UpdateUserDto,
   UpdateUserInput,
-} from 'src/dto/user.dto';
-import { GetUser } from 'src/decorator';
+} from '../dto/user.dto';
+import { GetUser } from '../decorator';
 @Resolver('User')
 export class UserResolver {
   constructor(

@@ -17,22 +17,22 @@ export class ProductResolver {
     private readonly imageService: ImageService,
   ) {}
 
-  @Query('products')
-  async products(
-    @Args('filters') filters: ProductFilters,
-    @Args('sort') sort: sortProduct,
-    @Args('limit') limit: number,
-    @Args('page') page: number,
-  ) {
-    try {
-      const options = handleProductFilters(filters);
-      const sorts = handleProductSorts(sort);
-      return this.productService.products(options, page, limit, sorts);
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  }
+  // @Query('products')
+  // async products(
+  //   @Args('filters') filters: ProductFilters,
+  //   @Args('sort') sort: sortProduct,
+  //   @Args('limit') limit: number,
+  //   @Args('page') page: number,
+  // ) {
+  //   try {
+  //     const options = handleProductFilters(filters);
+  //     const sorts = handleProductSorts(sort);
+  //     return this.productService.products(options, page, limit, sorts);
+  //   } catch (error) {
+  //     console.log(error);
+  //     throw error;
+  //   }
+  // }
   @Query('allProducts')
   async getAllProducts(@Args('filters') filters: ProductFilters) {
     try {

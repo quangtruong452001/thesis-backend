@@ -8,13 +8,13 @@ extend type Mutation {
 }
 
 type Query {
-  "Products lists"
-  products(
-    page: Int = 1
-    limit: Int = 9
-    sort: String
-    filters: ProductFilter
-  ): ProductPagination
+#  "Products lists"
+#  products(
+#    page: Int = 1
+#    limit: Int = 9
+#    sort: String
+#    filters: ProductFilter
+#  ): ProductPagination
   "All product"
   allProducts(filters: ProductFilter): ProductPagination
   "Product details"

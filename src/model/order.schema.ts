@@ -45,8 +45,4 @@ export class Order {
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);
-function applyPaginatePlugin(schema: mongoose.Schema<Order>) {
-  schema.plugin(paginate);
-}
-applyPaginatePlugin(OrderSchema);
 // OrderSchema.plugin(paginate);

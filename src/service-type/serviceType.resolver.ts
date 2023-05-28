@@ -24,7 +24,16 @@ export class ServiceTypeResolver {
       console.log(e);
     }
   }
-
+  @Query('getTopService')
+  async getTopService() {
+    try {
+      const data = await this.serviceTypeService.getTopServices();
+      return data;
+    } catch (e) {
+      throw e;
+      console.log(e);
+    }
+  }
   @Query('serviceType')
   async serviceType(@Args('id', { type: () => ID }) id: string) {
     try {

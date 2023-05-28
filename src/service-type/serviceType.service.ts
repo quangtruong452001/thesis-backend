@@ -25,6 +25,25 @@ export class serviceTypeService {
       console.log(e);
     }
   }
+  async getTopServices() {
+    try {
+      const getServices = await this.reservationService.getTopServiceType();
+      const result = [];
+
+      for (const service of getServices) {
+        const data = await this.findOne(service._id);
+        result.push({
+          name: data.name,
+          count: service.count,
+        });
+      }
+
+      return result;
+    } catch (error) {
+      console.error(error);
+      // Handle the error appropriately
+    }
+  }
 
   async findOne(id: string) {
     try {

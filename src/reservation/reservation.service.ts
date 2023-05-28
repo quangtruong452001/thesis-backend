@@ -33,7 +33,15 @@ export class ReservationService {
       throw new Error(`Could not fetch reservations: ${error.message}`);
     }
   }
-
+  async getTopServiceType() {
+    const countServices = await this.reservationModel.aggregate([
+      { $match: { status: { $ne: 'CANCELLED' } } },
+      { $group: { _id: '$serviceType', count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+      { $limit: 3 },
+    ]);
+    return countServices;
+  }
   async userReservations(userId: string) {
     try {
       return await this.reservationModel

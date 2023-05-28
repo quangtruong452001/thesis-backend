@@ -3,6 +3,7 @@ extend type Query {
   serviceTypes: [ServiceType!]!
   serviceType(id: ID!): ServiceType
   recommendService: [ServiceType!]!
+  getTopService: [TopService]
 }
 
 extend type Mutation {
@@ -10,7 +11,10 @@ extend type Mutation {
   updateServiceType(id: ID!, serviceType: UpdateServiceTypeInput!): ServiceType!
   deleteServiceType(id: ID!): ServiceType
 }
-
+type TopService {
+  name: String
+  count: Int
+}
 type ServiceType {
   _id: ID!
   name: String

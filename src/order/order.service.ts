@@ -18,9 +18,8 @@ export class OrderService {
     @InjectModel(Order.name)
     private orderModel: Model<OrderDocument>,
     @InjectModel(Payment.name)
-    private paymentModel: Model<PaymentDocument>, // @InjectModel(Order.name)
-  ) // private PaginationOrderModel: PaginateModel<OrderDocument>,
-  {}
+    private paymentModel: Model<PaymentDocument>, // @InjectModel(Order.name) // private PaginationOrderModel: PaginateModel<OrderDocument>,
+  ) {}
   // async orders(options: any, page: number, limit: number, sorts: string) {
   //   try {
   //     const query = options;

@@ -2,10 +2,7 @@ import {
   // ForbiddenException,
   Injectable,
 } from '@nestjs/common';
-import {
-  Model,
-  // PaginateModel
-} from 'mongoose';
+import { Model, PaginateModel } from 'mongoose';
 import { Product, ProductDocument } from '../model/product.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateProductDto, UpdateProductDto } from '../dto/product.dto';
@@ -18,38 +15,38 @@ export class ProductService {
   constructor(
     @InjectModel(Product.name)
     private productModel: Model<ProductDocument>, // private config: ConfigService,
-    // @InjectModel(Product.name)
-    // private productModelPagination: PaginateModel<ProductDocument>, //private orderService: OrderService,
+    @InjectModel(Product.name)
+    private productModelPagination: PaginateModel<ProductDocument>, //private orderService: OrderService,
     private orderService: OrderService,
   ) {}
 
   // Return list of products base on options
-  // async products(options: any, page?: number, limit?: number, sorts?: any) {
-  //   try {
-  //     const query = options;
-  //     // const products = await this.productModel.paginate(
-  //     //   query,
-  //     //   getDefaultPagingOptions(page, limit, sort),
-  //     // );
-  //     // const products = await this.productModel
-  //     //   .find(options)
-  //     //   .skip((page - 1) * limit)
-  //     //   .limit(limit)
-  //     //   .sort(sort)
-  //     //   .populate(['images', 'categories']);
-  //     sorts.createdAt = -1;
-  //     const data = await this.productModelPagination.paginate(query, {
-  //       page: page,
-  //       limit: limit,
-  //       populate: ['images', 'categories'],
-  //       sort: sorts,
-  //     });
-  //     return data;
-  //   } catch (error) {
-  //     console.log(error);
-  //     throw error;
-  //   }
-  // }
+  async products(options: any, page?: number, limit?: number, sorts?: any) {
+    try {
+      const query = options;
+      // const products = await this.productModel.paginate(
+      //   query,
+      //   getDefaultPagingOptions(page, limit, sort),
+      // );
+      // const products = await this.productModel
+      //   .find(options)
+      //   .skip((page - 1) * limit)
+      //   .limit(limit)
+      //   .sort(sort)
+      //   .populate(['images', 'categories']);
+      sorts.createdAt = -1;
+      const data = await this.productModelPagination.paginate(query, {
+        page: page,
+        limit: limit,
+        populate: ['images', 'categories'],
+        sort: sorts,
+      });
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
   async getAllProduct(filters: any) {
     try {
       const query = filters;

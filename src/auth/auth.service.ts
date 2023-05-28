@@ -87,6 +87,8 @@ export class AuthService {
         email: email,
         firstName: user.firstName,
         lastName: user.lastName,
+        role: user.role,
+        avatar: user.avatar,
       },
       statusCode: 200,
     };

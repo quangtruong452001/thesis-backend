@@ -58,4 +58,4 @@ export class Product {
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
-// ProductSchema.plugin(paginate);
+ProductSchema.plugin(paginate);

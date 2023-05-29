@@ -6,11 +6,13 @@ import {
   ArrayNotEmpty,
   ValidateNested,
   IsOptional,
+  MaxLength,
 } from 'class-validator';
 
 export class CreateProductDto {
   @IsString()
   @IsNotEmpty()
+  @MaxLength(100)
   name: string;
 
   @IsString()
@@ -27,9 +29,11 @@ export class CreateProductDto {
 
   @IsString()
   @IsNotEmpty()
+  @MaxLength(1000)
   description: string;
 
   @IsString()
+  @IsOptional()
   shortDescription?: string;
 
   @IsString()
@@ -47,23 +51,23 @@ export class CreateProductDto {
 export class UpdateProductDto {
   @IsString()
   @IsNotEmpty()
-  name: string;
+  name?: string;
 
   @IsString()
   @IsNotEmpty()
-  productCode: string;
+  productCode?: string;
 
   @IsString()
   @IsNotEmpty()
-  productSKU: string;
+  productSKU?: string;
 
   @IsNumber()
   @IsNotEmpty()
-  price: number;
+  price?: number;
 
   @IsString()
   @IsNotEmpty()
-  description: string;
+  description?: string;
 
   @IsString()
   shortDescription?: string;
@@ -74,11 +78,11 @@ export class UpdateProductDto {
   @IsArray()
   // @IsOptional()
   // @ArrayNotEmpty()
-  images: string[];
+  images?: string[];
 
   @IsArray()
   @ArrayNotEmpty()
-  categories: string[];
+  categories?: string[];
 }
 export class ProductFilters {
   category?: string;

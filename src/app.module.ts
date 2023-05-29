@@ -31,6 +31,7 @@ const config: ConfigService = new ConfigService();
       installSubscriptionHandlers: true,
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
+
       // definitions: {
       //   path: join(process.cwd(), 'src/graphql.ts'),
       //   outputAs: 'class',

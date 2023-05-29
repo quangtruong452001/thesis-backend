@@ -1,9 +1,15 @@
 import {
+  // Equals,
   IsArray,
+  IsEmail,
   IsEnum,
+  IsMongoId,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
+  Matches,
+  MaxLength,
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
@@ -19,14 +25,16 @@ enum OrderStatus {
 
 class CartItemInput {
   @IsNotEmpty()
-  @IsString()
+  @IsMongoId()
   id: string;
 
   @IsNotEmpty()
   @IsString()
+  @MaxLength(255)
   name: string;
 
   @IsNotEmpty()
+  @IsNumber()
   quantity: number;
 
   @IsNotEmpty()
@@ -42,6 +50,7 @@ class CartItemInput {
 class InfoInput {
   @IsNotEmpty()
   @IsString()
+  @MaxLength(99)
   firstName: string;
 
   @IsNotEmpty()
@@ -49,11 +58,11 @@ class InfoInput {
   lastName: string;
 
   @IsNotEmpty()
-  @IsString()
+  @Matches(/^\d{10}$/)
   phone: string;
 
   @IsNotEmpty()
-  @IsString()
+  @IsEmail()
   email: string;
 
   @IsNotEmpty()
@@ -62,6 +71,7 @@ class InfoInput {
 
   @IsNotEmpty()
   @IsString()
+  // @Equals('Hồ Chí Minh')
   region: string;
 
   @IsNotEmpty()
@@ -98,7 +108,7 @@ export class CreateOrderInput {
   bill: InfoInput;
 
   @IsNotEmpty()
-  @IsString()
+  @IsMongoId()
   user: string;
 
   @IsOptional()

@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { AuthDto } from '../dto/auth.dto';
+import { SignInDto, SignUpDto } from '../dto/auth.dto';
 import * as argon from 'argon2';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -16,7 +16,7 @@ export class AuthService {
     private config: ConfigService,
   ) {}
 
-  async signup(authDto: AuthDto) {
+  async signup(authDto: SignUpDto) {
     // ** Generate the password hash
     const hashPassword = await argon.hash(authDto.password);
 
@@ -40,7 +40,7 @@ export class AuthService {
     }
   }
 
-  async signin(authDto: AuthDto) {
+  async signin(authDto: SignInDto) {
     // ** Find the user by email
     const user = await this.userModel.findOne({
       email: authDto.email,

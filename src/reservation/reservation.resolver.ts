@@ -6,7 +6,7 @@ import {
   ID,
   Subscription,
 } from '@nestjs/graphql';
-import { Reservation } from '../model/reservation.schema';
+// import { Reservation } from '../model/reservation.schema';
 import { ReservationService } from './reservation.service';
 import {
   ReservationInput,

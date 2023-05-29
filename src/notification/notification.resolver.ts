@@ -2,6 +2,7 @@
 import { Resolver, Query, Mutation, Args, Subscription } from '@nestjs/graphql';
 import { NotificationService } from './notification.service';
 import { PubSub } from 'graphql-subscriptions';
+import { MongoIdPipe } from 'src/dto/pipe';
 
 const pubSub = new PubSub();
 @Resolver('Notification')
@@ -17,7 +18,7 @@ export class NotificationResolver {
     return this.notificationService.countIsRead();
   }
   @Mutation('markNotificationAsRead')
-  async markNotificationAsRead(@Args('id') id: string) {
+  async markNotificationAsRead(@Args('id', MongoIdPipe) id: string) {
     return this.notificationService.markNotificationAsRead(id);
   }
   // @Mutation(() => Notification)

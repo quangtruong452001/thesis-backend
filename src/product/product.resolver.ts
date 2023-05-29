@@ -11,6 +11,7 @@ import {
 import { GetUser } from '../decorator';
 import { ImageService } from '../image/image.service';
 import { sortProduct } from '../utils/config';
+import { MongoIdPipe } from 'src/dto/pipe';
 @Resolver('Product')
 export class ProductResolver {
   constructor(
@@ -45,7 +46,7 @@ export class ProductResolver {
     }
   }
   @Query('productDetail')
-  async productDetail(@Args('id') id: string) {
+  async productDetail(@Args('id', MongoIdPipe) id: string) {
     try {
       return this.productService.productDetail(id);
     } catch (error) {
@@ -151,7 +152,7 @@ export class ProductResolver {
   }
   @Mutation('updateProduct')
   async updateProduct(
-    @Args('id') id: string,
+    @Args('id', MongoIdPipe) id: string,
     @Args('input') input: UpdateProductDto,
     @Args({
       name: 'files',
@@ -187,7 +188,7 @@ export class ProductResolver {
     }
   }
   @Mutation('deleteProduct')
-  async deleteProduct(@Args('id') id: string) {
+  async deleteProduct(@Args('id', MongoIdPipe) id: string) {
     try {
       const product = await this.productService.deleteProduct(id);
       if (product) {

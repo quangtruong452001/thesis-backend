@@ -9,6 +9,7 @@ import {
   UpdateUserInput,
 } from '../dto/user.dto';
 import { GetUser } from '../decorator';
+import { MongoIdPipe } from 'src/dto/pipe';
 @Resolver('User')
 export class UserResolver {
   constructor(
@@ -28,7 +29,7 @@ export class UserResolver {
   }
 
   @Query('user')
-  async user(@Args('id') id: string) {
+  async user(@Args('id', MongoIdPipe) id: string) {
     try {
       return this.userService.user(id);
     } catch (error) {
@@ -92,7 +93,7 @@ export class UserResolver {
 
   @Mutation('updateUser')
   async updateUser(
-    @Args('id') id: string,
+    @Args('id', MongoIdPipe) id: string,
     @Args('input') input: UpdateUserInput,
     @Args({
       name: 'files',
@@ -130,7 +131,7 @@ export class UserResolver {
   }
 
   @Mutation('deleteUser')
-  async deleteUser(@Args('id') id: string) {
+  async deleteUser(@Args('id', MongoIdPipe) id: string) {
     try {
       return this.userService.deleteUser(id);
     } catch (error) {

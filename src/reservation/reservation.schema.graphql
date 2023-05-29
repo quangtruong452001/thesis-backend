@@ -10,7 +10,6 @@ extend type Query {
   totalReservationSales: Sales
   todayReservations: [Reservation]
   getHours: [Hour]
-
 }
 
 extend type Mutation {

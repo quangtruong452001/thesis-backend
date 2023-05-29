@@ -197,9 +197,10 @@ export class ProductService {
       const list = await this.orderService.userRecommendation(userId);
       const listProducts = await this.productModel
         .find({
-          name: { $in: list },
+          id: { $in: list },
         })
         .populate(['images', 'categories']);
+
       const numRandomProducts = 6 - listProducts.length;
 
       const randomProducts = await this.productModel.aggregate([

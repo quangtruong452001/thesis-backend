@@ -1,7 +1,7 @@
-import { IsString, IsUrl, IsDate } from 'class-validator';
+import { IsString, IsUrl, IsDate, IsMongoId } from 'class-validator';
 
 export class ImageDto {
-  @IsString()
+  @IsMongoId()
   _id: string;
 
   @IsString()

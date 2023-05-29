@@ -4,7 +4,9 @@ import {
   IsOptional,
   IsEnum,
   IsNotEmpty,
-  ArrayMinSize,
+  IsIn,
+  IsMongoId,
+  Matches,
 } from 'class-validator';
 
 enum LocationType {
@@ -19,6 +21,7 @@ enum ReservationStatus {
 }
 
 class LocationInput {
+  @IsIn(['Hồ Chí Minh', 'Hà Nội'])
   @IsString()
   region: string;
 
@@ -37,13 +40,14 @@ class LocationInput {
 }
 
 export class ReservationInput {
-  // @IsNotEmpty()
+  @IsNotEmpty()
+  @IsMongoId()
   userId: string;
 
   @IsString()
   userName: string;
 
-  @IsString()
+  @Matches(/^\d{10}$/)
   phoneNumber: string;
 
   // @ArrayMinSize(1)
@@ -81,6 +85,7 @@ export class ReservationInput {
 
 export class UpdateReservationInput {
   @IsOptional()
+  @IsMongoId()
   userId: string;
 
   @IsOptional()
@@ -88,7 +93,7 @@ export class UpdateReservationInput {
   userName: string;
 
   @IsOptional()
-  @IsString()
+  @Matches(/^\d{10}$/)
   phoneNumber: string;
 
   @IsOptional()

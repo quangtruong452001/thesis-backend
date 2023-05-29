@@ -5,19 +5,24 @@ import {
   IsEnum,
   IsNotEmpty,
   ArrayMinSize,
+  IsEmail,
+  IsPhoneNumber,
+  Matches,
+  IsUrl,
 } from 'class-validator';
 
 export class CreateUserDto {
-  @IsOptional()
+  @IsString()
   firstName: string;
 
-  @IsOptional()
+  @IsString()
   lastName: string;
 
-  @IsOptional()
+  @IsEmail()
   email: string;
 
-  @IsOptional()
+  // Validate phone number ten digits
+  @Matches(/^\d{10}$/)
   phone: string;
 
   @IsNotEmpty()
@@ -37,6 +42,7 @@ export class CreateUserInput {
   email: string;
 
   @IsOptional()
+  @Matches(/^\d{10}$/)
   phone: string;
 
   @IsNotEmpty()
@@ -56,6 +62,7 @@ export class UpdateUserInput {
   password: string;
 
   @IsOptional()
+  @Matches(/^\d{10}$/)
   phone: string;
 }
 export class UpdateUserDto {
@@ -69,11 +76,13 @@ export class UpdateUserDto {
   email: string;
 
   @IsOptional()
+  @Matches(/^\d{10}$/)
   phone: string;
 
   @IsNotEmpty()
   password: string;
 
   @IsOptional()
+  @IsUrl()
   avatar: string;
 }

@@ -6,7 +6,7 @@ import {
   ID,
   Subscription,
 } from '@nestjs/graphql';
-import { Reservation } from '../model/reservation.schema';
+// import { Reservation } from '../model/reservation.schema';
 import { ReservationService } from './reservation.service';
 import {
   ReservationInput,
@@ -20,6 +20,7 @@ import { GetUser } from '../decorator';
 import { PubSub } from 'graphql-subscriptions';
 import { NotificationService } from '../notification/notification.service';
 import { NotificationDto, notificationType } from '../dto/notification.dto';
+import { MongoIdPipe } from 'src/dto/pipe';
 
 @Resolver('Reservation')
 export class ReservationResolver {
@@ -53,7 +54,7 @@ export class ReservationResolver {
   }
 
   @Query('reservation')
-  async reservation(@Args('id', { type: () => ID }) id: string) {
+  async reservation(@Args('id', MongoIdPipe) id: string) {
     try {
       return await this.reservationService.findOne(id);
     } catch (error) {

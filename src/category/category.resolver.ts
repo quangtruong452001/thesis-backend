@@ -2,6 +2,7 @@ import { CategoryService } from './category.service';
 import { ProductService } from '../product/product.service';
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GetUser } from '../decorator';
+import { MongoIdPipe } from 'src/dto/pipe';
 
 @Resolver('Category')
 export class CategoryResolver {
@@ -27,7 +28,10 @@ export class CategoryResolver {
   }
 
   @Mutation('updateCategory')
-  async updateCategory(@Args('id') id: string, @Args('name') name: string) {
+  async updateCategory(
+    @Args('id', MongoIdPipe) id: string,
+    @Args('name') name: string,
+  ) {
     try {
       const category = await this.categoryService.updateCategory(id, name);
       if (category) {

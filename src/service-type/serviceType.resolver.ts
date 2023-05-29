@@ -9,6 +9,7 @@ import {
   UpdateServiceTypeInput,
 } from '../dto/serviceType.dto';
 import { GetUser } from '../decorator';
+import { MongoIdPipe } from 'src/dto/pipe';
 
 @Resolver('ServiceType')
 export class ServiceTypeResolver {
@@ -72,7 +73,7 @@ export class ServiceTypeResolver {
 
   @Mutation('updateServiceType')
   async updateServiceType(
-    @Args('id', { type: () => ID }) id: string,
+    @Args('id', MongoIdPipe) id: string,
     @Args('serviceType') updateServiceTypeDto: UpdateServiceTypeInput,
   ) {
     try {
@@ -87,7 +88,7 @@ export class ServiceTypeResolver {
   }
 
   @Mutation('deleteServiceType')
-  async deleteServiceType(@Args('id', { type: () => ID }) id: string) {
+  async deleteServiceType(@Args('id', MongoIdPipe) id: string) {
     try {
       const deletedServiceType = await this.serviceTypeService.delete(id);
       return deletedServiceType;

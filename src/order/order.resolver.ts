@@ -11,6 +11,7 @@ import { PubSub } from 'graphql-subscriptions';
 import { NotificationService } from '../notification/notification.service';
 import { NotificationDto, notificationType } from '../dto/notification.dto';
 import { createPaymentInput } from '../dto/payment.dto';
+import { MongoIdPipe } from 'src/dto/pipe';
 
 @Resolver('Order')
 export class OrderResolver {
@@ -34,7 +35,7 @@ export class OrderResolver {
   // }
 
   @Query('order')
-  async order(@Args('id') id: string) {
+  async order(@Args('id', MongoIdPipe) id: string) {
     return this.orderService.getOrderById(id);
   }
   @Query('totalOrderandSales')
@@ -95,7 +96,7 @@ export class OrderResolver {
   }
   @Mutation('updateOrder')
   async updateOrder(
-    @Args('id') id: string,
+    @Args('id', MongoIdPipe) id: string,
     @Args('input') input: UpdateOrderInput,
   ) {
     try {
@@ -119,7 +120,7 @@ export class OrderResolver {
   }
 
   @Mutation('deleteOrder')
-  async deleteOrder(@Args('id') id: string) {
+  async deleteOrder(@Args('id', MongoIdPipe) id: string) {
     try {
       const data = await this.orderService.deleteOrder(id);
       if (data) {

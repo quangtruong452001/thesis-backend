@@ -268,28 +268,38 @@ export class OrderService {
       const sortedSimilarUsers = Array.from(similarUsers.entries()).sort(
         (a, b) => b[1] - a[1],
       );
+      console.log(sortedSimilarUsers);
+      console.log('target item', targetUserItems);
       const recommendedProducts: Set<string> = new Set();
-
       for (const [otherUser, similarity] of sortedSimilarUsers) {
         const otherUserItems = userItemMatrix.get(otherUser);
 
         for (const [productId] of otherUserItems) {
           if (!targetUserItems.has(productId)) {
             recommendedProducts.add(productId);
+          }
+        }
+      }
 
-            if (recommendedProducts.size === 6) {
-              // Stop adding more recommended products
-              break;
-            }
+      // Convert recommendedProducts Set to an array
+      let recommendations = Array.from(recommendedProducts);
+      if (recommendations.length > 6) {
+        // If more than 6 recommendations, choose random 6
+        const randomRecommendations: string[] = [];
+        while (randomRecommendations.length < 6) {
+          const randomIndex = Math.floor(
+            Math.random() * recommendations.length,
+          );
+          const randomProduct = recommendations[randomIndex];
+          if (!randomRecommendations.includes(randomProduct)) {
+            randomRecommendations.push(randomProduct);
           }
         }
 
-        if (recommendedProducts.size === 6) {
-          // Stop iterating over similar users if we already have 6 recommendations
-          break;
-        }
+        recommendations = randomRecommendations;
       }
-      return Array.from(recommendedProducts);
+      console.log(recommendations);
+      return recommendations;
     } catch (error) {
       // Handle any errors
       console.error(error);

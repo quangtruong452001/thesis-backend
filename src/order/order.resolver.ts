@@ -23,16 +23,16 @@ export class OrderResolver {
     this.pubSub = new PubSub();
   }
 
-  // @Query('orders')
-  // async orders(
-  //   @Args('page') page: number,
-  //   @Args('limit') limit: number,
-  //   @Args('sort') sort: any,
-  //   @Args('filters', { nullable: true }) filters: OrderFilter,
-  // ) {
-  //   const options = handleOrderFilters(filters);
-  //   return this.orderService.orders(filters, page, limit, sort);
-  // }
+  @Query('orders')
+  async orders(
+    @Args('page') page: number,
+    @Args('limit') limit: number,
+    @Args('sort') sort: any,
+    @Args('filters', { nullable: true }) filters: OrderFilter,
+  ) {
+    const options = handleOrderFilters(filters);
+    return this.orderService.orders(filters, page, limit, sort);
+  }
 
   @Query('order')
   async order(@Args('id', MongoIdPipe) id: string) {

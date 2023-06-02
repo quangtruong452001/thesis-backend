@@ -5,12 +5,12 @@ type Subscription {
 
 extend type Query {
 #  "Orders List"
-#  orders(
-#    page: Int = 1
-#    limit: Int = 9
-#    sort: String
-#    filters: OrderFilter
-#  ): OrderPagination
+orders(
+    page: Int = 1
+    limit: Int = 9
+    sort: String
+    filters: OrderFilter
+  ): OrderPagination
   "Get order by id"
   order(id: ID!): Order
   totalOrderandSales: OrderSales

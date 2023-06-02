@@ -19,23 +19,25 @@ export class OrderService {
     @InjectModel(Order.name)
     private orderModel: Model<OrderDocument>,
     @InjectModel(Payment.name)
-    private paymentModel: Model<PaymentDocument>, // @InjectModel(Order.name) // private PaginationOrderModel: PaginateModel<OrderDocument>,
+    private paymentModel: Model<PaymentDocument>,
+    @InjectModel(Order.name)
+    private PaginationOrderModel: PaginateModel<OrderDocument>,
   ) {}
-  // async orders(options: any, page: number, limit: number, sorts: string) {
-  //   try {
-  //     const query = options;
-  //     const data = await this.PaginationOrderModel.paginate(query, {
-  //       page: page,
-  //       limit: limit,
-  //       populate: ['user'],
-  //       sort: sorts,
-  //     });
-  //     return data;
-  //   } catch (error) {
-  //     console.log(error);
-  //     throw error;
-  //   }
-  // }
+  async orders(options: any, page: number, limit: number, sorts: string) {
+    try {
+      const query = options;
+      const data = await this.PaginationOrderModel.paginate(query, {
+        page: page,
+        limit: limit,
+        populate: ['user'],
+        sort: sorts,
+      });
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
   // Get a single order by id
   async getOrderById(id: string): Promise<Order> {
     try {

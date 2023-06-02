@@ -4,8 +4,8 @@ type Subscription {
 }
 
 extend type Query {
-#  "Orders List"
-orders(
+  #  "Orders List"
+  orders(
     page: Int = 1
     limit: Int = 9
     sort: String
@@ -132,7 +132,7 @@ input CreateOrderInput {
 }
 
 input UpdateOrderInput {
-  cart: [CartItemInput!]
+  cart: [CartItemInput]
   bill: InfoInput
   #    user: String
   payment: ID

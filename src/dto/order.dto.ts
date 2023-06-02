@@ -112,7 +112,7 @@ export class CreateOrderInput {
   user: string;
 
   @IsOptional()
-  @IsString()
+  @IsMongoId()
   payment?: string;
 
   @IsNotEmpty()
@@ -147,7 +147,7 @@ export class UpdateOrderInput {
   // user?: string;
 
   @IsOptional()
-  @IsString()
+  @IsMongoId()
   payment?: string;
 
   @IsOptional()

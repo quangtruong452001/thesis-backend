@@ -47,9 +47,13 @@ export class OrderResolver {
     return this.orderService.getLatestOrder();
   }
   @Mutation('createOrder')
-  async createOrder(@Args('input') input: CreateOrderInput, @GetUser() user) {
+  async createOrder(
+    @Args('input') input: CreateOrderInput,
+    @GetUser() user: any,
+  ) {
     try {
       input.user = user.id;
+
       const data = await this.orderService.createOrder(input);
       if (data) {
         const notificationDto: NotificationDto = {

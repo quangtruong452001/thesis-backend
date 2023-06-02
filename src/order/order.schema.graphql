@@ -68,7 +68,7 @@ type Order {
   cart: [CartItem!]!
   bill: Info!
   user: User
-  payment: String
+  payment: ID
   shippingTime: String!
   shippingFee: Float!
   totalPrice: Float!
@@ -124,7 +124,7 @@ input CreateOrderInput {
   cart: [CartItemInput!]!
   bill: InfoInput!
   #    user: String!
-  payment: String
+  payment: ID
   shippingTime: String!
   shippingFee: Float!
   totalPrice: Float!
@@ -135,7 +135,7 @@ input UpdateOrderInput {
   cart: [CartItemInput!]
   bill: InfoInput
   #    user: String
-  payment: String
+  payment: ID
   shippingTime: String
   shippingFee: Float
   totalPrice: Float

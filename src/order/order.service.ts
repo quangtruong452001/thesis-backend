@@ -55,7 +55,7 @@ export class OrderService {
       const newOrder = await this.orderModel.create(createOrderInput);
       await newOrder.save();
       const data = await newOrder.populate('user');
-      return newOrder;
+      return data;
     } catch (error) {
       console.log(error);
       throw error;

@@ -51,6 +51,7 @@ export class OrderResolver {
     @Args('input') input: CreateOrderInput,
     @GetUser() user: any,
   ) {
+    console.log(user);
     try {
       input.user = user.id;
 

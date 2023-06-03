@@ -4,13 +4,13 @@ type Subscription {
 }
 
 extend type Query {
-#  "Orders List"
-#  orders(
-#    page: Int = 1
-#    limit: Int = 9
-#    sort: String
-#    filters: OrderFilter
-#  ): OrderPagination
+  #  "Orders List"
+  orders(
+    page: Int = 1
+    limit: Int = 9
+    sort: String
+    filters: OrderFilter
+  ): OrderPagination
   "Get order by id"
   order(id: ID!): Order
   totalOrderandSales: OrderSales
@@ -68,7 +68,7 @@ type Order {
   cart: [CartItem!]!
   bill: Info!
   user: User
-  payment: String
+  payment: ID
   shippingTime: String!
   shippingFee: Float!
   totalPrice: Float!
@@ -124,7 +124,7 @@ input CreateOrderInput {
   cart: [CartItemInput!]!
   bill: InfoInput!
   #    user: String!
-  payment: String
+  payment: ID
   shippingTime: String!
   shippingFee: Float!
   totalPrice: Float!
@@ -132,10 +132,10 @@ input CreateOrderInput {
 }
 
 input UpdateOrderInput {
-  cart: [CartItemInput!]
+  cart: [CartItemInput]
   bill: InfoInput
   #    user: String
-  payment: String
+  payment: ID
   shippingTime: String
   shippingFee: Float
   totalPrice: Float

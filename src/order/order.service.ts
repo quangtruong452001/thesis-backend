@@ -19,23 +19,25 @@ export class OrderService {
     @InjectModel(Order.name)
     private orderModel: Model<OrderDocument>,
     @InjectModel(Payment.name)
-    private paymentModel: Model<PaymentDocument>, // @InjectModel(Order.name) // private PaginationOrderModel: PaginateModel<OrderDocument>,
+    private paymentModel: Model<PaymentDocument>,
+    @InjectModel(Order.name)
+    private PaginationOrderModel: PaginateModel<OrderDocument>,
   ) {}
-  // async orders(options: any, page: number, limit: number, sorts: string) {
-  //   try {
-  //     const query = options;
-  //     const data = await this.PaginationOrderModel.paginate(query, {
-  //       page: page,
-  //       limit: limit,
-  //       populate: ['user'],
-  //       sort: sorts,
-  //     });
-  //     return data;
-  //   } catch (error) {
-  //     console.log(error);
-  //     throw error;
-  //   }
-  // }
+  async orders(options: any, page: number, limit: number, sorts: string) {
+    try {
+      const query = options;
+      const data = await this.PaginationOrderModel.paginate(query, {
+        page: page,
+        limit: limit,
+        populate: ['user'],
+        sort: sorts,
+      });
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
   // Get a single order by id
   async getOrderById(id: string): Promise<Order> {
     try {
@@ -53,7 +55,7 @@ export class OrderService {
       const newOrder = await this.orderModel.create(createOrderInput);
       await newOrder.save();
       const data = await newOrder.populate('user');
-      return newOrder;
+      return data;
     } catch (error) {
       console.log(error);
       throw error;
@@ -268,28 +270,38 @@ export class OrderService {
       const sortedSimilarUsers = Array.from(similarUsers.entries()).sort(
         (a, b) => b[1] - a[1],
       );
+      console.log(sortedSimilarUsers);
+      console.log('target item', targetUserItems);
       const recommendedProducts: Set<string> = new Set();
-
       for (const [otherUser, similarity] of sortedSimilarUsers) {
         const otherUserItems = userItemMatrix.get(otherUser);
 
         for (const [productId] of otherUserItems) {
           if (!targetUserItems.has(productId)) {
             recommendedProducts.add(productId);
+          }
+        }
+      }
 
-            if (recommendedProducts.size === 6) {
-              // Stop adding more recommended products
-              break;
-            }
+      // Convert recommendedProducts Set to an array
+      let recommendations = Array.from(recommendedProducts);
+      if (recommendations.length > 6) {
+        // If more than 6 recommendations, choose random 6
+        const randomRecommendations: string[] = [];
+        while (randomRecommendations.length < 6) {
+          const randomIndex = Math.floor(
+            Math.random() * recommendations.length,
+          );
+          const randomProduct = recommendations[randomIndex];
+          if (!randomRecommendations.includes(randomProduct)) {
+            randomRecommendations.push(randomProduct);
           }
         }
 
-        if (recommendedProducts.size === 6) {
-          // Stop iterating over similar users if we already have 6 recommendations
-          break;
-        }
+        recommendations = randomRecommendations;
       }
-      return Array.from(recommendedProducts);
+      console.log(recommendations);
+      return recommendations;
     } catch (error) {
       // Handle any errors
       console.error(error);

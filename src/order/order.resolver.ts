@@ -23,16 +23,16 @@ export class OrderResolver {
     this.pubSub = new PubSub();
   }
 
-  // @Query('orders')
-  // async orders(
-  //   @Args('page') page: number,
-  //   @Args('limit') limit: number,
-  //   @Args('sort') sort: any,
-  //   @Args('filters', { nullable: true }) filters: OrderFilter,
-  // ) {
-  //   const options = handleOrderFilters(filters);
-  //   return this.orderService.orders(filters, page, limit, sort);
-  // }
+  @Query('orders')
+  async orders(
+    @Args('page') page: number,
+    @Args('limit') limit: number,
+    @Args('sort') sort: any,
+    @Args('filters', { nullable: true }) filters: OrderFilter,
+  ) {
+    const options = handleOrderFilters(filters);
+    return this.orderService.orders(filters, page, limit, sort);
+  }
 
   @Query('order')
   async order(@Args('id', MongoIdPipe) id: string) {
@@ -47,9 +47,14 @@ export class OrderResolver {
     return this.orderService.getLatestOrder();
   }
   @Mutation('createOrder')
-  async createOrder(@Args('input') input: CreateOrderInput, @GetUser() user) {
+  async createOrder(
+    @Args('input') input: CreateOrderInput,
+    @GetUser() user: any,
+  ) {
+    console.log(user);
     try {
       input.user = user.id;
+
       const data = await this.orderService.createOrder(input);
       if (data) {
         const notificationDto: NotificationDto = {

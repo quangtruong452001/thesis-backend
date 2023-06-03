@@ -12,14 +12,14 @@ export const GetUser = createParamDecorator(
     const { req } = ctx.getContext();
     const jwtStrategy = new JwtStrategy(config);
     const token = req.headers.authorization.split(' ')[1];
-    try {
-      const user = await jwtStrategy.validate(
-        jwt.verify(token, config.get('JWT_SECRET')),
-      );
-      return user;
-    } catch (error) {
-      // Handle error in JWT verify
-      return null;
-    }
+    // try {
+    const user = await jwtStrategy.validate(
+      jwt.verify(token, config.get('JWT_SECRET')),
+    );
+    return user;
+    // } catch (error) {
+    //   // Handle error in JWT verify
+    //   return null;
+    // }
   },
 );

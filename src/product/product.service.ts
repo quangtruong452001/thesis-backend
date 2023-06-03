@@ -197,7 +197,7 @@ export class ProductService {
       const list = await this.orderService.userRecommendation(userId);
       const listProducts = await this.productModel
         .find({
-          id: { $in: list },
+          _id: { $in: list },
         })
         .populate(['images', 'categories']);
 

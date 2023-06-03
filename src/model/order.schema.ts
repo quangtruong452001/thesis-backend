@@ -45,4 +45,4 @@ export class Order {
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);
-// OrderSchema.plugin(paginate);
+OrderSchema.plugin(paginate);

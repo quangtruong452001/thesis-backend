@@ -3,6 +3,7 @@ extend type Mutation {
   createStaff(data: StaffInput!, files: [Upload]): User
   "Delete a user"
   deleteUser(id: ID!): User
+  "Update a user"
   updateUser(id: ID!, input: StaffInput, files: [Upload]): User
 }
 extend type Query {

@@ -163,7 +163,7 @@ export class ProductResolver {
     files,
   ) {
     try {
-      console.log('be files', files);
+      // console.log('be files', files);
       const imgs = [];
       for (const file of files) {
         const fileUp = await file.file;

@@ -7,7 +7,6 @@ import {
   UpdateReservationInput,
 } from '../dto/reservation.dto';
 import { Hour, HourDocument } from '../model/hour.schema';
-
 @Injectable()
 export class ReservationService {
   constructor(
@@ -174,11 +173,17 @@ export class ReservationService {
 
   async getTodayReservation() {
     try {
+      const startDateTime = new Date(new Date().setHours(7, 0, 0));
+      const endDateTime = new Date(new Date().setHours(30, 59, 59));
+
+      const startDateTimeString = startDateTime.toISOString().replace('Z', '0');
+      const endDateTimeString = endDateTime.toISOString().replace('Z', '0');
+
       return await this.reservationModel
         .find({
           reservationDate: {
-            $gte: new Date(new Date().setHours(0, 0, 0)),
-            $lt: new Date(new Date().setHours(23, 59, 59)),
+            $gte: startDateTimeString,
+            $lt: endDateTimeString,
           },
         })
         .populate([

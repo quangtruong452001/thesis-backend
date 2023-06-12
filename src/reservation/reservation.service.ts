@@ -174,11 +174,12 @@ export class ReservationService {
   async getTodayReservation() {
     try {
       const startDateTime = new Date(new Date().setHours(7, 0, 0));
+      startDateTime.setMilliseconds(0);
+      const startDateTimeString = startDateTime.toISOString();
+
       const endDateTime = new Date(new Date().setHours(30, 59, 59));
-
-      const startDateTimeString = startDateTime.toISOString().replace('Z', '0');
-      const endDateTimeString = endDateTime.toISOString().replace('Z', '0');
-
+      endDateTime.setMilliseconds(0);
+      const endDateTimeString = endDateTime.toISOString();
       return await this.reservationModel
         .find({
           reservationDate: {

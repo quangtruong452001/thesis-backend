@@ -270,8 +270,8 @@ export class OrderService {
       const sortedSimilarUsers = Array.from(similarUsers.entries()).sort(
         (a, b) => b[1] - a[1],
       );
-      console.log(sortedSimilarUsers);
-      console.log('target item', targetUserItems);
+      // console.log(sortedSimilarUsers);
+      // console.log('target item', targetUserItems);
       const recommendedProducts: Set<string> = new Set();
       for (const [otherUser, similarity] of sortedSimilarUsers) {
         const otherUserItems = userItemMatrix.get(otherUser);

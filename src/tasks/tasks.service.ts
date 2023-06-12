@@ -1,5 +1,5 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { Cron, Interval, Timeout } from '@nestjs/schedule';
+import { Injectable } from '@nestjs/common';
+import { Cron } from '@nestjs/schedule';
 import { InjectModel } from '@nestjs/mongoose';
 import { Reservation, ReservationDocument } from '../model/reservation.schema';
 import { Model } from 'mongoose';
@@ -8,8 +8,8 @@ import {
   generateBookingLink,
   genereateInfo,
 } from '../utils/mail/genereateInfo';
-import { sendMail } from '../utils/mail/sendMail';
-
+// import { sendMail } from '../utils/mail/sendMail';
+import { MailService } from '../mailer/mailer.service';
 @Injectable()
 export class TasksService {
   constructor(
@@ -17,6 +17,8 @@ export class TasksService {
     private reservationModel: Model<ReservationDocument>,
     @InjectModel(Hour.name)
     private hourModel: Model<HourDocument>,
+
+    private MailService: MailService,
   ) {}
 
   // Update reservation status to CANCELLED and send mail to user
@@ -40,7 +42,8 @@ export class TasksService {
           status: 'CANCELLED',
         });
         const context = generateBookingLink(r);
-        await sendMail(context);
+        // await sendMail(context);
+        await this.MailService.sendEmail(context);
       }
     }
   }
@@ -82,7 +85,7 @@ export class TasksService {
         const context = genereateInfo(r);
         // console.log(context);
         // send mail
-        await sendMail(context);
+        await this.MailService.sendEmail(context);
       }
     }
   }
@@ -224,6 +227,33 @@ export class TasksService {
   //       });
   //       const context = generateBookingLink(r);
   //       await sendMail(context);
+  //     }
+  //   }
+  // }
+
+  // @Cron('0 */2 * * * *', { timeZone: 'Asia/Ho_Chi_Minh' })
+  // async remindAppointmentTest() {
+  //   const today = new Date();
+  //   today.setHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to zero
+  //
+  //   const tomorrow = new Date(today);
+  //   tomorrow.setDate(tomorrow.getDate() + 1);
+  //   const tomorrowISOString = tomorrow.toISOString(); // change to iso string
+  //
+  //   const nextDateReservation = await this.reservationModel
+  //     .find({
+  //       ReservationDate: tomorrowISOString,
+  //     })
+  //     .populate(['userId', 'reservationHour', 'serviceType']);
+  //
+  //   if (nextDateReservation) {
+  //     for (let i = 0; i < nextDateReservation.length; i++) {
+  //       // create context
+  //       const r: any = nextDateReservation[i];
+  //       const context = genereateInfo(r);
+  //       // console.log(context);
+  //       // send mail
+  //       await this.MailService.sendEmail(context);
   //     }
   //   }
   // }

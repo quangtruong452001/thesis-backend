@@ -16,6 +16,7 @@ import { ReservationModule } from './reservation/reservation.module';
 import { ServiceTypeModule } from './service-type/service-type.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TasksModule } from './tasks/tasks.module';
+import { MailerModule } from './mailer/mailer.module';
 const config: ConfigService = new ConfigService();
 
 @Module({
@@ -49,6 +50,7 @@ const config: ConfigService = new ConfigService();
     ReservationModule,
     ServiceTypeModule,
     TasksModule,
+    MailerModule,
   ],
   controllers: [],
   providers: [],
